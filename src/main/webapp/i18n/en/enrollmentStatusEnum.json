@@ -1,0 +1,10 @@
+{
+  "jhipsterlmsapp3App": {
+    "EnrollmentStatusEnum": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "REJECTED": "REJECTED",
+      "PENDING": "PENDING"
+    }
+  }
+}
