@@ -1,0 +1,9 @@
+{
+  "jhipsterlmsapp3App": {
+    "UserType": {
+      "null": "",
+      "STUDENT": "STUDENT",
+      "TEACHER": "TEACHER"
+    }
+  }
+}
