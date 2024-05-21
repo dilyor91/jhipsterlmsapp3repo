@@ -84,6 +84,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="course.id">
+              <div class="d-flex">
+                <span jhiTranslate="jhipsterlmsapp3App.announcement.course">Course</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -99,6 +105,13 @@
               <td>{{ announcement.delayPost }}</td>
               <td>{{ announcement.postAt | formatMediumDatetime }}</td>
               <td>{{ announcement.published }}</td>
+              <td>
+                @if (announcement.course) {
+                  <div>
+                    <a [routerLink]="['/course', announcement.course.id, 'view']">{{ announcement.course.id }}</a>
+                  </div>
+                }
+              </td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/announcement', announcement.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

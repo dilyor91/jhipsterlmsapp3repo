@@ -47,6 +47,10 @@ public class Announcement implements Serializable {
     @Column(name = "published")
     private Boolean published;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
+    private Course course;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "rel_announcement__course_section",
@@ -148,6 +152,19 @@ public class Announcement implements Serializable {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public Course getCourse() {
+        return this.course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Announcement course(Course course) {
+        this.setCourse(course);
+        return this;
     }
 
     public Set<CourseSection> getCourseSections() {

@@ -3,6 +3,7 @@ package uz.momoit.lms_canvas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uz.momoit.lms_canvas.domain.AnnouncementTestSamples.*;
 import static uz.momoit.lms_canvas.domain.CourseSectionTestSamples.*;
+import static uz.momoit.lms_canvas.domain.CourseTestSamples.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,18 @@ class AnnouncementTest {
 
         announcement2 = getAnnouncementSample2();
         assertThat(announcement1).isNotEqualTo(announcement2);
+    }
+
+    @Test
+    void courseTest() throws Exception {
+        Announcement announcement = getAnnouncementRandomSampleGenerator();
+        Course courseBack = getCourseRandomSampleGenerator();
+
+        announcement.setCourse(courseBack);
+        assertThat(announcement.getCourse()).isEqualTo(courseBack);
+
+        announcement.course(null);
+        assertThat(announcement.getCourse()).isNull();
     }
 
     @Test

@@ -29,6 +29,8 @@ public class AnnouncementDTO implements Serializable {
 
     private Boolean published;
 
+    private CourseDTO course;
+
     private Set<CourseSectionDTO> courseSections = new HashSet<>();
 
     public Long getId() {
@@ -87,6 +89,14 @@ public class AnnouncementDTO implements Serializable {
         this.published = published;
     }
 
+    public CourseDTO getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseDTO course) {
+        this.course = course;
+    }
+
     public Set<CourseSectionDTO> getCourseSections() {
         return courseSections;
     }
@@ -127,6 +137,7 @@ public class AnnouncementDTO implements Serializable {
             ", delayPost='" + getDelayPost() + "'" +
             ", postAt='" + getPostAt() + "'" +
             ", published='" + getPublished() + "'" +
+            ", course=" + getCourse() +
             ", courseSections=" + getCourseSections() +
             "}";
     }

@@ -5,10 +5,12 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
+import { ICourse } from 'app/entities/course/course.model';
+import { CourseService } from 'app/entities/course/service/course.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
 import { CourseSectionService } from 'app/entities/course-section/service/course-section.service';
-import { AnnouncementService } from '../service/announcement.service';
 import { IAnnouncement } from '../announcement.model';
+import { AnnouncementService } from '../service/announcement.service';
 import { AnnouncementFormService } from './announcement-form.service';
 
 import { AnnouncementUpdateComponent } from './announcement-update.component';
@@ -19,6 +21,7 @@ describe('Announcement Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let announcementFormService: AnnouncementFormService;
   let announcementService: AnnouncementService;
+  let courseService: CourseService;
   let courseSectionService: CourseSectionService;
 
   beforeEach(() => {
@@ -41,12 +44,35 @@ describe('Announcement Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     announcementFormService = TestBed.inject(AnnouncementFormService);
     announcementService = TestBed.inject(AnnouncementService);
+    courseService = TestBed.inject(CourseService);
     courseSectionService = TestBed.inject(CourseSectionService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Course query and add missing value', () => {
+      const announcement: IAnnouncement = { id: 456 };
+      const course: ICourse = { id: 19861 };
+      announcement.course = course;
+
+      const courseCollection: ICourse[] = [{ id: 23737 }];
+      jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
+      const additionalCourses = [course];
+      const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
+      jest.spyOn(courseService, 'addCourseToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ announcement });
+      comp.ngOnInit();
+
+      expect(courseService.query).toHaveBeenCalled();
+      expect(courseService.addCourseToCollectionIfMissing).toHaveBeenCalledWith(
+        courseCollection,
+        ...additionalCourses.map(expect.objectContaining),
+      );
+      expect(comp.coursesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call CourseSection query and add missing value', () => {
       const announcement: IAnnouncement = { id: 456 };
       const courseSections: ICourseSection[] = [{ id: 23686 }];
@@ -71,12 +97,15 @@ describe('Announcement Management Update Component', () => {
 
     it('Should update editForm', () => {
       const announcement: IAnnouncement = { id: 456 };
+      const course: ICourse = { id: 17798 };
+      announcement.course = course;
       const courseSection: ICourseSection = { id: 14455 };
       announcement.courseSections = [courseSection];
 
       activatedRoute.data = of({ announcement });
       comp.ngOnInit();
 
+      expect(comp.coursesSharedCollection).toContain(course);
       expect(comp.courseSectionsSharedCollection).toContain(courseSection);
       expect(comp.announcement).toEqual(announcement);
     });
@@ -151,6 +180,16 @@ describe('Announcement Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareCourse', () => {
+      it('Should forward to courseService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(courseService, 'compareCourse');
+        comp.compareCourse(entity, entity2);
+        expect(courseService.compareCourse).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareCourseSection', () => {
       it('Should forward to courseSectionService', () => {
         const entity = { id: 123 };
