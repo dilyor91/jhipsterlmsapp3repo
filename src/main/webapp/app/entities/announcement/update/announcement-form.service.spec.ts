@@ -26,6 +26,7 @@ describe('Announcement Form Service', () => {
             delayPost: expect.any(Object),
             postAt: expect.any(Object),
             published: expect.any(Object),
+            course: expect.any(Object),
             courseSections: expect.any(Object),
           }),
         );
@@ -43,6 +44,7 @@ describe('Announcement Form Service', () => {
             delayPost: expect.any(Object),
             postAt: expect.any(Object),
             published: expect.any(Object),
+            course: expect.any(Object),
             courseSections: expect.any(Object),
           }),
         );

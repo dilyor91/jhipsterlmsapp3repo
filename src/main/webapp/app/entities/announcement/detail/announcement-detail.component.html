@@ -39,6 +39,14 @@
           <dd>
             <span>{{ announcement()!.published }}</span>
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.announcement.course">Course</span></dt>
+          <dd>
+            @if (announcement()!.course) {
+              <div>
+                <a [routerLink]="['/course', announcement()!.course?.id, 'view']">{{ announcement()!.course?.id }}</a>
+              </div>
+            }
+          </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.announcement.courseSection">Course Section</span></dt>
           <dd>
             @for (courseSection of announcement()!.courseSections; track $index; let last = $last) {

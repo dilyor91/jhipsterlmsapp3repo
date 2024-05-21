@@ -37,6 +37,7 @@ type AnnouncementFormGroupContent = {
   delayPost: FormControl<AnnouncementFormRawValue['delayPost']>;
   postAt: FormControl<AnnouncementFormRawValue['postAt']>;
   published: FormControl<AnnouncementFormRawValue['published']>;
+  course: FormControl<AnnouncementFormRawValue['course']>;
   courseSections: FormControl<AnnouncementFormRawValue['courseSections']>;
 };
 
@@ -67,6 +68,7 @@ export class AnnouncementFormService {
       delayPost: new FormControl(announcementRawValue.delayPost),
       postAt: new FormControl(announcementRawValue.postAt),
       published: new FormControl(announcementRawValue.published),
+      course: new FormControl(announcementRawValue.course),
       courseSections: new FormControl(announcementRawValue.courseSections ?? []),
     });
   }

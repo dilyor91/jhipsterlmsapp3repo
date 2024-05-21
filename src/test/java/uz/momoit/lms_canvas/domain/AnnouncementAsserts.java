@@ -64,6 +64,7 @@ public class AnnouncementAsserts {
     public static void assertAnnouncementUpdatableRelationshipsEquals(Announcement expected, Announcement actual) {
         assertThat(expected)
             .as("Verify Announcement relationships")
+            .satisfies(e -> assertThat(e.getCourse()).as("check course").isEqualTo(actual.getCourse()))
             .satisfies(e -> assertThat(e.getCourseSections()).as("check courseSections").isEqualTo(actual.getCourseSections()));
     }
 }

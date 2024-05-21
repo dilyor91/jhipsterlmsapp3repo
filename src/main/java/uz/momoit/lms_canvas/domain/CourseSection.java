@@ -36,7 +36,7 @@ public class CourseSection implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "courseSections")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "courseSections" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "course", "courseSections" }, allowSetters = true)
     private Set<Announcement> announcements = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -36,6 +36,12 @@
   "pagination": "pagination",
   "relationships": [
     {
+      "otherEntityName": "course",
+      "relationshipName": "course",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "courseSection",
       "otherEntityRelationshipName": "announcement",
       "relationshipName": "courseSection",
