@@ -1,49 +1,49 @@
 import { IAccounts, NewAccounts } from './accounts.model';
 
 export const sampleWithRequiredData: IAccounts = {
-  id: 14975,
-  username: 'contention furthermore',
-  fullName: 'atop weekly weakly',
-  sortableName: 'pace geez anenst',
-  phone: '938.485.7520 x7410',
-  gender: 'subscribe even',
-  userType: 'STUDENT',
+  id: 18712,
+  username: 'zesty',
+  fullName: 'acceptance',
+  sortableName: 'usher',
+  phone: '903-331-8890',
+  gender: 'destruction cartwheel evangelise',
+  userType: 'TEACHER',
   userStatus: 'ACTIVE',
 };
 
 export const sampleWithPartialData: IAccounts = {
-  id: 16551,
-  username: 'virtuous after',
-  fullName: 'judicious heavenly before',
-  sortableName: 'worker supposing gee',
-  phone: '556.620.3947',
-  locale: 'unusual whoever',
-  gender: 'around',
+  id: 15873,
+  username: 'retaliate while oof',
+  fullName: 'bless roughly tarragon',
+  sortableName: 'anti',
+  phone: '1-938-600-8187',
+  locale: 'rich until',
+  gender: 'phooey',
+  userType: 'TEACHER',
+  userStatus: 'PENDING',
+};
+
+export const sampleWithFullData: IAccounts = {
+  id: 7485,
+  username: 'quaint mmm supersize',
+  fullName: 'moisturize',
+  sortableName: 'church',
+  avatarImageUrl: 'sharply',
+  phone: '(844) 616-5996 x749',
+  locale: 'harmful hatchling soliloquize',
+  gender: 'incidentally whose',
   userType: 'TEACHER',
   userStatus: 'ACTIVE',
 };
 
-export const sampleWithFullData: IAccounts = {
-  id: 31159,
-  username: 'shyly',
-  fullName: 'furthermore vague greatly',
-  sortableName: 'but defiantly inasmuch',
-  avatarImageUrl: 'though pfft homonym',
-  phone: '(664) 975-1985 x150',
-  locale: 'soprano',
-  gender: 'astride tilt',
-  userType: 'TEACHER',
-  userStatus: 'PENDING',
-};
-
 export const sampleWithNewData: NewAccounts = {
-  username: 'bank cooperative gee',
-  fullName: 'about whether',
-  sortableName: 'phooey',
-  phone: '(356) 527-9022 x3386',
-  gender: 'proctor',
+  username: 'provided',
+  fullName: 'obediently onto geez',
+  sortableName: 'boohoo nucleotide upliftingly',
+  phone: '494.563.0435 x727',
+  gender: 'accessorize',
   userType: 'TEACHER',
-  userStatus: 'PENDING',
+  userStatus: 'BLOCKED',
   id: null,
 };
 

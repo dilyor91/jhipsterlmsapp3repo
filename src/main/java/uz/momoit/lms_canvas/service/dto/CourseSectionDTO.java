@@ -21,6 +21,8 @@ public class CourseSectionDTO implements Serializable {
 
     private Set<AnnouncementDTO> announcements = new HashSet<>();
 
+    private Set<AssignmentDTO> assignments = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -53,6 +55,14 @@ public class CourseSectionDTO implements Serializable {
         this.announcements = announcements;
     }
 
+    public Set<AssignmentDTO> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<AssignmentDTO> assignments) {
+        this.assignments = assignments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,6 +92,7 @@ public class CourseSectionDTO implements Serializable {
             ", sectionName='" + getSectionName() + "'" +
             ", course=" + getCourse() +
             ", announcements=" + getAnnouncements() +
+            ", assignments=" + getAssignments() +
             "}";
     }
 }
