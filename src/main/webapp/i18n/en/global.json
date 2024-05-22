@@ -13,7 +13,8 @@
         "accounts": "Accounts",
         "enrollment": "Enrollment",
         "announcement": "Announcement",
-        "assignment": "Assignment"
+        "assignment": "Assignment",
+        "calendarEvent": "Calendar Event"
       },
       "account": {
         "main": "Account",

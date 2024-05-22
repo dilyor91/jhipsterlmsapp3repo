@@ -1,0 +1,10 @@
+{
+  "jhipsterlmsapp3App": {
+    "EventFrequency": {
+      "null": "",
+      "NOREPEAT": "NOREPEAT",
+      "DAILY": "DAILY",
+      "WEEKLY": "WEEKLY"
+    }
+  }
+}
