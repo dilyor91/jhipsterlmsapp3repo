@@ -20,7 +20,8 @@
       "id": "ID",
       "sectionName": "Section Name",
       "course": "Course",
-      "announcement": "Announcement"
+      "announcement": "Announcement",
+      "assignment": "Assignment"
     }
   }
 }

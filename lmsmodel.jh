@@ -48,6 +48,21 @@ entity Announcement {
    published Boolean
 }
 
+entity Assignment {
+    name String required
+    content String
+    points Float
+    submissionType SubmissionTypeEnum
+    allowedAttempts Integer
+    startDate Instant
+    endDate Instant
+    dueDate Instant
+    published Boolean
+}
+
+enum SubmissionTypeEnum {
+    ONLINE, PAPER
+}
 enum EnrollmentStatusEnum {
    ACTIVE, REJECTED, PENDING
 }
@@ -70,14 +85,16 @@ relationship ManyToOne {
     Enrollment{courseSection} to CourseSection
     Enrollment{course} to Course
     Announcement{course} to Course
+    Assignment{course} to Course
 }
 
 relationship ManyToMany {
     Announcement{courseSection} to CourseSection{announcement}
+    Assignment{courseSection} to CourseSection{assignment}
 }
 
 // Set pagination options
-paginate  Course, CourseSection, Enrollment, Accounts, Announcement with pagination
+paginate  Course, CourseSection, Enrollment, Accounts, Assignment, Announcement with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

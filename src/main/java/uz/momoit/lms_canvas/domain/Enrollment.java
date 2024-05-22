@@ -44,7 +44,7 @@ public class Enrollment implements Serializable {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "course", "announcements" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "course", "announcements", "assignments" }, allowSetters = true)
     private CourseSection courseSection;
 
     @ManyToOne(fetch = FetchType.LAZY)

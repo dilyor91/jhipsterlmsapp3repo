@@ -1,0 +1,9 @@
+{
+  "jhipsterlmsapp3App": {
+    "SubmissionTypeEnum": {
+      "null": "",
+      "ONLINE": "ONLINE",
+      "PAPER": "PAPER"
+    }
+  }
+}
