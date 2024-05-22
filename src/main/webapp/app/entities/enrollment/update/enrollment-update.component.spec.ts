@@ -57,10 +57,10 @@ describe('Enrollment Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const user: IUser = { id: 16177 };
+      const user: IUser = { id: 14632 };
       enrollment.user = user;
 
-      const userCollection: IUser[] = [{ id: 31968 }];
+      const userCollection: IUser[] = [{ id: 24681 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -79,10 +79,10 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should call CourseSection query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const courseSection: ICourseSection = { id: 13119 };
+      const courseSection: ICourseSection = { id: 16610 };
       enrollment.courseSection = courseSection;
 
-      const courseSectionCollection: ICourseSection[] = [{ id: 26161 }];
+      const courseSectionCollection: ICourseSection[] = [{ id: 20098 }];
       jest.spyOn(courseSectionService, 'query').mockReturnValue(of(new HttpResponse({ body: courseSectionCollection })));
       const additionalCourseSections = [courseSection];
       const expectedCollection: ICourseSection[] = [...additionalCourseSections, ...courseSectionCollection];
@@ -101,10 +101,10 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should call Course query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const course: ICourse = { id: 4057 };
+      const course: ICourse = { id: 4258 };
       enrollment.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 31945 }];
+      const courseCollection: ICourse[] = [{ id: 19912 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -123,11 +123,11 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const user: IUser = { id: 16330 };
+      const user: IUser = { id: 9097 };
       enrollment.user = user;
-      const courseSection: ICourseSection = { id: 12284 };
+      const courseSection: ICourseSection = { id: 26863 };
       enrollment.courseSection = courseSection;
-      const course: ICourse = { id: 9717 };
+      const course: ICourse = { id: 17459 };
       enrollment.course = course;
 
       activatedRoute.data = of({ enrollment });
