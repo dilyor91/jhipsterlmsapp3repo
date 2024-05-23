@@ -71,6 +71,21 @@ entity CalendarEvent {
     eventFrequency EventFrequency 
 }
 
+entity WikiPage {
+    title String 
+    content String
+    whoAllowed WhoAllowed
+    addToStudents Boolean
+    addToStudentsDate Instant
+    publishedAt Instant
+    published Boolean
+    notifyUsersChanges Boolean
+}
+
+enum WhoAllowed{
+   ONLY_TEACHERS, TEACHER_AND_STUDENTS, ANYONE
+}
+
 enum EventFrequency {
     NOREPEAT, DAILY, WEEKLY
 }
@@ -102,6 +117,7 @@ relationship ManyToOne {
     Announcement{course} to Course
     Assignment{course} to Course
     CalendarEvent{user} to User
+    WikiPage{course} to Course
 }
 
 relationship ManyToMany {
@@ -111,7 +127,7 @@ relationship ManyToMany {
 
 // Set pagination options
 paginate  Course, CourseSection, Enrollment, Accounts, 
-Assignment, Announcement, CalendarEvent with pagination
+Assignment, Announcement, CalendarEvent, WikiPage with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

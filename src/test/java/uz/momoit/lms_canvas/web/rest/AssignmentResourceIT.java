@@ -386,9 +386,8 @@ class AssignmentResourceIT {
 
         partialUpdatedAssignment
             .name(UPDATED_NAME)
-            .content(UPDATED_CONTENT)
-            .submissionType(UPDATED_SUBMISSION_TYPE)
-            .startDate(UPDATED_START_DATE)
+            .points(UPDATED_POINTS)
+            .endDate(UPDATED_END_DATE)
             .dueDate(UPDATED_DUE_DATE)
             .published(UPDATED_PUBLISHED);
 
