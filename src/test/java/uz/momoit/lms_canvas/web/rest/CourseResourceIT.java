@@ -483,11 +483,9 @@ class CourseResourceIT {
         partialUpdatedCourse.setId(course.getId());
 
         partialUpdatedCourse
-            .courseName(UPDATED_COURSE_NAME)
             .courseImagePath(UPDATED_COURSE_IMAGE_PATH)
             .courseStartDate(UPDATED_COURSE_START_DATE)
             .courseEndDate(UPDATED_COURSE_END_DATE)
-            .courseFormat(UPDATED_COURSE_FORMAT)
             .selfEnrollment(UPDATED_SELF_ENROLLMENT)
             .storageQuota(UPDATED_STORAGE_QUOTA)
             .status(UPDATED_STATUS);
