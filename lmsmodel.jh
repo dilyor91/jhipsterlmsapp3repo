@@ -82,6 +82,18 @@ entity WikiPage {
     notifyUsersChanges Boolean
 }
 
+entity Attendance {
+    attendanceDate Instant
+}
+
+entity AttendanceDetail {
+    attendanceEnum AttendanceEnum
+}
+
+enum AttendanceEnum {
+    PRESENT, ABSENT, LATE, UNMARKED
+}
+
 enum WhoAllowed{
    ONLY_TEACHERS, TEACHER_AND_STUDENTS, ANYONE
 }
@@ -118,6 +130,11 @@ relationship ManyToOne {
     Assignment{course} to Course
     CalendarEvent{user} to User
     WikiPage{course} to Course
+    Attendance{course} to Course
+    Attendance{courseSection} to CourseSection
+    Attendance{teacher} to User
+    AttendanceDetail{attendance} to Attendance
+    AttendanceDetail{student} to User
 }
 
 relationship ManyToMany {
@@ -127,7 +144,8 @@ relationship ManyToMany {
 
 // Set pagination options
 paginate  Course, CourseSection, Enrollment, Accounts, 
-Assignment, Announcement, CalendarEvent, WikiPage with pagination
+Assignment, Announcement, CalendarEvent, WikiPage,
+Attendance, AttendanceDetail with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
