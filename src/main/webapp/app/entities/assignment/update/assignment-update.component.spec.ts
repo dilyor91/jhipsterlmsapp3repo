@@ -53,10 +53,10 @@ describe('Assignment Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Course query and add missing value', () => {
       const assignment: IAssignment = { id: 456 };
-      const course: ICourse = { id: 25901 };
+      const course: ICourse = { id: 3955 };
       assignment.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 4894 }];
+      const courseCollection: ICourse[] = [{ id: 9896 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -75,10 +75,10 @@ describe('Assignment Management Update Component', () => {
 
     it('Should call CourseSection query and add missing value', () => {
       const assignment: IAssignment = { id: 456 };
-      const courseSections: ICourseSection[] = [{ id: 481 }];
+      const courseSections: ICourseSection[] = [{ id: 18937 }];
       assignment.courseSections = courseSections;
 
-      const courseSectionCollection: ICourseSection[] = [{ id: 13100 }];
+      const courseSectionCollection: ICourseSection[] = [{ id: 28555 }];
       jest.spyOn(courseSectionService, 'query').mockReturnValue(of(new HttpResponse({ body: courseSectionCollection })));
       const additionalCourseSections = [...courseSections];
       const expectedCollection: ICourseSection[] = [...additionalCourseSections, ...courseSectionCollection];
@@ -97,9 +97,9 @@ describe('Assignment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const assignment: IAssignment = { id: 456 };
-      const course: ICourse = { id: 9093 };
+      const course: ICourse = { id: 19980 };
       assignment.course = course;
-      const courseSection: ICourseSection = { id: 31434 };
+      const courseSection: ICourseSection = { id: 12429 };
       assignment.courseSections = [courseSection];
 
       activatedRoute.data = of({ assignment });

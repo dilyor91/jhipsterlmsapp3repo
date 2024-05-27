@@ -15,7 +15,9 @@
         "announcement": "Announcement",
         "assignment": "Assignment",
         "calendarEvent": "Calendar Event",
-        "wikiPage": "Wiki Page"
+        "wikiPage": "Wiki Page",
+        "attendance": "Attendance",
+        "attendanceDetail": "Attendance Detail"
       },
       "account": {
         "main": "Account",

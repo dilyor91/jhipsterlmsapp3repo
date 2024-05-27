@@ -3,54 +3,53 @@ import dayjs from 'dayjs/esm';
 import { ICourse, NewCourse } from './course.model';
 
 export const sampleWithRequiredData: ICourse = {
-  id: 2016,
-  courseName: 'juggle',
-  courseCode: 'although',
-  courseStartDate: dayjs('2024-05-19T21:05'),
-  courseEndDate: dayjs('2024-05-20T10:30'),
-  courseFormat: 'seeker admire',
+  id: 31036,
+  courseName: 'ha upliftingly',
+  courseCode: 'beet',
+  courseStartDate: dayjs('2024-05-19T17:59'),
+  courseEndDate: dayjs('2024-05-20T02:42'),
+  courseFormat: 'the abaft',
   published: false,
-  storageQuota: 21723,
-  status: false,
-};
-
-export const sampleWithPartialData: ICourse = {
-  id: 25605,
-  courseName: 'aha geez ouch',
-  courseCode: 'while whereas',
-  courseStartDate: dayjs('2024-05-19T22:26'),
-  courseEndDate: dayjs('2024-05-19T16:44'),
-  courseFormat: 'shell ha fooey',
-  published: false,
-  selfEnrollment: false,
-  selfEnrollmentCode: 'earmark excellent among',
-  storageQuota: 32664,
-  status: false,
-};
-
-export const sampleWithFullData: ICourse = {
-  id: 17294,
-  courseName: 'carefree gadzooks that',
-  courseCode: 'aw tremendously meme',
-  courseImagePath: 'gosling er pong',
-  courseStartDate: dayjs('2024-05-20T08:22'),
-  courseEndDate: dayjs('2024-05-19T20:20'),
-  courseFormat: 'severe whether',
-  published: false,
-  selfEnrollment: true,
-  selfEnrollmentCode: 'stick whose helpful',
-  storageQuota: 18893,
+  storageQuota: 6560,
   status: true,
 };
 
+export const sampleWithPartialData: ICourse = {
+  id: 28484,
+  courseName: 'off',
+  courseCode: 'compartmentalise',
+  courseStartDate: dayjs('2024-05-19T16:49'),
+  courseEndDate: dayjs('2024-05-20T03:37'),
+  courseFormat: 'semaphore palatable interestingly',
+  published: false,
+  selfEnrollment: true,
+  storageQuota: 12870,
+  status: true,
+};
+
+export const sampleWithFullData: ICourse = {
+  id: 2041,
+  courseName: 'nor',
+  courseCode: 'though',
+  courseImagePath: 'considering',
+  courseStartDate: dayjs('2024-05-20T04:52'),
+  courseEndDate: dayjs('2024-05-20T03:03'),
+  courseFormat: 'sparkling refurbish',
+  published: false,
+  selfEnrollment: true,
+  selfEnrollmentCode: 'what',
+  storageQuota: 10297,
+  status: false,
+};
+
 export const sampleWithNewData: NewCourse = {
-  courseName: 'that yowza supposing',
-  courseCode: 'along swordfight cluck',
-  courseStartDate: dayjs('2024-05-19T16:22'),
-  courseEndDate: dayjs('2024-05-20T08:40'),
-  courseFormat: 'than motionless governance',
+  courseName: 'upward fragment than',
+  courseCode: 'direct unto lucky',
+  courseStartDate: dayjs('2024-05-20T04:36'),
+  courseEndDate: dayjs('2024-05-20T05:10'),
+  courseFormat: 'preclude lightly',
   published: true,
-  storageQuota: 28710,
+  storageQuota: 1012,
   status: false,
   id: null,
 };

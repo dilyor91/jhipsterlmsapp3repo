@@ -384,12 +384,7 @@ class AssignmentResourceIT {
         Assignment partialUpdatedAssignment = new Assignment();
         partialUpdatedAssignment.setId(assignment.getId());
 
-        partialUpdatedAssignment
-            .name(UPDATED_NAME)
-            .points(UPDATED_POINTS)
-            .endDate(UPDATED_END_DATE)
-            .dueDate(UPDATED_DUE_DATE)
-            .published(UPDATED_PUBLISHED);
+        partialUpdatedAssignment.name(UPDATED_NAME).startDate(UPDATED_START_DATE).dueDate(UPDATED_DUE_DATE).published(UPDATED_PUBLISHED);
 
         restAssignmentMockMvc
             .perform(
