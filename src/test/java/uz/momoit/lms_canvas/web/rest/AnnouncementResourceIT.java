@@ -376,11 +376,7 @@ class AnnouncementResourceIT {
         Announcement partialUpdatedAnnouncement = new Announcement();
         partialUpdatedAnnouncement.setId(announcement.getId());
 
-        partialUpdatedAnnouncement
-            .title(UPDATED_TITLE)
-            .attachmentId(UPDATED_ATTACHMENT_ID)
-            .delayPost(UPDATED_DELAY_POST)
-            .published(UPDATED_PUBLISHED);
+        partialUpdatedAnnouncement.title(UPDATED_TITLE).content(UPDATED_CONTENT).delayPost(UPDATED_DELAY_POST);
 
         restAnnouncementMockMvc
             .perform(

@@ -46,6 +46,16 @@ const routes: Routes = [
     data: { pageTitle: 'jhipsterlmsapp3App.wikiPage.home.title' },
     loadChildren: () => import('./wiki-page/wiki-page.routes'),
   },
+  {
+    path: 'attendance',
+    data: { pageTitle: 'jhipsterlmsapp3App.attendance.home.title' },
+    loadChildren: () => import('./attendance/attendance.routes'),
+  },
+  {
+    path: 'attendance-detail',
+    data: { pageTitle: 'jhipsterlmsapp3App.attendanceDetail.home.title' },
+    loadChildren: () => import('./attendance-detail/attendance-detail.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

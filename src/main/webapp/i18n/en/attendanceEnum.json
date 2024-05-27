@@ -1,0 +1,11 @@
+{
+  "jhipsterlmsapp3App": {
+    "AttendanceEnum": {
+      "null": "",
+      "PRESENT": "PRESENT",
+      "ABSENT": "ABSENT",
+      "LATE": "LATE",
+      "UNMARKED": "UNMARKED"
+    }
+  }
+}
