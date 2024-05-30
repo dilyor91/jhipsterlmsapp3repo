@@ -56,6 +56,26 @@ const routes: Routes = [
     data: { pageTitle: 'jhipsterlmsapp3App.attendanceDetail.home.title' },
     loadChildren: () => import('./attendance-detail/attendance-detail.routes'),
   },
+  {
+    path: 'student',
+    data: { pageTitle: 'jhipsterlmsapp3App.student.home.title' },
+    loadChildren: () => import('./student/student.routes'),
+  },
+  {
+    path: 'faculty',
+    data: { pageTitle: 'jhipsterlmsapp3App.faculty.home.title' },
+    loadChildren: () => import('./faculty/faculty.routes'),
+  },
+  {
+    path: 'speciality',
+    data: { pageTitle: 'jhipsterlmsapp3App.speciality.home.title' },
+    loadChildren: () => import('./speciality/speciality.routes'),
+  },
+  {
+    path: 'group',
+    data: { pageTitle: 'jhipsterlmsapp3App.group.home.title' },
+    loadChildren: () => import('./group/group.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

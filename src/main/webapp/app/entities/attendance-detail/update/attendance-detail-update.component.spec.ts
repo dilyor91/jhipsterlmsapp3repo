@@ -53,10 +53,10 @@ describe('AttendanceDetail Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Attendance query and add missing value', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const attendance: IAttendance = { id: 16027 };
+      const attendance: IAttendance = { id: 3357 };
       attendanceDetail.attendance = attendance;
 
-      const attendanceCollection: IAttendance[] = [{ id: 25287 }];
+      const attendanceCollection: IAttendance[] = [{ id: 15199 }];
       jest.spyOn(attendanceService, 'query').mockReturnValue(of(new HttpResponse({ body: attendanceCollection })));
       const additionalAttendances = [attendance];
       const expectedCollection: IAttendance[] = [...additionalAttendances, ...attendanceCollection];
@@ -75,10 +75,10 @@ describe('AttendanceDetail Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const student: IUser = { id: 28790 };
+      const student: IUser = { id: 16817 };
       attendanceDetail.student = student;
 
-      const userCollection: IUser[] = [{ id: 5446 }];
+      const userCollection: IUser[] = [{ id: 19188 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [student];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -97,9 +97,9 @@ describe('AttendanceDetail Management Update Component', () => {
 
     it('Should update editForm', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const attendance: IAttendance = { id: 10933 };
+      const attendance: IAttendance = { id: 14172 };
       attendanceDetail.attendance = attendance;
-      const student: IUser = { id: 6154 };
+      const student: IUser = { id: 28017 };
       attendanceDetail.student = student;
 
       activatedRoute.data = of({ attendanceDetail });

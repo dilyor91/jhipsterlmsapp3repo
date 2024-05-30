@@ -64,6 +64,10 @@ public class CacheConfiguration {
             createCache(cm, uz.momoit.lms_canvas.domain.WikiPage.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.Attendance.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.AttendanceDetail.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Student.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Faculty.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Speciality.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Group.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -17,7 +17,11 @@
         "calendarEvent": "Calendar Event",
         "wikiPage": "Wiki Page",
         "attendance": "Attendance",
-        "attendanceDetail": "Attendance Detail"
+        "attendanceDetail": "Attendance Detail",
+        "student": "Student",
+        "faculty": "Faculty",
+        "speciality": "Speciality",
+        "group": "Group"
       },
       "account": {
         "main": "Account",

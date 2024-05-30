@@ -3,33 +3,35 @@ import dayjs from 'dayjs/esm';
 import { IAssignment, NewAssignment } from './assignment.model';
 
 export const sampleWithRequiredData: IAssignment = {
-  id: 30905,
-  name: 'before pursuit',
+  id: 240,
+  name: 'absolute',
 };
 
 export const sampleWithPartialData: IAssignment = {
-  id: 11938,
-  name: 'apud down',
-  points: 1607.63,
-  submissionType: 'PAPER',
-  allowedAttempts: 24704,
+  id: 25479,
+  name: 'so',
+  content: 'although',
+  points: 6381.98,
+  startDate: dayjs('2024-05-21T06:27'),
+  endDate: dayjs('2024-05-21T20:13'),
+  published: false,
 };
 
 export const sampleWithFullData: IAssignment = {
-  id: 17715,
-  name: 'though cane mechanically',
-  content: 'wok',
-  points: 6811.78,
+  id: 1747,
+  name: 'chainstay',
+  content: 'slim',
+  points: 4081.36,
   submissionType: 'ONLINE',
-  allowedAttempts: 5669,
-  startDate: dayjs('2024-05-22T04:59'),
-  endDate: dayjs('2024-05-21T08:19'),
-  dueDate: dayjs('2024-05-22T05:10'),
+  allowedAttempts: 21914,
+  startDate: dayjs('2024-05-21T18:54'),
+  endDate: dayjs('2024-05-21T18:51'),
+  dueDate: dayjs('2024-05-21T15:22'),
   published: true,
 };
 
 export const sampleWithNewData: NewAssignment = {
-  name: 'yum',
+  name: 'round',
   id: null,
 };
 

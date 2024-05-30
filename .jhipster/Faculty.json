@@ -1,0 +1,12 @@
+{
+  "annotations": {
+    "changelogDate": "20240530050222"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [],
+  "name": "Faculty",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

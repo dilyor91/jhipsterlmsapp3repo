@@ -1,0 +1,9 @@
+{
+  "jhipsterlmsapp3App": {
+    "TutionTypeEnum": {
+      "null": "",
+      "GRANT": "GRANT",
+      "KONTRAKT": "KONTRAKT"
+    }
+  }
+}
