@@ -1,0 +1,10 @@
+{
+  "jhipsterlmsapp3App": {
+    "EducationType": {
+      "null": "",
+      "KUNDUZGI": "KUNDUZGI",
+      "KECHKI": "KECHKI",
+      "SIRTQI": "SIRTQI"
+    }
+  }
+}

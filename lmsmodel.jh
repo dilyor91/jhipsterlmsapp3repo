@@ -90,6 +90,49 @@ entity AttendanceDetail {
     attendanceEnum AttendanceEnum
 }
 
+entity Student {
+   firstName String required
+   lastName String required
+   middleName String required
+   gender String required
+   birthdate String required
+   phoneNumber String
+   email String required
+   hemisId Long 
+   passportNumber String required
+   jshshir String required
+   isActive Boolean
+   tutionType TutionTypeEnum,
+   nationality String
+   country String
+   city String
+   region String
+   addressLine String
+   academicYear String
+   course Integer
+   semester Integer
+   educationLanguage EducationLanguage
+   educationType EducationType
+   educationForm EducationForm
+}
+
+enum TutionTypeEnum {
+   GRANT, KONTRAKT
+}
+
+enum EducationLanguage {
+   UZBEK, RUSSIAN, ENGLISH
+}
+
+enum EducationType {
+   KUNDUZGI, KECHKI, SIRTQI
+}
+
+enum EducationForm {
+   BAKALAVR, MAGISTR 
+}
+
+
 enum AttendanceEnum {
     PRESENT, ABSENT, LATE, UNMARKED
 }
@@ -121,6 +164,18 @@ relationship OneToOne {
   Course{user} to User
 }
 
+entity Faculty {
+   
+}
+
+entity Speciality {
+
+}
+
+entity Group {
+
+}
+
 relationship ManyToOne {
     Enrollment{user} to User
     CourseSection{course} to Course
@@ -135,6 +190,10 @@ relationship ManyToOne {
     Attendance{teacher} to User
     AttendanceDetail{attendance} to Attendance
     AttendanceDetail{student} to User
+    Student{user} to User
+    Student{faculty} to Faculty
+    Student{speciality} to Speciality
+    Student{group} to Group
 }
 
 relationship ManyToMany {
@@ -145,7 +204,7 @@ relationship ManyToMany {
 // Set pagination options
 paginate  Course, CourseSection, Enrollment, Accounts, 
 Assignment, Announcement, CalendarEvent, WikiPage,
-Attendance, AttendanceDetail with pagination
+Attendance, AttendanceDetail, Student with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
