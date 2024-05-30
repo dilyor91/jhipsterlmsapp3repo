@@ -165,15 +165,15 @@ relationship OneToOne {
 }
 
 entity Faculty {
-   
+   name String
 }
 
 entity Speciality {
-
+   name String
 }
 
 entity Group {
-
+   name String 
 }
 
 relationship ManyToOne {
@@ -194,6 +194,8 @@ relationship ManyToOne {
     Student{faculty} to Faculty
     Student{speciality} to Speciality
     Student{group} to Group
+    Speciality{faculty} to Faculty
+    Group{speciality} to Speciality
 }
 
 relationship ManyToMany {
@@ -204,7 +206,8 @@ relationship ManyToMany {
 // Set pagination options
 paginate  Course, CourseSection, Enrollment, Accounts, 
 Assignment, Announcement, CalendarEvent, WikiPage,
-Attendance, AttendanceDetail, Student with pagination
+Attendance, AttendanceDetail, Student,
+Faculty, Speciality, Group with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
