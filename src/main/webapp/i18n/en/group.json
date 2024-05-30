@@ -17,7 +17,9 @@
       "detail": {
         "title": "Group"
       },
-      "id": "ID"
+      "id": "ID",
+      "name": "Name",
+      "speciality": "Speciality"
     }
   }
 }

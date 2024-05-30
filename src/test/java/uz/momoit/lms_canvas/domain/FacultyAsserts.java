@@ -44,7 +44,11 @@ public class FacultyAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertFacultyUpdatableFieldsEquals(Faculty expected, Faculty actual) {}
+    public static void assertFacultyUpdatableFieldsEquals(Faculty expected, Faculty actual) {
+        assertThat(expected)
+            .as("Verify Faculty relevant properties")
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+    }
 
     /**
      * Asserts that the entity has all the updatable relationships set.

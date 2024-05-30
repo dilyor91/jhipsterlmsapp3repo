@@ -11,12 +11,32 @@ public class GroupDTO implements Serializable {
 
     private Long id;
 
+    private String name;
+
+    private SpecialityDTO speciality;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public SpecialityDTO getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(SpecialityDTO speciality) {
+        this.speciality = speciality;
     }
 
     @Override
@@ -45,6 +65,8 @@ public class GroupDTO implements Serializable {
     public String toString() {
         return "GroupDTO{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", speciality=" + getSpeciality() +
             "}";
     }
 }

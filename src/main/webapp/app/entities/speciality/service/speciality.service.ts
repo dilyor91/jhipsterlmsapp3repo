@@ -7,6 +7,8 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { ISpeciality, NewSpeciality } from '../speciality.model';
 
+export type PartialUpdateSpeciality = Partial<ISpeciality> & Pick<ISpeciality, 'id'>;
+
 export type EntityResponseType = HttpResponse<ISpeciality>;
 export type EntityArrayResponseType = HttpResponse<ISpeciality[]>;
 
@@ -19,6 +21,18 @@ export class SpecialityService {
 
   create(speciality: NewSpeciality): Observable<EntityResponseType> {
     return this.http.post<ISpeciality>(this.resourceUrl, speciality, { observe: 'response' });
+  }
+
+  update(speciality: ISpeciality): Observable<EntityResponseType> {
+    return this.http.put<ISpeciality>(`${this.resourceUrl}/${this.getSpecialityIdentifier(speciality)}`, speciality, {
+      observe: 'response',
+    });
+  }
+
+  partialUpdate(speciality: PartialUpdateSpeciality): Observable<EntityResponseType> {
+    return this.http.patch<ISpeciality>(`${this.resourceUrl}/${this.getSpecialityIdentifier(speciality)}`, speciality, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {

@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static uz.momoit.lms_canvas.domain.SpecialityAsserts.*;
+import static uz.momoit.lms_canvas.web.rest.TestUtil.createUpdateProxyForBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
@@ -31,6 +32,9 @@ import uz.momoit.lms_canvas.service.mapper.SpecialityMapper;
 @AutoConfigureMockMvc
 @WithMockUser
 class SpecialityResourceIT {
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/specialities";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -62,7 +66,7 @@ class SpecialityResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Speciality createEntity(EntityManager em) {
-        Speciality speciality = new Speciality();
+        Speciality speciality = new Speciality().name(DEFAULT_NAME);
         return speciality;
     }
 
@@ -73,7 +77,7 @@ class SpecialityResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Speciality createUpdatedEntity(EntityManager em) {
-        Speciality speciality = new Speciality();
+        Speciality speciality = new Speciality().name(UPDATED_NAME);
         return speciality;
     }
 
@@ -133,7 +137,8 @@ class SpecialityResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(speciality.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(speciality.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -147,7 +152,8 @@ class SpecialityResourceIT {
             .perform(get(ENTITY_API_URL_ID, speciality.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(speciality.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(speciality.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -155,6 +161,217 @@ class SpecialityResourceIT {
     void getNonExistingSpeciality() throws Exception {
         // Get the speciality
         restSpecialityMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void putExistingSpeciality() throws Exception {
+        // Initialize the database
+        specialityRepository.saveAndFlush(speciality);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the speciality
+        Speciality updatedSpeciality = specialityRepository.findById(speciality.getId()).orElseThrow();
+        // Disconnect from session so that the updates on updatedSpeciality are not directly saved in db
+        em.detach(updatedSpeciality);
+        updatedSpeciality.name(UPDATED_NAME);
+        SpecialityDTO specialityDTO = specialityMapper.toDto(updatedSpeciality);
+
+        restSpecialityMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, specialityDTO.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(specialityDTO))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertPersistedSpecialityToMatchAllProperties(updatedSpeciality);
+    }
+
+    @Test
+    @Transactional
+    void putNonExistingSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, specialityDTO.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(specialityDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithIdMismatchSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(specialityDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithMissingIdPathParamSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(specialityDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void partialUpdateSpecialityWithPatch() throws Exception {
+        // Initialize the database
+        specialityRepository.saveAndFlush(speciality);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the speciality using partial update
+        Speciality partialUpdatedSpeciality = new Speciality();
+        partialUpdatedSpeciality.setId(speciality.getId());
+
+        partialUpdatedSpeciality.name(UPDATED_NAME);
+
+        restSpecialityMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedSpeciality.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedSpeciality))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Speciality in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertSpecialityUpdatableFieldsEquals(
+            createUpdateProxyForBean(partialUpdatedSpeciality, speciality),
+            getPersistedSpeciality(speciality)
+        );
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateSpecialityWithPatch() throws Exception {
+        // Initialize the database
+        specialityRepository.saveAndFlush(speciality);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the speciality using partial update
+        Speciality partialUpdatedSpeciality = new Speciality();
+        partialUpdatedSpeciality.setId(speciality.getId());
+
+        partialUpdatedSpeciality.name(UPDATED_NAME);
+
+        restSpecialityMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedSpeciality.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedSpeciality))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Speciality in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertSpecialityUpdatableFieldsEquals(partialUpdatedSpeciality, getPersistedSpeciality(partialUpdatedSpeciality));
+    }
+
+    @Test
+    @Transactional
+    void patchNonExistingSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, specialityDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(specialityDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithIdMismatchSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(specialityDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithMissingIdPathParamSpeciality() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        speciality.setId(longCount.incrementAndGet());
+
+        // Create the Speciality
+        SpecialityDTO specialityDTO = specialityMapper.toDto(speciality);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restSpecialityMockMvc
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(specialityDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Speciality in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
     @Test

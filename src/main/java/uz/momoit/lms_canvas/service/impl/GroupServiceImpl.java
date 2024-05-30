@@ -1,11 +1,10 @@
 package uz.momoit.lms_canvas.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.domain.Group;
@@ -41,10 +40,33 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public GroupDTO update(GroupDTO groupDTO) {
+        log.debug("Request to update Group : {}", groupDTO);
+        Group group = groupMapper.toEntity(groupDTO);
+        group = groupRepository.save(group);
+        return groupMapper.toDto(group);
+    }
+
+    @Override
+    public Optional<GroupDTO> partialUpdate(GroupDTO groupDTO) {
+        log.debug("Request to partially update Group : {}", groupDTO);
+
+        return groupRepository
+            .findById(groupDTO.getId())
+            .map(existingGroup -> {
+                groupMapper.partialUpdate(existingGroup, groupDTO);
+
+                return existingGroup;
+            })
+            .map(groupRepository::save)
+            .map(groupMapper::toDto);
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public List<GroupDTO> findAll() {
+    public Page<GroupDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Groups");
-        return groupRepository.findAll().stream().map(groupMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return groupRepository.findAll(pageable).map(groupMapper::toDto);
     }
 
     @Override

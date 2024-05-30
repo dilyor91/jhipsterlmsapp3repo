@@ -2,6 +2,7 @@ package uz.momoit.lms_canvas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uz.momoit.lms_canvas.domain.GroupTestSamples.*;
+import static uz.momoit.lms_canvas.domain.SpecialityTestSamples.*;
 
 import org.junit.jupiter.api.Test;
 import uz.momoit.lms_canvas.web.rest.TestUtil;
@@ -23,12 +24,14 @@ class GroupTest {
     }
 
     @Test
-    void hashCodeVerifier() throws Exception {
-        Group group = new Group();
-        assertThat(group.hashCode()).isZero();
+    void specialityTest() throws Exception {
+        Group group = getGroupRandomSampleGenerator();
+        Speciality specialityBack = getSpecialityRandomSampleGenerator();
 
-        Group group1 = getGroupSample1();
-        group.setId(group1.getId());
-        assertThat(group).hasSameHashCodeAs(group1);
+        group.setSpeciality(specialityBack);
+        assertThat(group.getSpeciality()).isEqualTo(specialityBack);
+
+        group.speciality(null);
+        assertThat(group.getSpeciality()).isNull();
     }
 }

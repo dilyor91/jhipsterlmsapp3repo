@@ -3,13 +3,19 @@ package uz.momoit.lms_canvas.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import uz.momoit.lms_canvas.repository.GroupRepository;
 import uz.momoit.lms_canvas.service.GroupService;
@@ -59,14 +65,86 @@ public class GroupResource {
     }
 
     /**
+     * {@code PUT  /groups/:id} : Updates an existing group.
+     *
+     * @param id the id of the groupDTO to save.
+     * @param groupDTO the groupDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated groupDTO,
+     * or with status {@code 400 (Bad Request)} if the groupDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the groupDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<GroupDTO> updateGroup(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestBody GroupDTO groupDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to update Group : {}, {}", id, groupDTO);
+        if (groupDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, groupDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!groupRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        groupDTO = groupService.update(groupDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString()))
+            .body(groupDTO);
+    }
+
+    /**
+     * {@code PATCH  /groups/:id} : Partial updates given fields of an existing group, field will ignore if it is null
+     *
+     * @param id the id of the groupDTO to save.
+     * @param groupDTO the groupDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated groupDTO,
+     * or with status {@code 400 (Bad Request)} if the groupDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the groupDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the groupDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<GroupDTO> partialUpdateGroup(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestBody GroupDTO groupDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to partial update Group partially : {}, {}", id, groupDTO);
+        if (groupDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, groupDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!groupRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<GroupDTO> result = groupService.partialUpdate(groupDTO);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, groupDTO.getId().toString())
+        );
+    }
+
+    /**
      * {@code GET  /groups} : get all the groups.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of groups in body.
      */
     @GetMapping("")
-    public List<GroupDTO> getAllGroups() {
-        log.debug("REST request to get all Groups");
-        return groupService.findAll();
+    public ResponseEntity<List<GroupDTO>> getAllGroups(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Groups");
+        Page<GroupDTO> page = groupService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

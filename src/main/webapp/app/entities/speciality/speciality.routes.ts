@@ -32,6 +32,14 @@ const specialityRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: ':id/edit',
+    component: SpecialityUpdateComponent,
+    resolve: {
+      speciality: SpecialityResolve,
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 export default specialityRoute;

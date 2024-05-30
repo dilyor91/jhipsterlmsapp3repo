@@ -4,8 +4,14 @@
   },
   "applications": "*",
   "dto": "mapstruct",
-  "fields": [],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
   "name": "Faculty",
+  "pagination": "pagination",
   "relationships": [],
   "searchEngine": "no",
   "service": "serviceImpl"

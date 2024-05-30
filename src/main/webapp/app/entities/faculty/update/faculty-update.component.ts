@@ -44,7 +44,11 @@ export class FacultyUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const faculty = this.facultyFormService.getFaculty(this.editForm);
-    this.subscribeToSaveResponse(this.facultyService.create(faculty));
+    if (faculty.id !== null) {
+      this.subscribeToSaveResponse(this.facultyService.update(faculty));
+    } else {
+      this.subscribeToSaveResponse(this.facultyService.create(faculty));
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IFaculty>>): void {

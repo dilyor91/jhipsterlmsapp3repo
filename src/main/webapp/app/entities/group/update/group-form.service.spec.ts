@@ -20,6 +20,8 @@ describe('Group Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            name: expect.any(Object),
+            speciality: expect.any(Object),
           }),
         );
       });
@@ -30,6 +32,8 @@ describe('Group Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            name: expect.any(Object),
+            speciality: expect.any(Object),
           }),
         );
       });

@@ -1,7 +1,8 @@
 package uz.momoit.lms_canvas.service;
 
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import uz.momoit.lms_canvas.service.dto.SpecialityDTO;
 
 /**
@@ -35,9 +36,10 @@ public interface SpecialityService {
     /**
      * Get all the specialities.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<SpecialityDTO> findAll();
+    Page<SpecialityDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" speciality.

@@ -7,6 +7,8 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFaculty, NewFaculty } from '../faculty.model';
 
+export type PartialUpdateFaculty = Partial<IFaculty> & Pick<IFaculty, 'id'>;
+
 export type EntityResponseType = HttpResponse<IFaculty>;
 export type EntityArrayResponseType = HttpResponse<IFaculty[]>;
 
@@ -19,6 +21,14 @@ export class FacultyService {
 
   create(faculty: NewFaculty): Observable<EntityResponseType> {
     return this.http.post<IFaculty>(this.resourceUrl, faculty, { observe: 'response' });
+  }
+
+  update(faculty: IFaculty): Observable<EntityResponseType> {
+    return this.http.put<IFaculty>(`${this.resourceUrl}/${this.getFacultyIdentifier(faculty)}`, faculty, { observe: 'response' });
+  }
+
+  partialUpdate(faculty: PartialUpdateFaculty): Observable<EntityResponseType> {
+    return this.http.patch<IFaculty>(`${this.resourceUrl}/${this.getFacultyIdentifier(faculty)}`, faculty, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {

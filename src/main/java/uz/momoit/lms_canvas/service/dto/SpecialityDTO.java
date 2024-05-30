@@ -11,12 +11,32 @@ public class SpecialityDTO implements Serializable {
 
     private Long id;
 
+    private String name;
+
+    private FacultyDTO faculty;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public FacultyDTO getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(FacultyDTO faculty) {
+        this.faculty = faculty;
     }
 
     @Override
@@ -45,6 +65,8 @@ public class SpecialityDTO implements Serializable {
     public String toString() {
         return "SpecialityDTO{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", faculty=" + getFaculty() +
             "}";
     }
 }
