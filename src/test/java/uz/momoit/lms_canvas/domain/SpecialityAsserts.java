@@ -44,7 +44,11 @@ public class SpecialityAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertSpecialityUpdatableFieldsEquals(Speciality expected, Speciality actual) {}
+    public static void assertSpecialityUpdatableFieldsEquals(Speciality expected, Speciality actual) {
+        assertThat(expected)
+            .as("Verify Speciality relevant properties")
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+    }
 
     /**
      * Asserts that the entity has all the updatable relationships set.
@@ -52,5 +56,9 @@ public class SpecialityAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertSpecialityUpdatableRelationshipsEquals(Speciality expected, Speciality actual) {}
+    public static void assertSpecialityUpdatableRelationshipsEquals(Speciality expected, Speciality actual) {
+        assertThat(expected)
+            .as("Verify Speciality relationships")
+            .satisfies(e -> assertThat(e.getFaculty()).as("check faculty").isEqualTo(actual.getFaculty()));
+    }
 }

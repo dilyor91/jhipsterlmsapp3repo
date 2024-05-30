@@ -18,6 +18,8 @@ type SpecialityFormDefaults = Pick<NewSpeciality, 'id'>;
 
 type SpecialityFormGroupContent = {
   id: FormControl<ISpeciality['id'] | NewSpeciality['id']>;
+  name: FormControl<ISpeciality['name']>;
+  faculty: FormControl<ISpeciality['faculty']>;
 };
 
 export type SpecialityFormGroup = FormGroup<SpecialityFormGroupContent>;
@@ -37,11 +39,13 @@ export class SpecialityFormService {
           validators: [Validators.required],
         },
       ),
+      name: new FormControl(specialityRawValue.name),
+      faculty: new FormControl(specialityRawValue.faculty),
     });
   }
 
-  getSpeciality(form: SpecialityFormGroup): NewSpeciality {
-    return form.getRawValue() as NewSpeciality;
+  getSpeciality(form: SpecialityFormGroup): ISpeciality | NewSpeciality {
+    return form.getRawValue() as ISpeciality | NewSpeciality;
   }
 
   resetForm(form: SpecialityFormGroup, speciality: SpecialityFormGroupInput): void {

@@ -2,7 +2,6 @@ package uz.momoit.lms_canvas.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,6 +22,9 @@ public class Faculty implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -36,6 +38,19 @@ public class Faculty implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Faculty name(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -53,7 +68,8 @@ public class Faculty implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
     // prettier-ignore
@@ -61,6 +77,7 @@ public class Faculty implements Serializable {
     public String toString() {
         return "Faculty{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

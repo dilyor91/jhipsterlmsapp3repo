@@ -32,6 +32,14 @@ const facultyRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: ':id/edit',
+    component: FacultyUpdateComponent,
+    resolve: {
+      faculty: FacultyResolve,
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 export default facultyRoute;

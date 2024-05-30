@@ -17,7 +17,8 @@
       "detail": {
         "title": "Faculty"
       },
-      "id": "ID"
+      "id": "ID",
+      "name": "Name"
     }
   }
 }

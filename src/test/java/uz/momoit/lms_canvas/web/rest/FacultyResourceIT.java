@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static uz.momoit.lms_canvas.domain.FacultyAsserts.*;
+import static uz.momoit.lms_canvas.web.rest.TestUtil.createUpdateProxyForBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
@@ -31,6 +32,9 @@ import uz.momoit.lms_canvas.service.mapper.FacultyMapper;
 @AutoConfigureMockMvc
 @WithMockUser
 class FacultyResourceIT {
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/faculties";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -62,7 +66,7 @@ class FacultyResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Faculty createEntity(EntityManager em) {
-        Faculty faculty = new Faculty();
+        Faculty faculty = new Faculty().name(DEFAULT_NAME);
         return faculty;
     }
 
@@ -73,7 +77,7 @@ class FacultyResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Faculty createUpdatedEntity(EntityManager em) {
-        Faculty faculty = new Faculty();
+        Faculty faculty = new Faculty().name(UPDATED_NAME);
         return faculty;
     }
 
@@ -133,7 +137,8 @@ class FacultyResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(faculty.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(faculty.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -147,7 +152,8 @@ class FacultyResourceIT {
             .perform(get(ENTITY_API_URL_ID, faculty.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(faculty.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(faculty.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -155,6 +161,210 @@ class FacultyResourceIT {
     void getNonExistingFaculty() throws Exception {
         // Get the faculty
         restFacultyMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void putExistingFaculty() throws Exception {
+        // Initialize the database
+        facultyRepository.saveAndFlush(faculty);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the faculty
+        Faculty updatedFaculty = facultyRepository.findById(faculty.getId()).orElseThrow();
+        // Disconnect from session so that the updates on updatedFaculty are not directly saved in db
+        em.detach(updatedFaculty);
+        updatedFaculty.name(UPDATED_NAME);
+        FacultyDTO facultyDTO = facultyMapper.toDto(updatedFaculty);
+
+        restFacultyMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, facultyDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(facultyDTO))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertPersistedFacultyToMatchAllProperties(updatedFaculty);
+    }
+
+    @Test
+    @Transactional
+    void putNonExistingFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, facultyDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(facultyDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithIdMismatchFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(facultyDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithMissingIdPathParamFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(facultyDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void partialUpdateFacultyWithPatch() throws Exception {
+        // Initialize the database
+        facultyRepository.saveAndFlush(faculty);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the faculty using partial update
+        Faculty partialUpdatedFaculty = new Faculty();
+        partialUpdatedFaculty.setId(faculty.getId());
+
+        partialUpdatedFaculty.name(UPDATED_NAME);
+
+        restFacultyMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedFaculty.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedFaculty))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Faculty in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertFacultyUpdatableFieldsEquals(createUpdateProxyForBean(partialUpdatedFaculty, faculty), getPersistedFaculty(faculty));
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateFacultyWithPatch() throws Exception {
+        // Initialize the database
+        facultyRepository.saveAndFlush(faculty);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the faculty using partial update
+        Faculty partialUpdatedFaculty = new Faculty();
+        partialUpdatedFaculty.setId(faculty.getId());
+
+        partialUpdatedFaculty.name(UPDATED_NAME);
+
+        restFacultyMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedFaculty.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedFaculty))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Faculty in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertFacultyUpdatableFieldsEquals(partialUpdatedFaculty, getPersistedFaculty(partialUpdatedFaculty));
+    }
+
+    @Test
+    @Transactional
+    void patchNonExistingFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, facultyDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(facultyDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithIdMismatchFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(facultyDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithMissingIdPathParamFaculty() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        faculty.setId(longCount.incrementAndGet());
+
+        // Create the Faculty
+        FacultyDTO facultyDTO = facultyMapper.toDto(faculty);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restFacultyMockMvc
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(facultyDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Faculty in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
     @Test

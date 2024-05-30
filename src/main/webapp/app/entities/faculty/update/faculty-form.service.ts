@@ -18,6 +18,7 @@ type FacultyFormDefaults = Pick<NewFaculty, 'id'>;
 
 type FacultyFormGroupContent = {
   id: FormControl<IFaculty['id'] | NewFaculty['id']>;
+  name: FormControl<IFaculty['name']>;
 };
 
 export type FacultyFormGroup = FormGroup<FacultyFormGroupContent>;
@@ -37,11 +38,12 @@ export class FacultyFormService {
           validators: [Validators.required],
         },
       ),
+      name: new FormControl(facultyRawValue.name),
     });
   }
 
-  getFaculty(form: FacultyFormGroup): NewFaculty {
-    return form.getRawValue() as NewFaculty;
+  getFaculty(form: FacultyFormGroup): IFaculty | NewFaculty {
+    return form.getRawValue() as IFaculty | NewFaculty;
   }
 
   resetForm(form: FacultyFormGroup, faculty: FacultyFormGroupInput): void {

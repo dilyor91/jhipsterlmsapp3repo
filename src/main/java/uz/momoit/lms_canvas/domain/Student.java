@@ -1,5 +1,6 @@
 package uz.momoit.lms_canvas.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -115,9 +116,11 @@ public class Student implements Serializable {
     private Faculty faculty;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "faculty" }, allowSetters = true)
     private Speciality speciality;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "speciality" }, allowSetters = true)
     private Group group;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -7,6 +7,8 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IGroup, NewGroup } from '../group.model';
 
+export type PartialUpdateGroup = Partial<IGroup> & Pick<IGroup, 'id'>;
+
 export type EntityResponseType = HttpResponse<IGroup>;
 export type EntityArrayResponseType = HttpResponse<IGroup[]>;
 
@@ -19,6 +21,14 @@ export class GroupService {
 
   create(group: NewGroup): Observable<EntityResponseType> {
     return this.http.post<IGroup>(this.resourceUrl, group, { observe: 'response' });
+  }
+
+  update(group: IGroup): Observable<EntityResponseType> {
+    return this.http.put<IGroup>(`${this.resourceUrl}/${this.getGroupIdentifier(group)}`, group, { observe: 'response' });
+  }
+
+  partialUpdate(group: PartialUpdateGroup): Observable<EntityResponseType> {
+    return this.http.patch<IGroup>(`${this.resourceUrl}/${this.getGroupIdentifier(group)}`, group, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {

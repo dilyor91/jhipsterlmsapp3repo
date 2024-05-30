@@ -32,6 +32,14 @@ const groupRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: ':id/edit',
+    component: GroupUpdateComponent,
+    resolve: {
+      group: GroupResolve,
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 export default groupRoute;

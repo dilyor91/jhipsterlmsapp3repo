@@ -21,14 +21,4 @@ class FacultyTest {
         faculty2 = getFacultySample2();
         assertThat(faculty1).isNotEqualTo(faculty2);
     }
-
-    @Test
-    void hashCodeVerifier() throws Exception {
-        Faculty faculty = new Faculty();
-        assertThat(faculty.hashCode()).isZero();
-
-        Faculty faculty1 = getFacultySample1();
-        faculty.setId(faculty1.getId());
-        assertThat(faculty).hasSameHashCodeAs(faculty1);
-    }
 }

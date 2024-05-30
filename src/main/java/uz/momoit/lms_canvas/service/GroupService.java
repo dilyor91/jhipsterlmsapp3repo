@@ -1,7 +1,8 @@
 package uz.momoit.lms_canvas.service;
 
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import uz.momoit.lms_canvas.service.dto.GroupDTO;
 
 /**
@@ -35,9 +36,10 @@ public interface GroupService {
     /**
      * Get all the groups.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<GroupDTO> findAll();
+    Page<GroupDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" group.

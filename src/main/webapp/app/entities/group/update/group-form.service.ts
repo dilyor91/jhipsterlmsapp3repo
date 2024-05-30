@@ -18,6 +18,8 @@ type GroupFormDefaults = Pick<NewGroup, 'id'>;
 
 type GroupFormGroupContent = {
   id: FormControl<IGroup['id'] | NewGroup['id']>;
+  name: FormControl<IGroup['name']>;
+  speciality: FormControl<IGroup['speciality']>;
 };
 
 export type GroupFormGroup = FormGroup<GroupFormGroupContent>;
@@ -37,11 +39,13 @@ export class GroupFormService {
           validators: [Validators.required],
         },
       ),
+      name: new FormControl(groupRawValue.name),
+      speciality: new FormControl(groupRawValue.speciality),
     });
   }
 
-  getGroup(form: GroupFormGroup): NewGroup {
-    return form.getRawValue() as NewGroup;
+  getGroup(form: GroupFormGroup): IGroup | NewGroup {
+    return form.getRawValue() as IGroup | NewGroup;
   }
 
   resetForm(form: GroupFormGroup, group: GroupFormGroupInput): void {

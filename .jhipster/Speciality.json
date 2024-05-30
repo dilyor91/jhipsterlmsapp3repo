@@ -4,9 +4,22 @@
   },
   "applications": "*",
   "dto": "mapstruct",
-  "fields": [],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
   "name": "Speciality",
-  "relationships": [],
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "faculty",
+      "relationshipName": "faculty",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceImpl"
 }

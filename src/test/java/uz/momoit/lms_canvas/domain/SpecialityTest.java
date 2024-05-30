@@ -1,6 +1,7 @@
 package uz.momoit.lms_canvas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uz.momoit.lms_canvas.domain.FacultyTestSamples.*;
 import static uz.momoit.lms_canvas.domain.SpecialityTestSamples.*;
 
 import org.junit.jupiter.api.Test;
@@ -23,12 +24,14 @@ class SpecialityTest {
     }
 
     @Test
-    void hashCodeVerifier() throws Exception {
-        Speciality speciality = new Speciality();
-        assertThat(speciality.hashCode()).isZero();
+    void facultyTest() throws Exception {
+        Speciality speciality = getSpecialityRandomSampleGenerator();
+        Faculty facultyBack = getFacultyRandomSampleGenerator();
 
-        Speciality speciality1 = getSpecialitySample1();
-        speciality.setId(speciality1.getId());
-        assertThat(speciality).hasSameHashCodeAs(speciality1);
+        speciality.setFaculty(facultyBack);
+        assertThat(speciality.getFaculty()).isEqualTo(facultyBack);
+
+        speciality.faculty(null);
+        assertThat(speciality.getFaculty()).isNull();
     }
 }

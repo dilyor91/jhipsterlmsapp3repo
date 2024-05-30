@@ -15,10 +15,26 @@
           <dd>
             <span>{{ group()!.id }}</span>
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.group.name">Name</span></dt>
+          <dd>
+            <span>{{ group()!.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.group.speciality">Speciality</span></dt>
+          <dd>
+            @if (group()!.speciality) {
+              <div>
+                <a [routerLink]="['/speciality', group()!.speciality?.id, 'view']">{{ group()!.speciality?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/group', group()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>
     }

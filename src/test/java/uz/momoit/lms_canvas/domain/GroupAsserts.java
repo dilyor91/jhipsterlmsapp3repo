@@ -44,7 +44,11 @@ public class GroupAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertGroupUpdatableFieldsEquals(Group expected, Group actual) {}
+    public static void assertGroupUpdatableFieldsEquals(Group expected, Group actual) {
+        assertThat(expected)
+            .as("Verify Group relevant properties")
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+    }
 
     /**
      * Asserts that the entity has all the updatable relationships set.
@@ -52,5 +56,9 @@ public class GroupAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertGroupUpdatableRelationshipsEquals(Group expected, Group actual) {}
+    public static void assertGroupUpdatableRelationshipsEquals(Group expected, Group actual) {
+        assertThat(expected)
+            .as("Verify Group relationships")
+            .satisfies(e -> assertThat(e.getSpeciality()).as("check speciality").isEqualTo(actual.getSpeciality()));
+    }
 }

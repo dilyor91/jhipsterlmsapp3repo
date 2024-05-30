@@ -83,10 +83,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Faculty query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const faculty: IFaculty = { id: 2898 };
+      const faculty: IFaculty = { id: 647 };
       student.faculty = faculty;
 
-      const facultyCollection: IFaculty[] = [{ id: 647 }];
+      const facultyCollection: IFaculty[] = [{ id: 13736 }];
       jest.spyOn(facultyService, 'query').mockReturnValue(of(new HttpResponse({ body: facultyCollection })));
       const additionalFaculties = [faculty];
       const expectedCollection: IFaculty[] = [...additionalFaculties, ...facultyCollection];
@@ -105,10 +105,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Speciality query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const speciality: ISpeciality = { id: 2911 };
+      const speciality: ISpeciality = { id: 5644 };
       student.speciality = speciality;
 
-      const specialityCollection: ISpeciality[] = [{ id: 5644 }];
+      const specialityCollection: ISpeciality[] = [{ id: 17581 }];
       jest.spyOn(specialityService, 'query').mockReturnValue(of(new HttpResponse({ body: specialityCollection })));
       const additionalSpecialities = [speciality];
       const expectedCollection: ISpeciality[] = [...additionalSpecialities, ...specialityCollection];
@@ -127,10 +127,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Group query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const group: IGroup = { id: 1950 };
+      const group: IGroup = { id: 6803 };
       student.group = group;
 
-      const groupCollection: IGroup[] = [{ id: 2750 }];
+      const groupCollection: IGroup[] = [{ id: 19406 }];
       jest.spyOn(groupService, 'query').mockReturnValue(of(new HttpResponse({ body: groupCollection })));
       const additionalGroups = [group];
       const expectedCollection: IGroup[] = [...additionalGroups, ...groupCollection];
@@ -151,11 +151,11 @@ describe('Student Management Update Component', () => {
       const student: IStudent = { id: 456 };
       const user: IUser = { id: 31215 };
       student.user = user;
-      const faculty: IFaculty = { id: 13736 };
+      const faculty: IFaculty = { id: 27987 };
       student.faculty = faculty;
-      const speciality: ISpeciality = { id: 17581 };
+      const speciality: ISpeciality = { id: 4777 };
       student.speciality = speciality;
-      const group: IGroup = { id: 13309 };
+      const group: IGroup = { id: 4712 };
       student.group = group;
 
       activatedRoute.data = of({ student });

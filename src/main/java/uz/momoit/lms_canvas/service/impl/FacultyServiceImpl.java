@@ -1,11 +1,10 @@
 package uz.momoit.lms_canvas.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.domain.Faculty;
@@ -41,10 +40,33 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
+    public FacultyDTO update(FacultyDTO facultyDTO) {
+        log.debug("Request to update Faculty : {}", facultyDTO);
+        Faculty faculty = facultyMapper.toEntity(facultyDTO);
+        faculty = facultyRepository.save(faculty);
+        return facultyMapper.toDto(faculty);
+    }
+
+    @Override
+    public Optional<FacultyDTO> partialUpdate(FacultyDTO facultyDTO) {
+        log.debug("Request to partially update Faculty : {}", facultyDTO);
+
+        return facultyRepository
+            .findById(facultyDTO.getId())
+            .map(existingFaculty -> {
+                facultyMapper.partialUpdate(existingFaculty, facultyDTO);
+
+                return existingFaculty;
+            })
+            .map(facultyRepository::save)
+            .map(facultyMapper::toDto);
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public List<FacultyDTO> findAll() {
+    public Page<FacultyDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Faculties");
-        return facultyRepository.findAll().stream().map(facultyMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return facultyRepository.findAll(pageable).map(facultyMapper::toDto);
     }
 
     @Override

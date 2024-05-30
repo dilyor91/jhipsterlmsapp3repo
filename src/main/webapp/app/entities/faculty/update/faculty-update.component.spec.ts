@@ -54,6 +54,29 @@ describe('Faculty Management Update Component', () => {
   });
 
   describe('save', () => {
+    it('Should call update service on save for existing entity', () => {
+      // GIVEN
+      const saveSubject = new Subject<HttpResponse<IFaculty>>();
+      const faculty = { id: 123 };
+      jest.spyOn(facultyFormService, 'getFaculty').mockReturnValue(faculty);
+      jest.spyOn(facultyService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(comp, 'previousState');
+      activatedRoute.data = of({ faculty });
+      comp.ngOnInit();
+
+      // WHEN
+      comp.save();
+      expect(comp.isSaving).toEqual(true);
+      saveSubject.next(new HttpResponse({ body: faculty }));
+      saveSubject.complete();
+
+      // THEN
+      expect(facultyFormService.getFaculty).toHaveBeenCalled();
+      expect(comp.previousState).toHaveBeenCalled();
+      expect(facultyService.update).toHaveBeenCalledWith(expect.objectContaining(faculty));
+      expect(comp.isSaving).toEqual(false);
+    });
+
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IFaculty>>();
@@ -75,6 +98,26 @@ describe('Faculty Management Update Component', () => {
       expect(facultyService.create).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
+    });
+
+    it('Should set isSaving to false on error', () => {
+      // GIVEN
+      const saveSubject = new Subject<HttpResponse<IFaculty>>();
+      const faculty = { id: 123 };
+      jest.spyOn(facultyService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(comp, 'previousState');
+      activatedRoute.data = of({ faculty });
+      comp.ngOnInit();
+
+      // WHEN
+      comp.save();
+      expect(comp.isSaving).toEqual(true);
+      saveSubject.error('This is an error!');
+
+      // THEN
+      expect(facultyService.update).toHaveBeenCalled();
+      expect(comp.isSaving).toEqual(false);
+      expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 });

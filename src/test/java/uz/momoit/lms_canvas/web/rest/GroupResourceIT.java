@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static uz.momoit.lms_canvas.domain.GroupAsserts.*;
+import static uz.momoit.lms_canvas.web.rest.TestUtil.createUpdateProxyForBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
@@ -31,6 +32,9 @@ import uz.momoit.lms_canvas.service.mapper.GroupMapper;
 @AutoConfigureMockMvc
 @WithMockUser
 class GroupResourceIT {
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/groups";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -62,7 +66,7 @@ class GroupResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Group createEntity(EntityManager em) {
-        Group group = new Group();
+        Group group = new Group().name(DEFAULT_NAME);
         return group;
     }
 
@@ -73,7 +77,7 @@ class GroupResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Group createUpdatedEntity(EntityManager em) {
-        Group group = new Group();
+        Group group = new Group().name(UPDATED_NAME);
         return group;
     }
 
@@ -133,7 +137,8 @@ class GroupResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(group.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(group.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -147,7 +152,8 @@ class GroupResourceIT {
             .perform(get(ENTITY_API_URL_ID, group.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(group.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(group.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -155,6 +161,210 @@ class GroupResourceIT {
     void getNonExistingGroup() throws Exception {
         // Get the group
         restGroupMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void putExistingGroup() throws Exception {
+        // Initialize the database
+        groupRepository.saveAndFlush(group);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the group
+        Group updatedGroup = groupRepository.findById(group.getId()).orElseThrow();
+        // Disconnect from session so that the updates on updatedGroup are not directly saved in db
+        em.detach(updatedGroup);
+        updatedGroup.name(UPDATED_NAME);
+        GroupDTO groupDTO = groupMapper.toDto(updatedGroup);
+
+        restGroupMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, groupDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(groupDTO))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertPersistedGroupToMatchAllProperties(updatedGroup);
+    }
+
+    @Test
+    @Transactional
+    void putNonExistingGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, groupDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(groupDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithIdMismatchGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(groupDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithMissingIdPathParamGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(groupDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void partialUpdateGroupWithPatch() throws Exception {
+        // Initialize the database
+        groupRepository.saveAndFlush(group);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the group using partial update
+        Group partialUpdatedGroup = new Group();
+        partialUpdatedGroup.setId(group.getId());
+
+        partialUpdatedGroup.name(UPDATED_NAME);
+
+        restGroupMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedGroup.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedGroup))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Group in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertGroupUpdatableFieldsEquals(createUpdateProxyForBean(partialUpdatedGroup, group), getPersistedGroup(group));
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateGroupWithPatch() throws Exception {
+        // Initialize the database
+        groupRepository.saveAndFlush(group);
+
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+
+        // Update the group using partial update
+        Group partialUpdatedGroup = new Group();
+        partialUpdatedGroup.setId(group.getId());
+
+        partialUpdatedGroup.name(UPDATED_NAME);
+
+        restGroupMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedGroup.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(partialUpdatedGroup))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Group in the database
+
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+        assertGroupUpdatableFieldsEquals(partialUpdatedGroup, getPersistedGroup(partialUpdatedGroup));
+    }
+
+    @Test
+    @Transactional
+    void patchNonExistingGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, groupDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(groupDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithIdMismatchGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(groupDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void patchWithMissingIdPathParamGroup() throws Exception {
+        long databaseSizeBeforeUpdate = getRepositoryCount();
+        group.setId(longCount.incrementAndGet());
+
+        // Create the Group
+        GroupDTO groupDTO = groupMapper.toDto(group);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restGroupMockMvc
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(groupDTO)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the Group in the database
+        assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
     @Test
