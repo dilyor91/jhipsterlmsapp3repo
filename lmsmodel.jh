@@ -108,12 +108,17 @@ entity Student {
    city String
    region String
    addressLine String
-   academicYear String
+   studyAcademicYear StudyAcademicYear
    course Integer
    semester Integer
    educationLanguage EducationLanguage
    educationType EducationType
    educationForm EducationForm
+}
+
+entity StudyAcademicYear {
+   fromDate Instant
+   endDate Instant
 }
 
 enum TutionTypeEnum {
@@ -162,6 +167,7 @@ enum UserStatus {
 
 relationship OneToOne {
   Course{user} to User
+  Student{studyAcademicYear} to StudyAcademicYear
 }
 
 entity Faculty {
