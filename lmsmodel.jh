@@ -108,12 +108,16 @@ entity Student {
    city String
    region String
    addressLine String
-   academicYear String
    course Integer
    semester Integer
    educationLanguage EducationLanguage
    educationType EducationType
    educationForm EducationForm
+}
+
+entity StudyAcademicYear {
+   fromDate Instant
+   endDate Instant
 }
 
 enum TutionTypeEnum {
@@ -162,6 +166,7 @@ enum UserStatus {
 
 relationship OneToOne {
   Course{user} to User
+  Student{studyAcademicYear} to StudyAcademicYear
 }
 
 entity Faculty {
@@ -207,7 +212,7 @@ relationship ManyToMany {
 paginate  Course, CourseSection, Enrollment, Accounts, 
 Assignment, Announcement, CalendarEvent, WikiPage,
 Attendance, AttendanceDetail, Student,
-Faculty, Speciality, Group with pagination
+Faculty, Speciality, Group, StudyAcademicYear with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
