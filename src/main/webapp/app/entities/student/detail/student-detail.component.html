@@ -85,10 +85,6 @@
           <dd>
             <span>{{ student()!.addressLine }}</span>
           </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.student.academicYear">Academic Year</span></dt>
-          <dd>
-            <span>{{ student()!.academicYear }}</span>
-          </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.student.course">Course</span></dt>
           <dd>
             <span>{{ student()!.course }}</span>
@@ -114,6 +110,16 @@
             <span [jhiTranslate]="'jhipsterlmsapp3App.EducationForm.' + (student()!.educationForm ?? 'null')">{{
               { null: '', BAKALAVR: 'BAKALAVR', MAGISTR: 'MAGISTR' }[student()!.educationForm ?? 'null']
             }}</span>
+          </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.student.studyAcademicYear">Study Academic Year</span></dt>
+          <dd>
+            @if (student()!.studyAcademicYear) {
+              <div>
+                <a [routerLink]="['/study-academic-year', student()!.studyAcademicYear?.id, 'view']">{{
+                  student()!.studyAcademicYear?.id
+                }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.student.user">User</span></dt>
           <dd>

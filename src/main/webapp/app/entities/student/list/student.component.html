@@ -161,13 +161,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="academicYear">
-              <div class="d-flex">
-                <span jhiTranslate="jhipsterlmsapp3App.student.academicYear">Academic Year</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="course">
               <div class="d-flex">
                 <span jhiTranslate="jhipsterlmsapp3App.student.course">Course</span>
@@ -200,6 +193,12 @@
               <div class="d-flex">
                 <span jhiTranslate="jhipsterlmsapp3App.student.educationForm">Education Form</span>
 
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="studyAcademicYear.id">
+              <div class="d-flex">
+                <span jhiTranslate="jhipsterlmsapp3App.student.studyAcademicYear">Study Academic Year</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -255,7 +254,6 @@
               <td>{{ student.city }}</td>
               <td>{{ student.region }}</td>
               <td>{{ student.addressLine }}</td>
-              <td>{{ student.academicYear }}</td>
               <td>{{ student.course }}</td>
               <td>{{ student.semester }}</td>
               <td [jhiTranslate]="'jhipsterlmsapp3App.EducationLanguage.' + (student.educationLanguage ?? 'null')">
@@ -266,6 +264,13 @@
               </td>
               <td [jhiTranslate]="'jhipsterlmsapp3App.EducationForm.' + (student.educationForm ?? 'null')">
                 {{ { null: '', BAKALAVR: 'BAKALAVR', MAGISTR: 'MAGISTR' }[student.educationForm ?? 'null'] }}
+              </td>
+              <td>
+                @if (student.studyAcademicYear) {
+                  <div>
+                    <a [routerLink]="['/study-academic-year', student.studyAcademicYear.id, 'view']">{{ student.studyAcademicYear.id }}</a>
+                  </div>
+                }
               </td>
               <td>
                 {{ student.user?.id }}

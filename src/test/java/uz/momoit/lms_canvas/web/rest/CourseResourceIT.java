@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.Course;
 import uz.momoit.lms_canvas.repository.CourseRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.CourseDTO;
 import uz.momoit.lms_canvas.service.mapper.CourseMapper;
 
@@ -81,6 +83,9 @@ class CourseResourceIT {
     private CourseRepository courseRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private CourseMapper courseMapper;
 
     @Autowired
@@ -90,6 +95,8 @@ class CourseResourceIT {
     private MockMvc restCourseMockMvc;
 
     private Course course;
+
+    private Course insertedCourse;
 
     /**
      * Create an entity for this test.
@@ -140,6 +147,14 @@ class CourseResourceIT {
         course = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedCourse != null) {
+            courseRepository.delete(insertedCourse);
+            insertedCourse = null;
+        }
+    }
+
     @Test
     @Transactional
     void createCourse() throws Exception {
@@ -160,6 +175,8 @@ class CourseResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedCourse = courseMapper.toEntity(returnedCourseDTO);
         assertCourseUpdatableFieldsEquals(returnedCourse, getPersistedCourse(returnedCourse));
+
+        insertedCourse = returnedCourse;
     }
 
     @Test
@@ -320,7 +337,7 @@ class CourseResourceIT {
     @Transactional
     void getAllCourses() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         // Get all the courseList
         restCourseMockMvc
@@ -345,7 +362,7 @@ class CourseResourceIT {
     @Transactional
     void getCourse() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         // Get the course
         restCourseMockMvc
@@ -377,7 +394,7 @@ class CourseResourceIT {
     @Transactional
     void putExistingCourse() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -474,7 +491,7 @@ class CourseResourceIT {
     @Transactional
     void partialUpdateCourseWithPatch() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -483,12 +500,11 @@ class CourseResourceIT {
         partialUpdatedCourse.setId(course.getId());
 
         partialUpdatedCourse
-            .courseImagePath(UPDATED_COURSE_IMAGE_PATH)
             .courseStartDate(UPDATED_COURSE_START_DATE)
             .courseEndDate(UPDATED_COURSE_END_DATE)
-            .published(UPDATED_PUBLISHED)
+            .courseFormat(UPDATED_COURSE_FORMAT)
             .selfEnrollment(UPDATED_SELF_ENROLLMENT)
-            .status(UPDATED_STATUS);
+            .selfEnrollmentCode(UPDATED_SELF_ENROLLMENT_CODE);
 
         restCourseMockMvc
             .perform(
@@ -508,7 +524,7 @@ class CourseResourceIT {
     @Transactional
     void fullUpdateCourseWithPatch() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -609,7 +625,7 @@ class CourseResourceIT {
     @Transactional
     void deleteCourse() throws Exception {
         // Initialize the database
-        courseRepository.saveAndFlush(course);
+        insertedCourse = courseRepository.saveAndFlush(course);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

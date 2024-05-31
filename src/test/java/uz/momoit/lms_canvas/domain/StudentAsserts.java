@@ -64,7 +64,6 @@ public class StudentAsserts {
             .satisfies(e -> assertThat(e.getCity()).as("check city").isEqualTo(actual.getCity()))
             .satisfies(e -> assertThat(e.getRegion()).as("check region").isEqualTo(actual.getRegion()))
             .satisfies(e -> assertThat(e.getAddressLine()).as("check addressLine").isEqualTo(actual.getAddressLine()))
-            .satisfies(e -> assertThat(e.getAcademicYear()).as("check academicYear").isEqualTo(actual.getAcademicYear()))
             .satisfies(e -> assertThat(e.getCourse()).as("check course").isEqualTo(actual.getCourse()))
             .satisfies(e -> assertThat(e.getSemester()).as("check semester").isEqualTo(actual.getSemester()))
             .satisfies(e -> assertThat(e.getEducationLanguage()).as("check educationLanguage").isEqualTo(actual.getEducationLanguage()))
@@ -81,6 +80,7 @@ public class StudentAsserts {
     public static void assertStudentUpdatableRelationshipsEquals(Student expected, Student actual) {
         assertThat(expected)
             .as("Verify Student relationships")
+            .satisfies(e -> assertThat(e.getStudyAcademicYear()).as("check studyAcademicYear").isEqualTo(actual.getStudyAcademicYear()))
             .satisfies(e -> assertThat(e.getFaculty()).as("check faculty").isEqualTo(actual.getFaculty()))
             .satisfies(e -> assertThat(e.getSpeciality()).as("check speciality").isEqualTo(actual.getSpeciality()))
             .satisfies(e -> assertThat(e.getGroup()).as("check group").isEqualTo(actual.getGroup()));

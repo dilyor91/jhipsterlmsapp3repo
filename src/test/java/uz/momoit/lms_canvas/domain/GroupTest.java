@@ -24,7 +24,7 @@ class GroupTest {
     }
 
     @Test
-    void specialityTest() throws Exception {
+    void specialityTest() {
         Group group = getGroupRandomSampleGenerator();
         Speciality specialityBack = getSpecialityRandomSampleGenerator();
 

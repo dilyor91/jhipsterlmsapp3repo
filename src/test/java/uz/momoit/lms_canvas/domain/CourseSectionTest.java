@@ -28,7 +28,7 @@ class CourseSectionTest {
     }
 
     @Test
-    void courseTest() throws Exception {
+    void courseTest() {
         CourseSection courseSection = getCourseSectionRandomSampleGenerator();
         Course courseBack = getCourseRandomSampleGenerator();
 
@@ -40,7 +40,7 @@ class CourseSectionTest {
     }
 
     @Test
-    void announcementTest() throws Exception {
+    void announcementTest() {
         CourseSection courseSection = getCourseSectionRandomSampleGenerator();
         Announcement announcementBack = getAnnouncementRandomSampleGenerator();
 
@@ -62,7 +62,7 @@ class CourseSectionTest {
     }
 
     @Test
-    void assignmentTest() throws Exception {
+    void assignmentTest() {
         CourseSection courseSection = getCourseSectionRandomSampleGenerator();
         Assignment assignmentBack = getAssignmentRandomSampleGenerator();
 

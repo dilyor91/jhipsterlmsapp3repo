@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,8 @@ class AccountsResourceIT {
 
     private Accounts accounts;
 
+    private Accounts insertedAccounts;
+
     /**
      * Create an entity for this test.
      *
@@ -130,6 +133,14 @@ class AccountsResourceIT {
         accounts = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedAccounts != null) {
+            accountsRepository.delete(insertedAccounts);
+            insertedAccounts = null;
+        }
+    }
+
     @Test
     @Transactional
     void createAccounts() throws Exception {
@@ -150,6 +161,8 @@ class AccountsResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedAccounts = accountsMapper.toEntity(returnedAccountsDTO);
         assertAccountsUpdatableFieldsEquals(returnedAccounts, getPersistedAccounts(returnedAccounts));
+
+        insertedAccounts = returnedAccounts;
     }
 
     @Test
@@ -293,7 +306,7 @@ class AccountsResourceIT {
     @Transactional
     void getAllAccounts() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         // Get all the accountsList
         restAccountsMockMvc
@@ -316,7 +329,7 @@ class AccountsResourceIT {
     @Transactional
     void getAccounts() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         // Get the accounts
         restAccountsMockMvc
@@ -346,7 +359,7 @@ class AccountsResourceIT {
     @Transactional
     void putExistingAccounts() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -445,7 +458,7 @@ class AccountsResourceIT {
     @Transactional
     void partialUpdateAccountsWithPatch() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -453,11 +466,7 @@ class AccountsResourceIT {
         Accounts partialUpdatedAccounts = new Accounts();
         partialUpdatedAccounts.setId(accounts.getId());
 
-        partialUpdatedAccounts
-            .fullName(UPDATED_FULL_NAME)
-            .sortableName(UPDATED_SORTABLE_NAME)
-            .locale(UPDATED_LOCALE)
-            .gender(UPDATED_GENDER);
+        partialUpdatedAccounts.locale(UPDATED_LOCALE).userStatus(UPDATED_USER_STATUS);
 
         restAccountsMockMvc
             .perform(
@@ -477,7 +486,7 @@ class AccountsResourceIT {
     @Transactional
     void fullUpdateAccountsWithPatch() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -576,7 +585,7 @@ class AccountsResourceIT {
     @Transactional
     void deleteAccounts() throws Exception {
         // Initialize the database
-        accountsRepository.saveAndFlush(accounts);
+        insertedAccounts = accountsRepository.saveAndFlush(accounts);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

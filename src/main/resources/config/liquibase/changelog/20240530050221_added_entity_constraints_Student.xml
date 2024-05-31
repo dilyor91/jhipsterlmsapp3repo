@@ -10,6 +10,13 @@
     -->
     <changeSet id="20240530050221-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="study_academic_year_id"
+                                 baseTableName="student"
+                                 constraintName="fk_student__study_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="study_academic_year"
+                                 />
+
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="student"
                                  constraintName="fk_student__user_id"

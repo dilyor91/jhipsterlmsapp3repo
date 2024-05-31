@@ -108,7 +108,6 @@ entity Student {
    city String
    region String
    addressLine String
-   studyAcademicYear StudyAcademicYear
    course Integer
    semester Integer
    educationLanguage EducationLanguage

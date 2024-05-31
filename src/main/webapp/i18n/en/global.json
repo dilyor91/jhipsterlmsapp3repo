@@ -21,7 +21,8 @@
         "student": "Student",
         "faculty": "Faculty",
         "speciality": "Speciality",
-        "group": "Group"
+        "group": "Group",
+        "studyAcademicYear": "Study Academic Year"
       },
       "account": {
         "main": "Account",

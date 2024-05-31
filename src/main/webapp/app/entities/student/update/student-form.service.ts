@@ -35,12 +35,12 @@ type StudentFormGroupContent = {
   city: FormControl<IStudent['city']>;
   region: FormControl<IStudent['region']>;
   addressLine: FormControl<IStudent['addressLine']>;
-  academicYear: FormControl<IStudent['academicYear']>;
   course: FormControl<IStudent['course']>;
   semester: FormControl<IStudent['semester']>;
   educationLanguage: FormControl<IStudent['educationLanguage']>;
   educationType: FormControl<IStudent['educationType']>;
   educationForm: FormControl<IStudent['educationForm']>;
+  studyAcademicYear: FormControl<IStudent['studyAcademicYear']>;
   user: FormControl<IStudent['user']>;
   faculty: FormControl<IStudent['faculty']>;
   speciality: FormControl<IStudent['speciality']>;
@@ -97,12 +97,12 @@ export class StudentFormService {
       city: new FormControl(studentRawValue.city),
       region: new FormControl(studentRawValue.region),
       addressLine: new FormControl(studentRawValue.addressLine),
-      academicYear: new FormControl(studentRawValue.academicYear),
       course: new FormControl(studentRawValue.course),
       semester: new FormControl(studentRawValue.semester),
       educationLanguage: new FormControl(studentRawValue.educationLanguage),
       educationType: new FormControl(studentRawValue.educationType),
       educationForm: new FormControl(studentRawValue.educationForm),
+      studyAcademicYear: new FormControl(studentRawValue.studyAcademicYear),
       user: new FormControl(studentRawValue.user),
       faculty: new FormControl(studentRawValue.faculty),
       speciality: new FormControl(studentRawValue.speciality),

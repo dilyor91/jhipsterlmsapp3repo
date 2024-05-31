@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import uz.momoit.lms_canvas.domain.enumeration.EducationLanguage;
 import uz.momoit.lms_canvas.domain.enumeration.EducationType;
 import uz.momoit.lms_canvas.domain.enumeration.TutionTypeEnum;
 import uz.momoit.lms_canvas.repository.StudentRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.StudentDTO;
 import uz.momoit.lms_canvas.service.mapper.StudentMapper;
 
@@ -88,9 +90,6 @@ class StudentResourceIT {
     private static final String DEFAULT_ADDRESS_LINE = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS_LINE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ACADEMIC_YEAR = "AAAAAAAAAA";
-    private static final String UPDATED_ACADEMIC_YEAR = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_COURSE = 1;
     private static final Integer UPDATED_COURSE = 2;
 
@@ -119,6 +118,9 @@ class StudentResourceIT {
     private StudentRepository studentRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private StudentMapper studentMapper;
 
     @Autowired
@@ -128,6 +130,8 @@ class StudentResourceIT {
     private MockMvc restStudentMockMvc;
 
     private Student student;
+
+    private Student insertedStudent;
 
     /**
      * Create an entity for this test.
@@ -154,7 +158,6 @@ class StudentResourceIT {
             .city(DEFAULT_CITY)
             .region(DEFAULT_REGION)
             .addressLine(DEFAULT_ADDRESS_LINE)
-            .academicYear(DEFAULT_ACADEMIC_YEAR)
             .course(DEFAULT_COURSE)
             .semester(DEFAULT_SEMESTER)
             .educationLanguage(DEFAULT_EDUCATION_LANGUAGE)
@@ -188,7 +191,6 @@ class StudentResourceIT {
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
             .addressLine(UPDATED_ADDRESS_LINE)
-            .academicYear(UPDATED_ACADEMIC_YEAR)
             .course(UPDATED_COURSE)
             .semester(UPDATED_SEMESTER)
             .educationLanguage(UPDATED_EDUCATION_LANGUAGE)
@@ -200,6 +202,14 @@ class StudentResourceIT {
     @BeforeEach
     public void initTest() {
         student = createEntity(em);
+    }
+
+    @AfterEach
+    public void cleanup() {
+        if (insertedStudent != null) {
+            studentRepository.delete(insertedStudent);
+            insertedStudent = null;
+        }
     }
 
     @Test
@@ -222,6 +232,8 @@ class StudentResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedStudent = studentMapper.toEntity(returnedStudentDTO);
         assertStudentUpdatableFieldsEquals(returnedStudent, getPersistedStudent(returnedStudent));
+
+        insertedStudent = returnedStudent;
     }
 
     @Test
@@ -382,7 +394,7 @@ class StudentResourceIT {
     @Transactional
     void getAllStudents() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         // Get all the studentList
         restStudentMockMvc
@@ -407,7 +419,6 @@ class StudentResourceIT {
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
             .andExpect(jsonPath("$.[*].region").value(hasItem(DEFAULT_REGION)))
             .andExpect(jsonPath("$.[*].addressLine").value(hasItem(DEFAULT_ADDRESS_LINE)))
-            .andExpect(jsonPath("$.[*].academicYear").value(hasItem(DEFAULT_ACADEMIC_YEAR)))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE)))
             .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER)))
             .andExpect(jsonPath("$.[*].educationLanguage").value(hasItem(DEFAULT_EDUCATION_LANGUAGE.toString())))
@@ -419,7 +430,7 @@ class StudentResourceIT {
     @Transactional
     void getStudent() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         // Get the student
         restStudentMockMvc
@@ -444,7 +455,6 @@ class StudentResourceIT {
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY))
             .andExpect(jsonPath("$.region").value(DEFAULT_REGION))
             .andExpect(jsonPath("$.addressLine").value(DEFAULT_ADDRESS_LINE))
-            .andExpect(jsonPath("$.academicYear").value(DEFAULT_ACADEMIC_YEAR))
             .andExpect(jsonPath("$.course").value(DEFAULT_COURSE))
             .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER))
             .andExpect(jsonPath("$.educationLanguage").value(DEFAULT_EDUCATION_LANGUAGE.toString()))
@@ -463,7 +473,7 @@ class StudentResourceIT {
     @Transactional
     void putExistingStudent() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -489,7 +499,6 @@ class StudentResourceIT {
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
             .addressLine(UPDATED_ADDRESS_LINE)
-            .academicYear(UPDATED_ACADEMIC_YEAR)
             .course(UPDATED_COURSE)
             .semester(UPDATED_SEMESTER)
             .educationLanguage(UPDATED_EDUCATION_LANGUAGE)
@@ -572,7 +581,7 @@ class StudentResourceIT {
     @Transactional
     void partialUpdateStudentWithPatch() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -582,13 +591,14 @@ class StudentResourceIT {
 
         partialUpdatedStudent
             .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .gender(UPDATED_GENDER)
-            .birthdate(UPDATED_BIRTHDATE)
-            .hemisId(UPDATED_HEMIS_ID)
             .jshshir(UPDATED_JSHSHIR)
-            .city(UPDATED_CITY)
-            .region(UPDATED_REGION)
+            .isActive(UPDATED_IS_ACTIVE)
+            .nationality(UPDATED_NATIONALITY)
+            .country(UPDATED_COUNTRY)
             .addressLine(UPDATED_ADDRESS_LINE)
+            .semester(UPDATED_SEMESTER)
             .educationType(UPDATED_EDUCATION_TYPE)
             .educationForm(UPDATED_EDUCATION_FORM);
 
@@ -610,7 +620,7 @@ class StudentResourceIT {
     @Transactional
     void fullUpdateStudentWithPatch() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -636,7 +646,6 @@ class StudentResourceIT {
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
             .addressLine(UPDATED_ADDRESS_LINE)
-            .academicYear(UPDATED_ACADEMIC_YEAR)
             .course(UPDATED_COURSE)
             .semester(UPDATED_SEMESTER)
             .educationLanguage(UPDATED_EDUCATION_LANGUAGE)
@@ -723,7 +732,7 @@ class StudentResourceIT {
     @Transactional
     void deleteStudent() throws Exception {
         // Initialize the database
-        studentRepository.saveAndFlush(student);
+        insertedStudent = studentRepository.saveAndFlush(student);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

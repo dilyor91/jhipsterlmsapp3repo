@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.AttendanceDetail;
 import uz.momoit.lms_canvas.domain.enumeration.AttendanceEnum;
 import uz.momoit.lms_canvas.repository.AttendanceDetailRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.AttendanceDetailDTO;
 import uz.momoit.lms_canvas.service.mapper.AttendanceDetailMapper;
 
@@ -50,6 +52,9 @@ class AttendanceDetailResourceIT {
     private AttendanceDetailRepository attendanceDetailRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AttendanceDetailMapper attendanceDetailMapper;
 
     @Autowired
@@ -59,6 +64,8 @@ class AttendanceDetailResourceIT {
     private MockMvc restAttendanceDetailMockMvc;
 
     private AttendanceDetail attendanceDetail;
+
+    private AttendanceDetail insertedAttendanceDetail;
 
     /**
      * Create an entity for this test.
@@ -87,6 +94,14 @@ class AttendanceDetailResourceIT {
         attendanceDetail = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedAttendanceDetail != null) {
+            attendanceDetailRepository.delete(insertedAttendanceDetail);
+            insertedAttendanceDetail = null;
+        }
+    }
+
     @Test
     @Transactional
     void createAttendanceDetail() throws Exception {
@@ -107,6 +122,8 @@ class AttendanceDetailResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedAttendanceDetail = attendanceDetailMapper.toEntity(returnedAttendanceDetailDTO);
         assertAttendanceDetailUpdatableFieldsEquals(returnedAttendanceDetail, getPersistedAttendanceDetail(returnedAttendanceDetail));
+
+        insertedAttendanceDetail = returnedAttendanceDetail;
     }
 
     @Test
@@ -131,7 +148,7 @@ class AttendanceDetailResourceIT {
     @Transactional
     void getAllAttendanceDetails() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         // Get all the attendanceDetailList
         restAttendanceDetailMockMvc
@@ -146,7 +163,7 @@ class AttendanceDetailResourceIT {
     @Transactional
     void getAttendanceDetail() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         // Get the attendanceDetail
         restAttendanceDetailMockMvc
@@ -168,7 +185,7 @@ class AttendanceDetailResourceIT {
     @Transactional
     void putExistingAttendanceDetail() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -258,13 +275,15 @@ class AttendanceDetailResourceIT {
     @Transactional
     void partialUpdateAttendanceDetailWithPatch() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the attendanceDetail using partial update
         AttendanceDetail partialUpdatedAttendanceDetail = new AttendanceDetail();
         partialUpdatedAttendanceDetail.setId(attendanceDetail.getId());
+
+        partialUpdatedAttendanceDetail.attendanceEnum(UPDATED_ATTENDANCE_ENUM);
 
         restAttendanceDetailMockMvc
             .perform(
@@ -287,7 +306,7 @@ class AttendanceDetailResourceIT {
     @Transactional
     void fullUpdateAttendanceDetailWithPatch() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -380,7 +399,7 @@ class AttendanceDetailResourceIT {
     @Transactional
     void deleteAttendanceDetail() throws Exception {
         // Initialize the database
-        attendanceDetailRepository.saveAndFlush(attendanceDetail);
+        insertedAttendanceDetail = attendanceDetailRepository.saveAndFlush(attendanceDetail);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

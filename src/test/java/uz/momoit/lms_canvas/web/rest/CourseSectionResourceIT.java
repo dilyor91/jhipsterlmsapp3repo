@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ class CourseSectionResourceIT {
 
     private CourseSection courseSection;
 
+    private CourseSection insertedCourseSection;
+
     /**
      * Create an entity for this test.
      *
@@ -86,6 +89,14 @@ class CourseSectionResourceIT {
         courseSection = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedCourseSection != null) {
+            courseSectionRepository.delete(insertedCourseSection);
+            insertedCourseSection = null;
+        }
+    }
+
     @Test
     @Transactional
     void createCourseSection() throws Exception {
@@ -106,6 +117,8 @@ class CourseSectionResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedCourseSection = courseSectionMapper.toEntity(returnedCourseSectionDTO);
         assertCourseSectionUpdatableFieldsEquals(returnedCourseSection, getPersistedCourseSection(returnedCourseSection));
+
+        insertedCourseSection = returnedCourseSection;
     }
 
     @Test
@@ -147,7 +160,7 @@ class CourseSectionResourceIT {
     @Transactional
     void getAllCourseSections() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         // Get all the courseSectionList
         restCourseSectionMockMvc
@@ -162,7 +175,7 @@ class CourseSectionResourceIT {
     @Transactional
     void getCourseSection() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         // Get the courseSection
         restCourseSectionMockMvc
@@ -184,7 +197,7 @@ class CourseSectionResourceIT {
     @Transactional
     void putExistingCourseSection() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -274,15 +287,13 @@ class CourseSectionResourceIT {
     @Transactional
     void partialUpdateCourseSectionWithPatch() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the courseSection using partial update
         CourseSection partialUpdatedCourseSection = new CourseSection();
         partialUpdatedCourseSection.setId(courseSection.getId());
-
-        partialUpdatedCourseSection.sectionName(UPDATED_SECTION_NAME);
 
         restCourseSectionMockMvc
             .perform(
@@ -305,7 +316,7 @@ class CourseSectionResourceIT {
     @Transactional
     void fullUpdateCourseSectionWithPatch() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -395,7 +406,7 @@ class CourseSectionResourceIT {
     @Transactional
     void deleteCourseSection() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        insertedCourseSection = courseSectionRepository.saveAndFlush(courseSection);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

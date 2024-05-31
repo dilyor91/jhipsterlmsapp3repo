@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.Attendance;
 import uz.momoit.lms_canvas.repository.AttendanceRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.AttendanceDTO;
 import uz.momoit.lms_canvas.service.mapper.AttendanceMapper;
 
@@ -51,6 +53,9 @@ class AttendanceResourceIT {
     private AttendanceRepository attendanceRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AttendanceMapper attendanceMapper;
 
     @Autowired
@@ -60,6 +65,8 @@ class AttendanceResourceIT {
     private MockMvc restAttendanceMockMvc;
 
     private Attendance attendance;
+
+    private Attendance insertedAttendance;
 
     /**
      * Create an entity for this test.
@@ -88,6 +95,14 @@ class AttendanceResourceIT {
         attendance = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedAttendance != null) {
+            attendanceRepository.delete(insertedAttendance);
+            insertedAttendance = null;
+        }
+    }
+
     @Test
     @Transactional
     void createAttendance() throws Exception {
@@ -108,6 +123,8 @@ class AttendanceResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedAttendance = attendanceMapper.toEntity(returnedAttendanceDTO);
         assertAttendanceUpdatableFieldsEquals(returnedAttendance, getPersistedAttendance(returnedAttendance));
+
+        insertedAttendance = returnedAttendance;
     }
 
     @Test
@@ -132,7 +149,7 @@ class AttendanceResourceIT {
     @Transactional
     void getAllAttendances() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         // Get all the attendanceList
         restAttendanceMockMvc
@@ -147,7 +164,7 @@ class AttendanceResourceIT {
     @Transactional
     void getAttendance() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         // Get the attendance
         restAttendanceMockMvc
@@ -169,7 +186,7 @@ class AttendanceResourceIT {
     @Transactional
     void putExistingAttendance() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -259,13 +276,15 @@ class AttendanceResourceIT {
     @Transactional
     void partialUpdateAttendanceWithPatch() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the attendance using partial update
         Attendance partialUpdatedAttendance = new Attendance();
         partialUpdatedAttendance.setId(attendance.getId());
+
+        partialUpdatedAttendance.attendanceDate(UPDATED_ATTENDANCE_DATE);
 
         restAttendanceMockMvc
             .perform(
@@ -288,7 +307,7 @@ class AttendanceResourceIT {
     @Transactional
     void fullUpdateAttendanceWithPatch() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -378,7 +397,7 @@ class AttendanceResourceIT {
     @Transactional
     void deleteAttendance() throws Exception {
         // Initialize the database
-        attendanceRepository.saveAndFlush(attendance);
+        insertedAttendance = attendanceRepository.saveAndFlush(attendance);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

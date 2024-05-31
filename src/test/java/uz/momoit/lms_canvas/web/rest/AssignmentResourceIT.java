@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,6 +102,8 @@ class AssignmentResourceIT {
 
     private Assignment assignment;
 
+    private Assignment insertedAssignment;
+
     /**
      * Create an entity for this test.
      *
@@ -146,6 +149,14 @@ class AssignmentResourceIT {
         assignment = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedAssignment != null) {
+            assignmentRepository.delete(insertedAssignment);
+            insertedAssignment = null;
+        }
+    }
+
     @Test
     @Transactional
     void createAssignment() throws Exception {
@@ -166,6 +177,8 @@ class AssignmentResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedAssignment = assignmentMapper.toEntity(returnedAssignmentDTO);
         assertAssignmentUpdatableFieldsEquals(returnedAssignment, getPersistedAssignment(returnedAssignment));
+
+        insertedAssignment = returnedAssignment;
     }
 
     @Test
@@ -207,7 +220,7 @@ class AssignmentResourceIT {
     @Transactional
     void getAllAssignments() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         // Get all the assignmentList
         restAssignmentMockMvc
@@ -247,7 +260,7 @@ class AssignmentResourceIT {
     @Transactional
     void getAssignment() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         // Get the assignment
         restAssignmentMockMvc
@@ -277,7 +290,7 @@ class AssignmentResourceIT {
     @Transactional
     void putExistingAssignment() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -376,7 +389,7 @@ class AssignmentResourceIT {
     @Transactional
     void partialUpdateAssignmentWithPatch() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -384,14 +397,7 @@ class AssignmentResourceIT {
         Assignment partialUpdatedAssignment = new Assignment();
         partialUpdatedAssignment.setId(assignment.getId());
 
-        partialUpdatedAssignment
-            .name(UPDATED_NAME)
-            .content(UPDATED_CONTENT)
-            .submissionType(UPDATED_SUBMISSION_TYPE)
-            .allowedAttempts(UPDATED_ALLOWED_ATTEMPTS)
-            .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE)
-            .dueDate(UPDATED_DUE_DATE);
+        partialUpdatedAssignment.content(UPDATED_CONTENT).endDate(UPDATED_END_DATE);
 
         restAssignmentMockMvc
             .perform(
@@ -414,7 +420,7 @@ class AssignmentResourceIT {
     @Transactional
     void fullUpdateAssignmentWithPatch() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -513,7 +519,7 @@ class AssignmentResourceIT {
     @Transactional
     void deleteAssignment() throws Exception {
         // Initialize the database
-        assignmentRepository.saveAndFlush(assignment);
+        insertedAssignment = assignmentRepository.saveAndFlush(assignment);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

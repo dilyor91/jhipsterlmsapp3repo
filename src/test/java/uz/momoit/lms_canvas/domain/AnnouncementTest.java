@@ -27,7 +27,7 @@ class AnnouncementTest {
     }
 
     @Test
-    void courseTest() throws Exception {
+    void courseTest() {
         Announcement announcement = getAnnouncementRandomSampleGenerator();
         Course courseBack = getCourseRandomSampleGenerator();
 
@@ -39,7 +39,7 @@ class AnnouncementTest {
     }
 
     @Test
-    void courseSectionTest() throws Exception {
+    void courseSectionTest() {
         Announcement announcement = getAnnouncementRandomSampleGenerator();
         CourseSection courseSectionBack = getCourseSectionRandomSampleGenerator();
 

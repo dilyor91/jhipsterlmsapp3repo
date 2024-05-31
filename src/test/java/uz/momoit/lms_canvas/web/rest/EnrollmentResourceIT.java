@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.Enrollment;
 import uz.momoit.lms_canvas.domain.enumeration.EnrollmentStatusEnum;
 import uz.momoit.lms_canvas.repository.EnrollmentRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.EnrollmentDTO;
 import uz.momoit.lms_canvas.service.mapper.EnrollmentMapper;
 
@@ -61,6 +63,9 @@ class EnrollmentResourceIT {
     private EnrollmentRepository enrollmentRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private EnrollmentMapper enrollmentMapper;
 
     @Autowired
@@ -70,6 +75,8 @@ class EnrollmentResourceIT {
     private MockMvc restEnrollmentMockMvc;
 
     private Enrollment enrollment;
+
+    private Enrollment insertedEnrollment;
 
     /**
      * Create an entity for this test.
@@ -106,6 +113,14 @@ class EnrollmentResourceIT {
         enrollment = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedEnrollment != null) {
+            enrollmentRepository.delete(insertedEnrollment);
+            insertedEnrollment = null;
+        }
+    }
+
     @Test
     @Transactional
     void createEnrollment() throws Exception {
@@ -126,6 +141,8 @@ class EnrollmentResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedEnrollment = enrollmentMapper.toEntity(returnedEnrollmentDTO);
         assertEnrollmentUpdatableFieldsEquals(returnedEnrollment, getPersistedEnrollment(returnedEnrollment));
+
+        insertedEnrollment = returnedEnrollment;
     }
 
     @Test
@@ -167,7 +184,7 @@ class EnrollmentResourceIT {
     @Transactional
     void getAllEnrollments() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         // Get all the enrollmentList
         restEnrollmentMockMvc
@@ -185,7 +202,7 @@ class EnrollmentResourceIT {
     @Transactional
     void getEnrollment() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         // Get the enrollment
         restEnrollmentMockMvc
@@ -210,7 +227,7 @@ class EnrollmentResourceIT {
     @Transactional
     void putExistingEnrollment() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -304,15 +321,13 @@ class EnrollmentResourceIT {
     @Transactional
     void partialUpdateEnrollmentWithPatch() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the enrollment using partial update
         Enrollment partialUpdatedEnrollment = new Enrollment();
         partialUpdatedEnrollment.setId(enrollment.getId());
-
-        partialUpdatedEnrollment.enrollmentStatus(UPDATED_ENROLLMENT_STATUS).lastActivityAt(UPDATED_LAST_ACTIVITY_AT);
 
         restEnrollmentMockMvc
             .perform(
@@ -335,7 +350,7 @@ class EnrollmentResourceIT {
     @Transactional
     void fullUpdateEnrollmentWithPatch() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -429,7 +444,7 @@ class EnrollmentResourceIT {
     @Transactional
     void deleteEnrollment() throws Exception {
         // Initialize the database
-        enrollmentRepository.saveAndFlush(enrollment);
+        insertedEnrollment = enrollmentRepository.saveAndFlush(enrollment);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

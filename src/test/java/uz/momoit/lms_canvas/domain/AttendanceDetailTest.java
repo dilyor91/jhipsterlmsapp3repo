@@ -24,7 +24,7 @@ class AttendanceDetailTest {
     }
 
     @Test
-    void attendanceTest() throws Exception {
+    void attendanceTest() {
         AttendanceDetail attendanceDetail = getAttendanceDetailRandomSampleGenerator();
         Attendance attendanceBack = getAttendanceRandomSampleGenerator();
 

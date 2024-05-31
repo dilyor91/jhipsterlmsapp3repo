@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { IStudyAcademicYear } from 'app/entities/study-academic-year/study-academic-year.model';
+import { StudyAcademicYearService } from 'app/entities/study-academic-year/service/study-academic-year.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
 import { IFaculty } from 'app/entities/faculty/faculty.model';
@@ -37,6 +39,7 @@ export class StudentUpdateComponent implements OnInit {
   educationTypeValues = Object.keys(EducationType);
   educationFormValues = Object.keys(EducationForm);
 
+  studyAcademicYearsCollection: IStudyAcademicYear[] = [];
   usersSharedCollection: IUser[] = [];
   facultiesSharedCollection: IFaculty[] = [];
   specialitiesSharedCollection: ISpeciality[] = [];
@@ -44,6 +47,7 @@ export class StudentUpdateComponent implements OnInit {
 
   protected studentService = inject(StudentService);
   protected studentFormService = inject(StudentFormService);
+  protected studyAcademicYearService = inject(StudyAcademicYearService);
   protected userService = inject(UserService);
   protected facultyService = inject(FacultyService);
   protected specialityService = inject(SpecialityService);
@@ -52,6 +56,9 @@ export class StudentUpdateComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: StudentFormGroup = this.studentFormService.createStudentFormGroup();
+
+  compareStudyAcademicYear = (o1: IStudyAcademicYear | null, o2: IStudyAcademicYear | null): boolean =>
+    this.studyAcademicYearService.compareStudyAcademicYear(o1, o2);
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
@@ -109,6 +116,10 @@ export class StudentUpdateComponent implements OnInit {
     this.student = student;
     this.studentFormService.resetForm(this.editForm, student);
 
+    this.studyAcademicYearsCollection = this.studyAcademicYearService.addStudyAcademicYearToCollectionIfMissing<IStudyAcademicYear>(
+      this.studyAcademicYearsCollection,
+      student.studyAcademicYear,
+    );
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, student.user);
     this.facultiesSharedCollection = this.facultyService.addFacultyToCollectionIfMissing<IFaculty>(
       this.facultiesSharedCollection,
@@ -122,6 +133,19 @@ export class StudentUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.studyAcademicYearService
+      .query({ filter: 'student-is-null' })
+      .pipe(map((res: HttpResponse<IStudyAcademicYear[]>) => res.body ?? []))
+      .pipe(
+        map((studyAcademicYears: IStudyAcademicYear[]) =>
+          this.studyAcademicYearService.addStudyAcademicYearToCollectionIfMissing<IStudyAcademicYear>(
+            studyAcademicYears,
+            this.student?.studyAcademicYear,
+          ),
+        ),
+      )
+      .subscribe((studyAcademicYears: IStudyAcademicYear[]) => (this.studyAcademicYearsCollection = studyAcademicYears));
+
     this.userService
       .query()
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))

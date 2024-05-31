@@ -83,10 +83,6 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "academicYear",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "course",
       "fieldType": "Integer"
     },
@@ -113,6 +109,12 @@
   "name": "Student",
   "pagination": "pagination",
   "relationships": [
+    {
+      "otherEntityName": "studyAcademicYear",
+      "relationshipName": "studyAcademicYear",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
     {
       "otherEntityName": "user",
       "relationshipName": "user",
