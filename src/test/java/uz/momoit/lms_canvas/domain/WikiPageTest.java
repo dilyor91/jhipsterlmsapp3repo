@@ -24,7 +24,7 @@ class WikiPageTest {
     }
 
     @Test
-    void courseTest() throws Exception {
+    void courseTest() {
         WikiPage wikiPage = getWikiPageRandomSampleGenerator();
         Course courseBack = getCourseRandomSampleGenerator();
 

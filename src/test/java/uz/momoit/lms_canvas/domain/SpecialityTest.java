@@ -24,7 +24,7 @@ class SpecialityTest {
     }
 
     @Test
-    void facultyTest() throws Exception {
+    void facultyTest() {
         Speciality speciality = getSpecialityRandomSampleGenerator();
         Faculty facultyBack = getFacultyRandomSampleGenerator();
 

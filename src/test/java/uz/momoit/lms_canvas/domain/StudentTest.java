@@ -5,6 +5,7 @@ import static uz.momoit.lms_canvas.domain.FacultyTestSamples.*;
 import static uz.momoit.lms_canvas.domain.GroupTestSamples.*;
 import static uz.momoit.lms_canvas.domain.SpecialityTestSamples.*;
 import static uz.momoit.lms_canvas.domain.StudentTestSamples.*;
+import static uz.momoit.lms_canvas.domain.StudyAcademicYearTestSamples.*;
 
 import org.junit.jupiter.api.Test;
 import uz.momoit.lms_canvas.web.rest.TestUtil;
@@ -26,7 +27,19 @@ class StudentTest {
     }
 
     @Test
-    void facultyTest() throws Exception {
+    void studyAcademicYearTest() {
+        Student student = getStudentRandomSampleGenerator();
+        StudyAcademicYear studyAcademicYearBack = getStudyAcademicYearRandomSampleGenerator();
+
+        student.setStudyAcademicYear(studyAcademicYearBack);
+        assertThat(student.getStudyAcademicYear()).isEqualTo(studyAcademicYearBack);
+
+        student.studyAcademicYear(null);
+        assertThat(student.getStudyAcademicYear()).isNull();
+    }
+
+    @Test
+    void facultyTest() {
         Student student = getStudentRandomSampleGenerator();
         Faculty facultyBack = getFacultyRandomSampleGenerator();
 
@@ -38,7 +51,7 @@ class StudentTest {
     }
 
     @Test
-    void specialityTest() throws Exception {
+    void specialityTest() {
         Student student = getStudentRandomSampleGenerator();
         Speciality specialityBack = getSpecialityRandomSampleGenerator();
 
@@ -50,7 +63,7 @@ class StudentTest {
     }
 
     @Test
-    void groupTest() throws Exception {
+    void groupTest() {
         Student student = getStudentRandomSampleGenerator();
         Group groupBack = getGroupRandomSampleGenerator();
 

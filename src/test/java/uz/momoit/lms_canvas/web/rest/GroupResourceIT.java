@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ class GroupResourceIT {
 
     private Group group;
 
+    private Group insertedGroup;
+
     /**
      * Create an entity for this test.
      *
@@ -86,6 +89,14 @@ class GroupResourceIT {
         group = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedGroup != null) {
+            groupRepository.delete(insertedGroup);
+            insertedGroup = null;
+        }
+    }
+
     @Test
     @Transactional
     void createGroup() throws Exception {
@@ -106,6 +117,8 @@ class GroupResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedGroup = groupMapper.toEntity(returnedGroupDTO);
         assertGroupUpdatableFieldsEquals(returnedGroup, getPersistedGroup(returnedGroup));
+
+        insertedGroup = returnedGroup;
     }
 
     @Test
@@ -130,7 +143,7 @@ class GroupResourceIT {
     @Transactional
     void getAllGroups() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         // Get all the groupList
         restGroupMockMvc
@@ -145,7 +158,7 @@ class GroupResourceIT {
     @Transactional
     void getGroup() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         // Get the group
         restGroupMockMvc
@@ -167,7 +180,7 @@ class GroupResourceIT {
     @Transactional
     void putExistingGroup() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -253,7 +266,7 @@ class GroupResourceIT {
     @Transactional
     void partialUpdateGroupWithPatch() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -281,7 +294,7 @@ class GroupResourceIT {
     @Transactional
     void fullUpdateGroupWithPatch() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -371,7 +384,7 @@ class GroupResourceIT {
     @Transactional
     void deleteGroup() throws Exception {
         // Initialize the database
-        groupRepository.saveAndFlush(group);
+        insertedGroup = groupRepository.saveAndFlush(group);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

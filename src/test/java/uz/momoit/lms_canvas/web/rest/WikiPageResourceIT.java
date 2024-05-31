@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,8 @@ class WikiPageResourceIT {
 
     private WikiPage wikiPage;
 
+    private WikiPage insertedWikiPage;
+
     /**
      * Create an entity for this test.
      *
@@ -126,6 +129,14 @@ class WikiPageResourceIT {
         wikiPage = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedWikiPage != null) {
+            wikiPageRepository.delete(insertedWikiPage);
+            insertedWikiPage = null;
+        }
+    }
+
     @Test
     @Transactional
     void createWikiPage() throws Exception {
@@ -146,6 +157,8 @@ class WikiPageResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedWikiPage = wikiPageMapper.toEntity(returnedWikiPageDTO);
         assertWikiPageUpdatableFieldsEquals(returnedWikiPage, getPersistedWikiPage(returnedWikiPage));
+
+        insertedWikiPage = returnedWikiPage;
     }
 
     @Test
@@ -170,7 +183,7 @@ class WikiPageResourceIT {
     @Transactional
     void getAllWikiPages() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         // Get all the wikiPageList
         restWikiPageMockMvc
@@ -192,7 +205,7 @@ class WikiPageResourceIT {
     @Transactional
     void getWikiPage() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         // Get the wikiPage
         restWikiPageMockMvc
@@ -221,7 +234,7 @@ class WikiPageResourceIT {
     @Transactional
     void putExistingWikiPage() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -319,7 +332,7 @@ class WikiPageResourceIT {
     @Transactional
     void partialUpdateWikiPageWithPatch() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -327,7 +340,7 @@ class WikiPageResourceIT {
         WikiPage partialUpdatedWikiPage = new WikiPage();
         partialUpdatedWikiPage.setId(wikiPage.getId());
 
-        partialUpdatedWikiPage.whoAllowed(UPDATED_WHO_ALLOWED).publishedAt(UPDATED_PUBLISHED_AT);
+        partialUpdatedWikiPage.publishedAt(UPDATED_PUBLISHED_AT);
 
         restWikiPageMockMvc
             .perform(
@@ -347,7 +360,7 @@ class WikiPageResourceIT {
     @Transactional
     void fullUpdateWikiPageWithPatch() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -445,7 +458,7 @@ class WikiPageResourceIT {
     @Transactional
     void deleteWikiPage() throws Exception {
         // Initialize the database
-        wikiPageRepository.saveAndFlush(wikiPage);
+        insertedWikiPage = wikiPageRepository.saveAndFlush(wikiPage);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.CalendarEvent;
 import uz.momoit.lms_canvas.domain.enumeration.EventFrequency;
 import uz.momoit.lms_canvas.repository.CalendarEventRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.CalendarEventDTO;
 import uz.momoit.lms_canvas.service.mapper.CalendarEventMapper;
 
@@ -73,6 +75,9 @@ class CalendarEventResourceIT {
     private CalendarEventRepository calendarEventRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private CalendarEventMapper calendarEventMapper;
 
     @Autowired
@@ -82,6 +87,8 @@ class CalendarEventResourceIT {
     private MockMvc restCalendarEventMockMvc;
 
     private CalendarEvent calendarEvent;
+
+    private CalendarEvent insertedCalendarEvent;
 
     /**
      * Create an entity for this test.
@@ -126,6 +133,14 @@ class CalendarEventResourceIT {
         calendarEvent = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedCalendarEvent != null) {
+            calendarEventRepository.delete(insertedCalendarEvent);
+            insertedCalendarEvent = null;
+        }
+    }
+
     @Test
     @Transactional
     void createCalendarEvent() throws Exception {
@@ -146,6 +161,8 @@ class CalendarEventResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedCalendarEvent = calendarEventMapper.toEntity(returnedCalendarEventDTO);
         assertCalendarEventUpdatableFieldsEquals(returnedCalendarEvent, getPersistedCalendarEvent(returnedCalendarEvent));
+
+        insertedCalendarEvent = returnedCalendarEvent;
     }
 
     @Test
@@ -170,7 +187,7 @@ class CalendarEventResourceIT {
     @Transactional
     void getAllCalendarEvents() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         // Get all the calendarEventList
         restCalendarEventMockMvc
@@ -192,7 +209,7 @@ class CalendarEventResourceIT {
     @Transactional
     void getCalendarEvent() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         // Get the calendarEvent
         restCalendarEventMockMvc
@@ -221,7 +238,7 @@ class CalendarEventResourceIT {
     @Transactional
     void putExistingCalendarEvent() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -319,7 +336,7 @@ class CalendarEventResourceIT {
     @Transactional
     void partialUpdateCalendarEventWithPatch() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -327,11 +344,7 @@ class CalendarEventResourceIT {
         CalendarEvent partialUpdatedCalendarEvent = new CalendarEvent();
         partialUpdatedCalendarEvent.setId(calendarEvent.getId());
 
-        partialUpdatedCalendarEvent
-            .title(UPDATED_TITLE)
-            .date(UPDATED_DATE)
-            .startTime(UPDATED_START_TIME)
-            .eventFrequency(UPDATED_EVENT_FREQUENCY);
+        partialUpdatedCalendarEvent.title(UPDATED_TITLE).endTime(UPDATED_END_TIME).eventFrequency(UPDATED_EVENT_FREQUENCY);
 
         restCalendarEventMockMvc
             .perform(
@@ -354,7 +367,7 @@ class CalendarEventResourceIT {
     @Transactional
     void fullUpdateCalendarEventWithPatch() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -452,7 +465,7 @@ class CalendarEventResourceIT {
     @Transactional
     void deleteCalendarEvent() throws Exception {
         // Initialize the database
-        calendarEventRepository.saveAndFlush(calendarEvent);
+        insertedCalendarEvent = calendarEventRepository.saveAndFlush(calendarEvent);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

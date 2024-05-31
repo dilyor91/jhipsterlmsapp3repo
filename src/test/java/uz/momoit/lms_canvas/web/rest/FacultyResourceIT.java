@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ class FacultyResourceIT {
 
     private Faculty faculty;
 
+    private Faculty insertedFaculty;
+
     /**
      * Create an entity for this test.
      *
@@ -86,6 +89,14 @@ class FacultyResourceIT {
         faculty = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedFaculty != null) {
+            facultyRepository.delete(insertedFaculty);
+            insertedFaculty = null;
+        }
+    }
+
     @Test
     @Transactional
     void createFaculty() throws Exception {
@@ -106,6 +117,8 @@ class FacultyResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedFaculty = facultyMapper.toEntity(returnedFacultyDTO);
         assertFacultyUpdatableFieldsEquals(returnedFaculty, getPersistedFaculty(returnedFaculty));
+
+        insertedFaculty = returnedFaculty;
     }
 
     @Test
@@ -130,7 +143,7 @@ class FacultyResourceIT {
     @Transactional
     void getAllFaculties() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         // Get all the facultyList
         restFacultyMockMvc
@@ -145,7 +158,7 @@ class FacultyResourceIT {
     @Transactional
     void getFaculty() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         // Get the faculty
         restFacultyMockMvc
@@ -167,7 +180,7 @@ class FacultyResourceIT {
     @Transactional
     void putExistingFaculty() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -253,15 +266,13 @@ class FacultyResourceIT {
     @Transactional
     void partialUpdateFacultyWithPatch() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the faculty using partial update
         Faculty partialUpdatedFaculty = new Faculty();
         partialUpdatedFaculty.setId(faculty.getId());
-
-        partialUpdatedFaculty.name(UPDATED_NAME);
 
         restFacultyMockMvc
             .perform(
@@ -281,7 +292,7 @@ class FacultyResourceIT {
     @Transactional
     void fullUpdateFacultyWithPatch() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -371,7 +382,7 @@ class FacultyResourceIT {
     @Transactional
     void deleteFaculty() throws Exception {
         // Initialize the database
-        facultyRepository.saveAndFlush(faculty);
+        insertedFaculty = facultyRepository.saveAndFlush(faculty);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

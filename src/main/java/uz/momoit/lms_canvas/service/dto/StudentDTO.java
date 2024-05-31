@@ -58,8 +58,6 @@ public class StudentDTO implements Serializable {
 
     private String addressLine;
 
-    private String academicYear;
-
     private Integer course;
 
     private Integer semester;
@@ -69,6 +67,8 @@ public class StudentDTO implements Serializable {
     private EducationType educationType;
 
     private EducationForm educationForm;
+
+    private StudyAcademicYearDTO studyAcademicYear;
 
     private UserDTO user;
 
@@ -222,14 +222,6 @@ public class StudentDTO implements Serializable {
         this.addressLine = addressLine;
     }
 
-    public String getAcademicYear() {
-        return academicYear;
-    }
-
-    public void setAcademicYear(String academicYear) {
-        this.academicYear = academicYear;
-    }
-
     public Integer getCourse() {
         return course;
     }
@@ -268,6 +260,14 @@ public class StudentDTO implements Serializable {
 
     public void setEducationForm(EducationForm educationForm) {
         this.educationForm = educationForm;
+    }
+
+    public StudyAcademicYearDTO getStudyAcademicYear() {
+        return studyAcademicYear;
+    }
+
+    public void setStudyAcademicYear(StudyAcademicYearDTO studyAcademicYear) {
+        this.studyAcademicYear = studyAcademicYear;
     }
 
     public UserDTO getUser() {
@@ -345,12 +345,12 @@ public class StudentDTO implements Serializable {
             ", city='" + getCity() + "'" +
             ", region='" + getRegion() + "'" +
             ", addressLine='" + getAddressLine() + "'" +
-            ", academicYear='" + getAcademicYear() + "'" +
             ", course=" + getCourse() +
             ", semester=" + getSemester() +
             ", educationLanguage='" + getEducationLanguage() + "'" +
             ", educationType='" + getEducationType() + "'" +
             ", educationForm='" + getEducationForm() + "'" +
+            ", studyAcademicYear=" + getStudyAcademicYear() +
             ", user=" + getUser() +
             ", faculty=" + getFaculty() +
             ", speciality=" + getSpeciality() +

@@ -1,3 +1,4 @@
+import { IStudyAcademicYear } from 'app/entities/study-academic-year/study-academic-year.model';
 import { IUser } from 'app/entities/user/user.model';
 import { IFaculty } from 'app/entities/faculty/faculty.model';
 import { ISpeciality } from 'app/entities/speciality/speciality.model';
@@ -26,12 +27,12 @@ export interface IStudent {
   city?: string | null;
   region?: string | null;
   addressLine?: string | null;
-  academicYear?: string | null;
   course?: number | null;
   semester?: number | null;
   educationLanguage?: keyof typeof EducationLanguage | null;
   educationType?: keyof typeof EducationType | null;
   educationForm?: keyof typeof EducationForm | null;
+  studyAcademicYear?: Pick<IStudyAcademicYear, 'id'> | null;
   user?: Pick<IUser, 'id'> | null;
   faculty?: Pick<IFaculty, 'id'> | null;
   speciality?: Pick<ISpeciality, 'id'> | null;

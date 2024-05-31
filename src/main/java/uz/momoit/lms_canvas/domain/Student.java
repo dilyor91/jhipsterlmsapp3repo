@@ -88,9 +88,6 @@ public class Student implements Serializable {
     @Column(name = "address_line")
     private String addressLine;
 
-    @Column(name = "academic_year")
-    private String academicYear;
-
     @Column(name = "course")
     private Integer course;
 
@@ -108,6 +105,11 @@ public class Student implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "education_form")
     private EducationForm educationForm;
+
+    @JsonIgnoreProperties(value = { "student" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private StudyAcademicYear studyAcademicYear;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -359,19 +361,6 @@ public class Student implements Serializable {
         this.addressLine = addressLine;
     }
 
-    public String getAcademicYear() {
-        return this.academicYear;
-    }
-
-    public Student academicYear(String academicYear) {
-        this.setAcademicYear(academicYear);
-        return this;
-    }
-
-    public void setAcademicYear(String academicYear) {
-        this.academicYear = academicYear;
-    }
-
     public Integer getCourse() {
         return this.course;
     }
@@ -435,6 +424,19 @@ public class Student implements Serializable {
 
     public void setEducationForm(EducationForm educationForm) {
         this.educationForm = educationForm;
+    }
+
+    public StudyAcademicYear getStudyAcademicYear() {
+        return this.studyAcademicYear;
+    }
+
+    public void setStudyAcademicYear(StudyAcademicYear studyAcademicYear) {
+        this.studyAcademicYear = studyAcademicYear;
+    }
+
+    public Student studyAcademicYear(StudyAcademicYear studyAcademicYear) {
+        this.setStudyAcademicYear(studyAcademicYear);
+        return this;
     }
 
     public User getUser() {
@@ -530,7 +532,6 @@ public class Student implements Serializable {
             ", city='" + getCity() + "'" +
             ", region='" + getRegion() + "'" +
             ", addressLine='" + getAddressLine() + "'" +
-            ", academicYear='" + getAcademicYear() + "'" +
             ", course=" + getCourse() +
             ", semester=" + getSemester() +
             ", educationLanguage='" + getEducationLanguage() + "'" +

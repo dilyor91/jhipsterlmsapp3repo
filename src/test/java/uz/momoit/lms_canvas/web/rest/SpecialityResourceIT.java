@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ class SpecialityResourceIT {
 
     private Speciality speciality;
 
+    private Speciality insertedSpeciality;
+
     /**
      * Create an entity for this test.
      *
@@ -86,6 +89,14 @@ class SpecialityResourceIT {
         speciality = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedSpeciality != null) {
+            specialityRepository.delete(insertedSpeciality);
+            insertedSpeciality = null;
+        }
+    }
+
     @Test
     @Transactional
     void createSpeciality() throws Exception {
@@ -106,6 +117,8 @@ class SpecialityResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedSpeciality = specialityMapper.toEntity(returnedSpecialityDTO);
         assertSpecialityUpdatableFieldsEquals(returnedSpeciality, getPersistedSpeciality(returnedSpeciality));
+
+        insertedSpeciality = returnedSpeciality;
     }
 
     @Test
@@ -130,7 +143,7 @@ class SpecialityResourceIT {
     @Transactional
     void getAllSpecialities() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         // Get all the specialityList
         restSpecialityMockMvc
@@ -145,7 +158,7 @@ class SpecialityResourceIT {
     @Transactional
     void getSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         // Get the speciality
         restSpecialityMockMvc
@@ -167,7 +180,7 @@ class SpecialityResourceIT {
     @Transactional
     void putExistingSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -257,15 +270,13 @@ class SpecialityResourceIT {
     @Transactional
     void partialUpdateSpecialityWithPatch() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the speciality using partial update
         Speciality partialUpdatedSpeciality = new Speciality();
         partialUpdatedSpeciality.setId(speciality.getId());
-
-        partialUpdatedSpeciality.name(UPDATED_NAME);
 
         restSpecialityMockMvc
             .perform(
@@ -288,7 +299,7 @@ class SpecialityResourceIT {
     @Transactional
     void fullUpdateSpecialityWithPatch() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -378,7 +389,7 @@ class SpecialityResourceIT {
     @Transactional
     void deleteSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        insertedSpeciality = specialityRepository.saveAndFlush(speciality);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

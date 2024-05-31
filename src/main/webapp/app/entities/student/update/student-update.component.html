@@ -201,18 +201,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_academicYear" jhiTranslate="jhipsterlmsapp3App.student.academicYear">Academic Year</label>
-          <input
-            type="text"
-            class="form-control"
-            name="academicYear"
-            id="field_academicYear"
-            data-cy="academicYear"
-            formControlName="academicYear"
-          />
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_course" jhiTranslate="jhipsterlmsapp3App.student.course">Course</label>
           <input type="number" class="form-control" name="course" id="field_course" data-cy="course" formControlName="course" />
         </div>
@@ -268,6 +256,25 @@
             <option [ngValue]="null">{{ 'jhipsterlmsapp3App.EducationForm.null' | translate }}</option>
             @for (educationForm of educationFormValues; track $index) {
               <option [value]="educationForm">{{ 'jhipsterlmsapp3App.EducationForm.' + educationForm | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_studyAcademicYear" jhiTranslate="jhipsterlmsapp3App.student.studyAcademicYear"
+            >Study Academic Year</label
+          >
+          <select
+            class="form-control"
+            id="field_studyAcademicYear"
+            data-cy="studyAcademicYear"
+            name="studyAcademicYear"
+            formControlName="studyAcademicYear"
+            [compareWith]="compareStudyAcademicYear"
+          >
+            <option [ngValue]="null"></option>
+            @for (studyAcademicYearOption of studyAcademicYearsCollection; track $index) {
+              <option [ngValue]="studyAcademicYearOption">{{ studyAcademicYearOption.id }}</option>
             }
           </select>
         </div>

@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -91,6 +92,8 @@ class AnnouncementResourceIT {
 
     private Announcement announcement;
 
+    private Announcement insertedAnnouncement;
+
     /**
      * Create an entity for this test.
      *
@@ -130,6 +133,14 @@ class AnnouncementResourceIT {
         announcement = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedAnnouncement != null) {
+            announcementRepository.delete(insertedAnnouncement);
+            insertedAnnouncement = null;
+        }
+    }
+
     @Test
     @Transactional
     void createAnnouncement() throws Exception {
@@ -150,6 +161,8 @@ class AnnouncementResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedAnnouncement = announcementMapper.toEntity(returnedAnnouncementDTO);
         assertAnnouncementUpdatableFieldsEquals(returnedAnnouncement, getPersistedAnnouncement(returnedAnnouncement));
+
+        insertedAnnouncement = returnedAnnouncement;
     }
 
     @Test
@@ -208,7 +221,7 @@ class AnnouncementResourceIT {
     @Transactional
     void getAllAnnouncements() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         // Get all the announcementList
         restAnnouncementMockMvc
@@ -245,7 +258,7 @@ class AnnouncementResourceIT {
     @Transactional
     void getAnnouncement() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         // Get the announcement
         restAnnouncementMockMvc
@@ -272,7 +285,7 @@ class AnnouncementResourceIT {
     @Transactional
     void putExistingAnnouncement() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -368,7 +381,7 @@ class AnnouncementResourceIT {
     @Transactional
     void partialUpdateAnnouncementWithPatch() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -376,7 +389,7 @@ class AnnouncementResourceIT {
         Announcement partialUpdatedAnnouncement = new Announcement();
         partialUpdatedAnnouncement.setId(announcement.getId());
 
-        partialUpdatedAnnouncement.title(UPDATED_TITLE).content(UPDATED_CONTENT).delayPost(UPDATED_DELAY_POST).postAt(UPDATED_POST_AT);
+        partialUpdatedAnnouncement.title(UPDATED_TITLE);
 
         restAnnouncementMockMvc
             .perform(
@@ -399,7 +412,7 @@ class AnnouncementResourceIT {
     @Transactional
     void fullUpdateAnnouncementWithPatch() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -495,7 +508,7 @@ class AnnouncementResourceIT {
     @Transactional
     void deleteAnnouncement() throws Exception {
         // Initialize the database
-        announcementRepository.saveAndFlush(announcement);
+        insertedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

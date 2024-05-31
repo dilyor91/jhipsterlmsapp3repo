@@ -29,7 +29,6 @@ public class StudentTestSamples {
             .city("city1")
             .region("region1")
             .addressLine("addressLine1")
-            .academicYear("academicYear1")
             .course(1)
             .semester(1);
     }
@@ -52,7 +51,6 @@ public class StudentTestSamples {
             .city("city2")
             .region("region2")
             .addressLine("addressLine2")
-            .academicYear("academicYear2")
             .course(2)
             .semester(2);
     }
@@ -75,7 +73,6 @@ public class StudentTestSamples {
             .city(UUID.randomUUID().toString())
             .region(UUID.randomUUID().toString())
             .addressLine(UUID.randomUUID().toString())
-            .academicYear(UUID.randomUUID().toString())
             .course(intCount.incrementAndGet())
             .semester(intCount.incrementAndGet());
     }

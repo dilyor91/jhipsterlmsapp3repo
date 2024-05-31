@@ -25,7 +25,7 @@ class AttendanceTest {
     }
 
     @Test
-    void courseTest() throws Exception {
+    void courseTest() {
         Attendance attendance = getAttendanceRandomSampleGenerator();
         Course courseBack = getCourseRandomSampleGenerator();
 
@@ -37,7 +37,7 @@ class AttendanceTest {
     }
 
     @Test
-    void courseSectionTest() throws Exception {
+    void courseSectionTest() {
         Attendance attendance = getAttendanceRandomSampleGenerator();
         CourseSection courseSectionBack = getCourseSectionRandomSampleGenerator();
 
