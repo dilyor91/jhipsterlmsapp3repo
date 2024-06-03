@@ -1,16 +1,16 @@
 import { IGroup, NewGroup } from './group.model';
 
 export const sampleWithRequiredData: IGroup = {
-  id: 7419,
+  id: 17262,
 };
 
 export const sampleWithPartialData: IGroup = {
-  id: 6124,
+  id: 27261,
 };
 
 export const sampleWithFullData: IGroup = {
-  id: 492,
-  name: 'uh-huh',
+  id: 384,
+  name: 'whether adventurous ouch',
 };
 
 export const sampleWithNewData: NewGroup = {

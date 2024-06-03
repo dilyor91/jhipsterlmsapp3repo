@@ -96,6 +96,12 @@ public class Teacher implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Faculty faculty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Department department;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -355,6 +361,32 @@ public class Teacher implements Serializable {
 
     public Teacher user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Faculty getFaculty() {
+        return this.faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Teacher faculty(Faculty faculty) {
+        this.setFaculty(faculty);
+        return this;
+    }
+
+    public Department getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Teacher department(Department department) {
+        this.setDepartment(department);
         return this;
     }
 

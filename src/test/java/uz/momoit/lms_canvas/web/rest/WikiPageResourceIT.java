@@ -341,8 +341,7 @@ class WikiPageResourceIT {
         partialUpdatedWikiPage.setId(wikiPage.getId());
 
         partialUpdatedWikiPage
-            .title(UPDATED_TITLE)
-            .addToStudents(UPDATED_ADD_TO_STUDENTS)
+            .content(UPDATED_CONTENT)
             .addToStudentsDate(UPDATED_ADD_TO_STUDENTS_DATE)
             .published(UPDATED_PUBLISHED)
             .notifyUsersChanges(UPDATED_NOTIFY_USERS_CHANGES);

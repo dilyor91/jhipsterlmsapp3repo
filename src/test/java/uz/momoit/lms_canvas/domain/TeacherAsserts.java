@@ -73,5 +73,10 @@ public class TeacherAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertTeacherUpdatableRelationshipsEquals(Teacher expected, Teacher actual) {}
+    public static void assertTeacherUpdatableRelationshipsEquals(Teacher expected, Teacher actual) {
+        assertThat(expected)
+            .as("Verify Teacher relationships")
+            .satisfies(e -> assertThat(e.getFaculty()).as("check faculty").isEqualTo(actual.getFaculty()))
+            .satisfies(e -> assertThat(e.getDepartment()).as("check department").isEqualTo(actual.getDepartment()));
+    }
 }

@@ -61,6 +61,10 @@ public class TeacherDTO implements Serializable {
 
     private UserDTO user;
 
+    private FacultyDTO faculty;
+
+    private DepartmentDTO department;
+
     public Long getId() {
         return id;
     }
@@ -221,6 +225,22 @@ public class TeacherDTO implements Serializable {
         this.user = user;
     }
 
+    public FacultyDTO getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(FacultyDTO faculty) {
+        this.faculty = faculty;
+    }
+
+    public DepartmentDTO getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDTO department) {
+        this.department = department;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -266,6 +286,8 @@ public class TeacherDTO implements Serializable {
             ", academicDegree='" + getAcademicDegree() + "'" +
             ", academicTitle='" + getAcademicTitle() + "'" +
             ", user=" + getUser() +
+            ", faculty=" + getFaculty() +
+            ", department=" + getDepartment() +
             "}";
     }
 }

@@ -36,7 +36,9 @@
       "position": "Position",
       "academicDegree": "Academic Degree",
       "academicTitle": "Academic Title",
-      "user": "User"
+      "user": "User",
+      "faculty": "Faculty",
+      "department": "Department"
     }
   }
 }

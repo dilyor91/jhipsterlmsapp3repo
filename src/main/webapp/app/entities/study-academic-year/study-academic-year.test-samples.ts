@@ -3,17 +3,19 @@ import dayjs from 'dayjs/esm';
 import { IStudyAcademicYear, NewStudyAcademicYear } from './study-academic-year.model';
 
 export const sampleWithRequiredData: IStudyAcademicYear = {
-  id: 26973,
+  id: 15509,
 };
 
 export const sampleWithPartialData: IStudyAcademicYear = {
-  id: 11096,
+  id: 5760,
+  fromDate: dayjs('2024-05-30T05:18'),
+  endDate: dayjs('2024-05-30T05:51'),
 };
 
 export const sampleWithFullData: IStudyAcademicYear = {
-  id: 15869,
-  fromDate: dayjs('2024-05-30T11:55'),
-  endDate: dayjs('2024-05-30T14:20'),
+  id: 22606,
+  fromDate: dayjs('2024-05-30T18:38'),
+  endDate: dayjs('2024-05-31T01:07'),
 };
 
 export const sampleWithNewData: NewStudyAcademicYear = {

@@ -65,10 +65,10 @@ describe('Student Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call studyAcademicYear query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const studyAcademicYear: IStudyAcademicYear = { id: 18594 };
+      const studyAcademicYear: IStudyAcademicYear = { id: 5316 };
       student.studyAcademicYear = studyAcademicYear;
 
-      const studyAcademicYearCollection: IStudyAcademicYear[] = [{ id: 22948 }];
+      const studyAcademicYearCollection: IStudyAcademicYear[] = [{ id: 30231 }];
       jest.spyOn(studyAcademicYearService, 'query').mockReturnValue(of(new HttpResponse({ body: studyAcademicYearCollection })));
       const expectedCollection: IStudyAcademicYear[] = [studyAcademicYear, ...studyAcademicYearCollection];
       jest.spyOn(studyAcademicYearService, 'addStudyAcademicYearToCollectionIfMissing').mockReturnValue(expectedCollection);
@@ -86,10 +86,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const user: IUser = { id: 880 };
+      const user: IUser = { id: 29682 };
       student.user = user;
 
-      const userCollection: IUser[] = [{ id: 23101 }];
+      const userCollection: IUser[] = [{ id: 17276 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -108,10 +108,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Faculty query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const faculty: IFaculty = { id: 27292 };
+      const faculty: IFaculty = { id: 837 };
       student.faculty = faculty;
 
-      const facultyCollection: IFaculty[] = [{ id: 196 }];
+      const facultyCollection: IFaculty[] = [{ id: 12453 }];
       jest.spyOn(facultyService, 'query').mockReturnValue(of(new HttpResponse({ body: facultyCollection })));
       const additionalFaculties = [faculty];
       const expectedCollection: IFaculty[] = [...additionalFaculties, ...facultyCollection];
@@ -130,10 +130,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Speciality query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const speciality: ISpeciality = { id: 21962 };
+      const speciality: ISpeciality = { id: 4399 };
       student.speciality = speciality;
 
-      const specialityCollection: ISpeciality[] = [{ id: 13128 }];
+      const specialityCollection: ISpeciality[] = [{ id: 31650 }];
       jest.spyOn(specialityService, 'query').mockReturnValue(of(new HttpResponse({ body: specialityCollection })));
       const additionalSpecialities = [speciality];
       const expectedCollection: ISpeciality[] = [...additionalSpecialities, ...specialityCollection];
@@ -152,10 +152,10 @@ describe('Student Management Update Component', () => {
 
     it('Should call Group query and add missing value', () => {
       const student: IStudent = { id: 456 };
-      const group: IGroup = { id: 13053 };
+      const group: IGroup = { id: 7851 };
       student.group = group;
 
-      const groupCollection: IGroup[] = [{ id: 29845 }];
+      const groupCollection: IGroup[] = [{ id: 22927 }];
       jest.spyOn(groupService, 'query').mockReturnValue(of(new HttpResponse({ body: groupCollection })));
       const additionalGroups = [group];
       const expectedCollection: IGroup[] = [...additionalGroups, ...groupCollection];
@@ -174,15 +174,15 @@ describe('Student Management Update Component', () => {
 
     it('Should update editForm', () => {
       const student: IStudent = { id: 456 };
-      const studyAcademicYear: IStudyAcademicYear = { id: 20984 };
+      const studyAcademicYear: IStudyAcademicYear = { id: 26636 };
       student.studyAcademicYear = studyAcademicYear;
-      const user: IUser = { id: 14394 };
+      const user: IUser = { id: 1710 };
       student.user = user;
-      const faculty: IFaculty = { id: 14014 };
+      const faculty: IFaculty = { id: 22776 };
       student.faculty = faculty;
-      const speciality: ISpeciality = { id: 25941 };
+      const speciality: ISpeciality = { id: 9385 };
       student.speciality = speciality;
-      const group: IGroup = { id: 5164 };
+      const group: IGroup = { id: 15666 };
       student.group = group;
 
       activatedRoute.data = of({ student });

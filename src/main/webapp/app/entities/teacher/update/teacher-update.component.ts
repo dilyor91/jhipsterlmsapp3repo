@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
+import { IFaculty } from 'app/entities/faculty/faculty.model';
+import { FacultyService } from 'app/entities/faculty/service/faculty.service';
+import { IDepartment } from 'app/entities/department/department.model';
+import { DepartmentService } from 'app/entities/department/service/department.service';
 import { GenderEnum } from 'app/entities/enumerations/gender-enum.model';
 import { PositionEnum } from 'app/entities/enumerations/position-enum.model';
 import { AcademicDegreeEnum } from 'app/entities/enumerations/academic-degree-enum.model';
@@ -32,16 +36,24 @@ export class TeacherUpdateComponent implements OnInit {
   academicTitleEnumValues = Object.keys(AcademicTitleEnum);
 
   usersSharedCollection: IUser[] = [];
+  facultiesSharedCollection: IFaculty[] = [];
+  departmentsSharedCollection: IDepartment[] = [];
 
   protected teacherService = inject(TeacherService);
   protected teacherFormService = inject(TeacherFormService);
   protected userService = inject(UserService);
+  protected facultyService = inject(FacultyService);
+  protected departmentService = inject(DepartmentService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: TeacherFormGroup = this.teacherFormService.createTeacherFormGroup();
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+
+  compareFaculty = (o1: IFaculty | null, o2: IFaculty | null): boolean => this.facultyService.compareFaculty(o1, o2);
+
+  compareDepartment = (o1: IDepartment | null, o2: IDepartment | null): boolean => this.departmentService.compareDepartment(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ teacher }) => {
@@ -92,6 +104,14 @@ export class TeacherUpdateComponent implements OnInit {
     this.teacherFormService.resetForm(this.editForm, teacher);
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, teacher.user);
+    this.facultiesSharedCollection = this.facultyService.addFacultyToCollectionIfMissing<IFaculty>(
+      this.facultiesSharedCollection,
+      teacher.faculty,
+    );
+    this.departmentsSharedCollection = this.departmentService.addDepartmentToCollectionIfMissing<IDepartment>(
+      this.departmentsSharedCollection,
+      teacher.department,
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -100,5 +120,21 @@ export class TeacherUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.teacher?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.facultyService
+      .query()
+      .pipe(map((res: HttpResponse<IFaculty[]>) => res.body ?? []))
+      .pipe(map((faculties: IFaculty[]) => this.facultyService.addFacultyToCollectionIfMissing<IFaculty>(faculties, this.teacher?.faculty)))
+      .subscribe((faculties: IFaculty[]) => (this.facultiesSharedCollection = faculties));
+
+    this.departmentService
+      .query()
+      .pipe(map((res: HttpResponse<IDepartment[]>) => res.body ?? []))
+      .pipe(
+        map((departments: IDepartment[]) =>
+          this.departmentService.addDepartmentToCollectionIfMissing<IDepartment>(departments, this.teacher?.department),
+        ),
+      )
+      .subscribe((departments: IDepartment[]) => (this.departmentsSharedCollection = departments));
   }
 }

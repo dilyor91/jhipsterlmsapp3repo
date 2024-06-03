@@ -39,6 +39,8 @@ describe('Teacher Form Service', () => {
             academicDegree: expect.any(Object),
             academicTitle: expect.any(Object),
             user: expect.any(Object),
+            faculty: expect.any(Object),
+            department: expect.any(Object),
           }),
         );
       });
@@ -68,6 +70,8 @@ describe('Teacher Form Service', () => {
             academicDegree: expect.any(Object),
             academicTitle: expect.any(Object),
             user: expect.any(Object),
+            faculty: expect.any(Object),
+            department: expect.any(Object),
           }),
         );
       });
