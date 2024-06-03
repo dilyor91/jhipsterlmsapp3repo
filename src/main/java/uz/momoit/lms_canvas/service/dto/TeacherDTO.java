@@ -59,6 +59,8 @@ public class TeacherDTO implements Serializable {
 
     private AcademicTitleEnum academicTitle;
 
+    private UserDTO user;
+
     public Long getId() {
         return id;
     }
@@ -211,6 +213,14 @@ public class TeacherDTO implements Serializable {
         this.academicTitle = academicTitle;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -255,6 +265,7 @@ public class TeacherDTO implements Serializable {
             ", position='" + getPosition() + "'" +
             ", academicDegree='" + getAcademicDegree() + "'" +
             ", academicTitle='" + getAcademicTitle() + "'" +
+            ", user=" + getUser() +
             "}";
     }
 }

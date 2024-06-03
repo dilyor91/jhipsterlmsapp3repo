@@ -92,6 +92,10 @@ public class Teacher implements Serializable {
     @Column(name = "academic_title")
     private AcademicTitleEnum academicTitle;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -339,6 +343,19 @@ public class Teacher implements Serializable {
 
     public void setAcademicTitle(AcademicTitleEnum academicTitle) {
         this.academicTitle = academicTitle;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Teacher user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

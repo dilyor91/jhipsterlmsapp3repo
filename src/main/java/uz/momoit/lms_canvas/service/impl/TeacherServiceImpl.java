@@ -1,11 +1,10 @@
 package uz.momoit.lms_canvas.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.domain.Teacher;
@@ -65,9 +64,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TeacherDTO> findAll() {
+    public Page<TeacherDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Teachers");
-        return teacherRepository.findAll().stream().map(teacherMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return teacherRepository.findAll(pageable).map(teacherMapper::toDto);
     }
 
     @Override

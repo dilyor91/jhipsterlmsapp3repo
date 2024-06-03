@@ -102,6 +102,10 @@
               { null: '', ILMIY_UNVONSIZ: 'ILMIY_UNVONSIZ', DOTSENT: 'DOTSENT', PROFESSOR: 'PROFESSOR' }[teacher()!.academicTitle ?? 'null']
             }}</span>
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.teacher.user">User</span></dt>
+          <dd>
+            <span>{{ teacher()!.user?.id }}</span>
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -1,3 +1,4 @@
+import { IUser } from 'app/entities/user/user.model';
 import { GenderEnum } from 'app/entities/enumerations/gender-enum.model';
 import { PositionEnum } from 'app/entities/enumerations/position-enum.model';
 import { AcademicDegreeEnum } from 'app/entities/enumerations/academic-degree-enum.model';
@@ -23,6 +24,7 @@ export interface ITeacher {
   position?: keyof typeof PositionEnum | null;
   academicDegree?: keyof typeof AcademicDegreeEnum | null;
   academicTitle?: keyof typeof AcademicTitleEnum | null;
+  user?: Pick<IUser, 'id'> | null;
 }
 
 export type NewTeacher = Omit<ITeacher, 'id'> & { id: null };
