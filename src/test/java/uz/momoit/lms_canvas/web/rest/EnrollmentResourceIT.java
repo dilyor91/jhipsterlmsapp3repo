@@ -329,6 +329,11 @@ class EnrollmentResourceIT {
         Enrollment partialUpdatedEnrollment = new Enrollment();
         partialUpdatedEnrollment.setId(enrollment.getId());
 
+        partialUpdatedEnrollment
+            .lastActivityAt(UPDATED_LAST_ACTIVITY_AT)
+            .enrollmentStartAt(UPDATED_ENROLLMENT_START_AT)
+            .enrollmentEndAt(UPDATED_ENROLLMENT_END_AT);
+
         restEnrollmentMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedEnrollment.getId())

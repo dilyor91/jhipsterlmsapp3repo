@@ -49,10 +49,10 @@ describe('WikiPage Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Course query and add missing value', () => {
       const wikiPage: IWikiPage = { id: 456 };
-      const course: ICourse = { id: 25384 };
+      const course: ICourse = { id: 23288 };
       wikiPage.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 32088 }];
+      const courseCollection: ICourse[] = [{ id: 19204 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -71,7 +71,7 @@ describe('WikiPage Management Update Component', () => {
 
     it('Should update editForm', () => {
       const wikiPage: IWikiPage = { id: 456 };
-      const course: ICourse = { id: 3992 };
+      const course: ICourse = { id: 20845 };
       wikiPage.course = course;
 
       activatedRoute.data = of({ wikiPage });
