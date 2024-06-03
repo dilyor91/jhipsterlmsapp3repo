@@ -3,17 +3,16 @@ import dayjs from 'dayjs/esm';
 import { IAttendance, NewAttendance } from './attendance.model';
 
 export const sampleWithRequiredData: IAttendance = {
-  id: 2328,
+  id: 5891,
 };
 
 export const sampleWithPartialData: IAttendance = {
-  id: 30197,
-  attendanceDate: dayjs('2024-05-27T04:21'),
+  id: 15511,
 };
 
 export const sampleWithFullData: IAttendance = {
-  id: 12666,
-  attendanceDate: dayjs('2024-05-27T01:53'),
+  id: 959,
+  attendanceDate: dayjs('2024-05-26T14:49'),
 };
 
 export const sampleWithNewData: NewAttendance = {

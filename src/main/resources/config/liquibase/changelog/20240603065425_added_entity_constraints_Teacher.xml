@@ -16,5 +16,19 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="faculty_id"
+                                 baseTableName="teacher"
+                                 constraintName="fk_teacher__faculty_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="faculty"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="teacher"
+                                 constraintName="fk_teacher__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"
+                                 />
     </changeSet>
 </databaseChangeLog>

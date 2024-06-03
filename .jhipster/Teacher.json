@@ -97,6 +97,18 @@
       "relationshipName": "user",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "faculty",
+      "relationshipName": "faculty",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "department",
+      "relationshipName": "department",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

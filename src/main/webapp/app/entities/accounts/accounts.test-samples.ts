@@ -1,47 +1,46 @@
 import { IAccounts, NewAccounts } from './accounts.model';
 
 export const sampleWithRequiredData: IAccounts = {
-  id: 22655,
-  username: 'hence beautifully uh-huh',
-  fullName: 'aw meh amid',
-  sortableName: 'beside inaugurate whoever',
-  phone: '1-716-865-3881 x8185',
-  gender: 'nourishment stick',
-  userType: 'TEACHER',
-  userStatus: 'BLOCKED',
+  id: 15803,
+  username: 'lest',
+  fullName: 'queasily voluntarily granola',
+  sortableName: 'declassify',
+  phone: '1-679-301-0876',
+  gender: 'supervisor playwright',
+  userType: 'STUDENT',
+  userStatus: 'ACTIVE',
 };
 
 export const sampleWithPartialData: IAccounts = {
-  id: 252,
-  username: 'sightseeing great-grandfather',
-  fullName: 'yowza muddy',
-  sortableName: 'regionalism failing',
-  avatarImageUrl: 'subsist',
-  phone: '588-306-6970 x36143',
-  gender: 'importune',
+  id: 8213,
+  username: 'protection',
+  fullName: 'warlike heavenly',
+  sortableName: 'gloss',
+  phone: '(945) 697-8839 x965',
+  gender: 'than why',
+  userType: 'TEACHER',
+  userStatus: 'PENDING',
+};
+
+export const sampleWithFullData: IAccounts = {
+  id: 15178,
+  username: 'demonise any',
+  fullName: 'gosling',
+  sortableName: 'useful',
+  avatarImageUrl: 'assist ruddy',
+  phone: '(661) 266-6292',
+  locale: 'immediately wrong unlike',
+  gender: 'lined',
   userType: 'STUDENT',
   userStatus: 'BLOCKED',
 };
 
-export const sampleWithFullData: IAccounts = {
-  id: 9481,
-  username: 'only dearly by',
-  fullName: 'headquarters',
-  sortableName: 'proffer sewer before',
-  avatarImageUrl: 'inborn gosh',
-  phone: '462-555-2713 x55763',
-  locale: 'beautifully happy-go-lucky',
-  gender: 'qua urgently',
-  userType: 'TEACHER',
-  userStatus: 'BLOCKED',
-};
-
 export const sampleWithNewData: NewAccounts = {
-  username: 'boo inventor',
-  fullName: 'intensely after pressurise',
-  sortableName: 'likewise nickname lookout',
-  phone: '786.560.8590 x95770',
-  gender: 'instead',
+  username: 'consolidate',
+  fullName: 'abnormally',
+  sortableName: 'detest required even',
+  phone: '297.387.6237 x597',
+  gender: 'beside unfortunately',
   userType: 'TEACHER',
   userStatus: 'BLOCKED',
   id: null,

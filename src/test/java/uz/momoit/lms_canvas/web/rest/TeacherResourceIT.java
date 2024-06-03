@@ -541,15 +541,14 @@ class TeacherResourceIT {
         partialUpdatedTeacher.setId(teacher.getId());
 
         partialUpdatedTeacher
-            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .middleName(UPDATED_MIDDLE_NAME)
+            .gender(UPDATED_GENDER)
             .birthdate(UPDATED_BIRTHDATE)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .email(UPDATED_EMAIL)
-            .passportNumber(UPDATED_PASSPORT_NUMBER)
+            .jshshir(UPDATED_JSHSHIR)
             .isActive(UPDATED_IS_ACTIVE)
-            .nationality(UPDATED_NATIONALITY)
-            .addressLine(UPDATED_ADDRESS_LINE)
+            .country(UPDATED_COUNTRY)
+            .city(UPDATED_CITY)
             .position(UPDATED_POSITION)
             .academicDegree(UPDATED_ACADEMIC_DEGREE);
 

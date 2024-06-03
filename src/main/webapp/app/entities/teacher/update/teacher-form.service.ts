@@ -37,6 +37,8 @@ type TeacherFormGroupContent = {
   academicDegree: FormControl<ITeacher['academicDegree']>;
   academicTitle: FormControl<ITeacher['academicTitle']>;
   user: FormControl<ITeacher['user']>;
+  faculty: FormControl<ITeacher['faculty']>;
+  department: FormControl<ITeacher['department']>;
 };
 
 export type TeacherFormGroup = FormGroup<TeacherFormGroupContent>;
@@ -89,6 +91,8 @@ export class TeacherFormService {
       academicDegree: new FormControl(teacherRawValue.academicDegree),
       academicTitle: new FormControl(teacherRawValue.academicTitle),
       user: new FormControl(teacherRawValue.user),
+      faculty: new FormControl(teacherRawValue.faculty),
+      department: new FormControl(teacherRawValue.department),
     });
   }
 

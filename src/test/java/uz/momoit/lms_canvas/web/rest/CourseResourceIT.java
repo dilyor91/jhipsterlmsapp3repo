@@ -499,7 +499,12 @@ class CourseResourceIT {
         Course partialUpdatedCourse = new Course();
         partialUpdatedCourse.setId(course.getId());
 
-        partialUpdatedCourse.published(UPDATED_PUBLISHED).selfEnrollmentCode(UPDATED_SELF_ENROLLMENT_CODE);
+        partialUpdatedCourse
+            .courseName(UPDATED_COURSE_NAME)
+            .courseCode(UPDATED_COURSE_CODE)
+            .courseImagePath(UPDATED_COURSE_IMAGE_PATH)
+            .courseStartDate(UPDATED_COURSE_START_DATE)
+            .storageQuota(UPDATED_STORAGE_QUOTA);
 
         restCourseMockMvc
             .perform(

@@ -236,6 +236,40 @@
             }
           </select>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_faculty" jhiTranslate="jhipsterlmsapp3App.teacher.faculty">Faculty</label>
+          <select
+            class="form-control"
+            id="field_faculty"
+            data-cy="faculty"
+            name="faculty"
+            formControlName="faculty"
+            [compareWith]="compareFaculty"
+          >
+            <option [ngValue]="null"></option>
+            @for (facultyOption of facultiesSharedCollection; track $index) {
+              <option [ngValue]="facultyOption">{{ facultyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_department" jhiTranslate="jhipsterlmsapp3App.teacher.department">Department</label>
+          <select
+            class="form-control"
+            id="field_department"
+            data-cy="department"
+            name="department"
+            formControlName="department"
+            [compareWith]="compareDepartment"
+          >
+            <option [ngValue]="null"></option>
+            @for (departmentOption of departmentsSharedCollection; track $index) {
+              <option [ngValue]="departmentOption">{{ departmentOption.id }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <div>

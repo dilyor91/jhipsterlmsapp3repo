@@ -23,7 +23,8 @@
         "speciality": "Speciality",
         "group": "Group",
         "studyAcademicYear": "Study Academic Year",
-        "teacher": "Teacher"
+        "teacher": "Teacher",
+        "department": "Department"
       },
       "account": {
         "main": "Account",

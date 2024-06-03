@@ -344,7 +344,13 @@ class CalendarEventResourceIT {
         CalendarEvent partialUpdatedCalendarEvent = new CalendarEvent();
         partialUpdatedCalendarEvent.setId(calendarEvent.getId());
 
-        partialUpdatedCalendarEvent.title(UPDATED_TITLE).endTime(UPDATED_END_TIME).eventFrequency(UPDATED_EVENT_FREQUENCY);
+        partialUpdatedCalendarEvent
+            .title(UPDATED_TITLE)
+            .content(UPDATED_CONTENT)
+            .date(UPDATED_DATE)
+            .startTime(UPDATED_START_TIME)
+            .location(UPDATED_LOCATION)
+            .eventFrequency(UPDATED_EVENT_FREQUENCY);
 
         restCalendarEventMockMvc
             .perform(

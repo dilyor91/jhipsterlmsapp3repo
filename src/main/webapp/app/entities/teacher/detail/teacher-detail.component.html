@@ -106,6 +106,22 @@
           <dd>
             <span>{{ teacher()!.user?.id }}</span>
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.teacher.faculty">Faculty</span></dt>
+          <dd>
+            @if (teacher()!.faculty) {
+              <div>
+                <a [routerLink]="['/faculty', teacher()!.faculty?.id, 'view']">{{ teacher()!.faculty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.teacher.department">Department</span></dt>
+          <dd>
+            @if (teacher()!.department) {
+              <div>
+                <a [routerLink]="['/department', teacher()!.department?.id, 'view']">{{ teacher()!.department?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

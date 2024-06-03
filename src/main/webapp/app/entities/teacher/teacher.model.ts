@@ -1,4 +1,6 @@
 import { IUser } from 'app/entities/user/user.model';
+import { IFaculty } from 'app/entities/faculty/faculty.model';
+import { IDepartment } from 'app/entities/department/department.model';
 import { GenderEnum } from 'app/entities/enumerations/gender-enum.model';
 import { PositionEnum } from 'app/entities/enumerations/position-enum.model';
 import { AcademicDegreeEnum } from 'app/entities/enumerations/academic-degree-enum.model';
@@ -25,6 +27,8 @@ export interface ITeacher {
   academicDegree?: keyof typeof AcademicDegreeEnum | null;
   academicTitle?: keyof typeof AcademicTitleEnum | null;
   user?: Pick<IUser, 'id'> | null;
+  faculty?: Pick<IFaculty, 'id'> | null;
+  department?: Pick<IDepartment, 'id'> | null;
 }
 
 export type NewTeacher = Omit<ITeacher, 'id'> & { id: null };

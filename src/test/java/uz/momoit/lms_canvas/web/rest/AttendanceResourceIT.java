@@ -284,6 +284,8 @@ class AttendanceResourceIT {
         Attendance partialUpdatedAttendance = new Attendance();
         partialUpdatedAttendance.setId(attendance.getId());
 
+        partialUpdatedAttendance.attendanceDate(UPDATED_ATTENDANCE_DATE);
+
         restAttendanceMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedAttendance.getId())
