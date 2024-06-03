@@ -115,9 +115,54 @@ entity Student {
    educationForm EducationForm
 }
 
+entity Teacher {
+   firstName String required
+   lastName String required
+   middleName String
+   gender GenderEnum required
+   birthdate String required
+   phoneNumber String
+   email String required
+   passportNumber String required
+   jshshir String required
+   isActive Boolean
+   nationality String
+   country String
+   city String
+   region String
+   addressLine String
+   position PositionEnum
+   academicDegree AcademicDegreeEnum
+   academicTitle AcademicTitleEnum
+}
+
 entity StudyAcademicYear {
    fromDate Instant
    endDate Instant
+}
+
+enum PositionEnum {
+  ASSISTENT,
+  KATTA_OQITUVCHI,
+  DOTSENT,
+  PROFESSOR,
+  KAFEDRA_MUDIRI
+}
+
+enum AcademicDegreeEnum {
+   ILMIY_DARAJASIZ,
+   PHD,
+   FAN_DOCTORI
+}
+
+enum AcademicTitleEnum {
+   ILMIY_UNVONSIZ,
+   DOTSENT,
+   PROFESSOR
+}
+
+enum GenderEnum {
+   MALE, FEMALE
 }
 
 enum TutionTypeEnum {
