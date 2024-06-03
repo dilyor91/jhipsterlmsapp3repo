@@ -81,6 +81,11 @@ const routes: Routes = [
     data: { pageTitle: 'jhipsterlmsapp3App.studyAcademicYear.home.title' },
     loadChildren: () => import('./study-academic-year/study-academic-year.routes'),
   },
+  {
+    path: 'teacher',
+    data: { pageTitle: 'jhipsterlmsapp3App.teacher.home.title' },
+    loadChildren: () => import('./teacher/teacher.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

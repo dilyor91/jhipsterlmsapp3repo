@@ -1,0 +1,9 @@
+{
+  "jhipsterlmsapp3App": {
+    "GenderEnum": {
+      "null": "",
+      "MALE": "MALE",
+      "FEMALE": "FEMALE"
+    }
+  }
+}

@@ -53,10 +53,10 @@ describe('Assignment Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Course query and add missing value', () => {
       const assignment: IAssignment = { id: 456 };
-      const course: ICourse = { id: 22050 };
+      const course: ICourse = { id: 19488 };
       assignment.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 16583 }];
+      const courseCollection: ICourse[] = [{ id: 23616 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -75,10 +75,10 @@ describe('Assignment Management Update Component', () => {
 
     it('Should call CourseSection query and add missing value', () => {
       const assignment: IAssignment = { id: 456 };
-      const courseSections: ICourseSection[] = [{ id: 14318 }];
+      const courseSections: ICourseSection[] = [{ id: 27854 }];
       assignment.courseSections = courseSections;
 
-      const courseSectionCollection: ICourseSection[] = [{ id: 13633 }];
+      const courseSectionCollection: ICourseSection[] = [{ id: 22767 }];
       jest.spyOn(courseSectionService, 'query').mockReturnValue(of(new HttpResponse({ body: courseSectionCollection })));
       const additionalCourseSections = [...courseSections];
       const expectedCollection: ICourseSection[] = [...additionalCourseSections, ...courseSectionCollection];
@@ -97,9 +97,9 @@ describe('Assignment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const assignment: IAssignment = { id: 456 };
-      const course: ICourse = { id: 26319 };
+      const course: ICourse = { id: 24442 };
       assignment.course = course;
-      const courseSection: ICourseSection = { id: 9942 };
+      const courseSection: ICourseSection = { id: 18437 };
       assignment.courseSections = [courseSection];
 
       activatedRoute.data = of({ assignment });

@@ -1,0 +1,10 @@
+{
+  "jhipsterlmsapp3App": {
+    "AcademicDegreeEnum": {
+      "null": "",
+      "ILMIY_DARAJASIZ": "ILMIY_DARAJASIZ",
+      "PHD": "PHD",
+      "FAN_DOCTORI": "FAN_DOCTORI"
+    }
+  }
+}

@@ -3,33 +3,31 @@ import dayjs from 'dayjs/esm';
 import { IAssignment, NewAssignment } from './assignment.model';
 
 export const sampleWithRequiredData: IAssignment = {
-  id: 4922,
-  name: 'reckless in dimly',
+  id: 15081,
+  name: 'eek',
 };
 
 export const sampleWithPartialData: IAssignment = {
-  id: 19079,
-  name: 'victimise',
-  points: 24266.99,
-  dueDate: dayjs('2024-05-21T07:03'),
-  published: true,
+  id: 27273,
+  name: 'glass',
+  submissionType: 'ONLINE',
 };
 
 export const sampleWithFullData: IAssignment = {
-  id: 21185,
-  name: 'scuttle italicize',
-  content: 'soliloquy',
-  points: 23379.35,
-  submissionType: 'ONLINE',
-  allowedAttempts: 30487,
-  startDate: dayjs('2024-05-21T09:38'),
-  endDate: dayjs('2024-05-21T17:31'),
-  dueDate: dayjs('2024-05-21T15:16'),
-  published: true,
+  id: 29071,
+  name: 'perfumed rave',
+  content: 'curly tense',
+  points: 31370.57,
+  submissionType: 'PAPER',
+  allowedAttempts: 25042,
+  startDate: dayjs('2024-05-21T19:11'),
+  endDate: dayjs('2024-05-21T23:47'),
+  dueDate: dayjs('2024-05-21T13:08'),
+  published: false,
 };
 
 export const sampleWithNewData: NewAssignment = {
-  name: 'fake minor',
+  name: 'instead as',
   id: null,
 };
 

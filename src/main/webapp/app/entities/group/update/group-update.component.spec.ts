@@ -49,10 +49,10 @@ describe('Group Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Speciality query and add missing value', () => {
       const group: IGroup = { id: 456 };
-      const speciality: ISpeciality = { id: 1659 };
+      const speciality: ISpeciality = { id: 3963 };
       group.speciality = speciality;
 
-      const specialityCollection: ISpeciality[] = [{ id: 27257 }];
+      const specialityCollection: ISpeciality[] = [{ id: 7902 }];
       jest.spyOn(specialityService, 'query').mockReturnValue(of(new HttpResponse({ body: specialityCollection })));
       const additionalSpecialities = [speciality];
       const expectedCollection: ISpeciality[] = [...additionalSpecialities, ...specialityCollection];
@@ -71,7 +71,7 @@ describe('Group Management Update Component', () => {
 
     it('Should update editForm', () => {
       const group: IGroup = { id: 456 };
-      const speciality: ISpeciality = { id: 4557 };
+      const speciality: ISpeciality = { id: 29538 };
       group.speciality = speciality;
 
       activatedRoute.data = of({ group });
