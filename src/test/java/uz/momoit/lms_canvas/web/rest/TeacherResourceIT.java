@@ -27,6 +27,7 @@ import uz.momoit.lms_canvas.domain.enumeration.AcademicTitleEnum;
 import uz.momoit.lms_canvas.domain.enumeration.GenderEnum;
 import uz.momoit.lms_canvas.domain.enumeration.PositionEnum;
 import uz.momoit.lms_canvas.repository.TeacherRepository;
+import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.TeacherDTO;
 import uz.momoit.lms_canvas.service.mapper.TeacherMapper;
 
@@ -103,6 +104,9 @@ class TeacherResourceIT {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TeacherMapper teacherMapper;

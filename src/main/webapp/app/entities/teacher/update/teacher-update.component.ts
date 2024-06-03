@@ -2,11 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { GenderEnum } from 'app/entities/enumerations/gender-enum.model';
 import { PositionEnum } from 'app/entities/enumerations/position-enum.model';
 import { AcademicDegreeEnum } from 'app/entities/enumerations/academic-degree-enum.model';
@@ -29,12 +31,17 @@ export class TeacherUpdateComponent implements OnInit {
   academicDegreeEnumValues = Object.keys(AcademicDegreeEnum);
   academicTitleEnumValues = Object.keys(AcademicTitleEnum);
 
+  usersSharedCollection: IUser[] = [];
+
   protected teacherService = inject(TeacherService);
   protected teacherFormService = inject(TeacherFormService);
+  protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: TeacherFormGroup = this.teacherFormService.createTeacherFormGroup();
+
+  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ teacher }) => {
@@ -42,6 +49,8 @@ export class TeacherUpdateComponent implements OnInit {
       if (teacher) {
         this.updateForm(teacher);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -81,5 +90,15 @@ export class TeacherUpdateComponent implements OnInit {
   protected updateForm(teacher: ITeacher): void {
     this.teacher = teacher;
     this.teacherFormService.resetForm(this.editForm, teacher);
+
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, teacher.user);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.teacher?.user)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

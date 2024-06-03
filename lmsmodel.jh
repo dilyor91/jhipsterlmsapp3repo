@@ -102,7 +102,7 @@ entity Student {
    passportNumber String required
    jshshir String required
    isActive Boolean
-   tutionType TutionTypeEnum,
+   tutionType TutionTypeEnum
    nationality String
    country String
    city String
@@ -210,6 +210,7 @@ enum UserStatus {
 }
 
 relationship OneToOne {
+  Teacher{user} to User
   Course{user} to User
   Student{studyAcademicYear} to StudyAcademicYear
 }
@@ -257,7 +258,8 @@ relationship ManyToMany {
 paginate  Course, CourseSection, Enrollment, Accounts, 
 Assignment, Announcement, CalendarEvent, WikiPage,
 Attendance, AttendanceDetail, Student,
-Faculty, Speciality, Group, StudyAcademicYear with pagination
+Faculty, Speciality, Group, StudyAcademicYear,
+Teacher with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

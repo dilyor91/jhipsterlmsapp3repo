@@ -1,7 +1,8 @@
 package uz.momoit.lms_canvas.service;
 
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import uz.momoit.lms_canvas.service.dto.TeacherDTO;
 
 /**
@@ -35,9 +36,10 @@ public interface TeacherService {
     /**
      * Get all the teachers.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<TeacherDTO> findAll();
+    Page<TeacherDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" teacher.
