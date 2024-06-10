@@ -20,9 +20,8 @@
       "id": "ID",
       "enrollmentStatus": "Enrollment Status",
       "lastActivityAt": "Last Activity At",
-      "enrollmentStartAt": "Enrollment Start At",
-      "enrollmentEndAt": "Enrollment End At",
-      "user": "User",
+      "enrollmentDate": "Enrollment Date",
+      "student": "Student",
       "courseSection": "Course Section",
       "course": "Course"
     }

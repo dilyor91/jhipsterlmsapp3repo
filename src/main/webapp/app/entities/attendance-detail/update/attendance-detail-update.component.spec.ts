@@ -75,10 +75,10 @@ describe('AttendanceDetail Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const student: IUser = { id: 32419 };
+      const student: IUser = { id: 4692 };
       attendanceDetail.student = student;
 
-      const userCollection: IUser[] = [{ id: 25775 }];
+      const userCollection: IUser[] = [{ id: 30151 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [student];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -99,7 +99,7 @@ describe('AttendanceDetail Management Update Component', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
       const attendance: IAttendance = { id: 15204 };
       attendanceDetail.attendance = attendance;
-      const student: IUser = { id: 29853 };
+      const student: IUser = { id: 14386 };
       attendanceDetail.student = student;
 
       activatedRoute.data = of({ attendanceDetail });

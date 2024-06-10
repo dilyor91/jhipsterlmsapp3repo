@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
+import { IStudent } from 'app/entities/student/student.model';
+import { StudentService } from 'app/entities/student/service/student.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
 import { CourseSectionService } from 'app/entities/course-section/service/course-section.service';
 import { ICourse } from 'app/entities/course/course.model';
@@ -29,13 +29,13 @@ export class EnrollmentUpdateComponent implements OnInit {
   enrollment: IEnrollment | null = null;
   enrollmentStatusEnumValues = Object.keys(EnrollmentStatusEnum);
 
-  usersSharedCollection: IUser[] = [];
+  studentsSharedCollection: IStudent[] = [];
   courseSectionsSharedCollection: ICourseSection[] = [];
   coursesSharedCollection: ICourse[] = [];
 
   protected enrollmentService = inject(EnrollmentService);
   protected enrollmentFormService = inject(EnrollmentFormService);
-  protected userService = inject(UserService);
+  protected studentService = inject(StudentService);
   protected courseSectionService = inject(CourseSectionService);
   protected courseService = inject(CourseService);
   protected activatedRoute = inject(ActivatedRoute);
@@ -43,7 +43,7 @@ export class EnrollmentUpdateComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: EnrollmentFormGroup = this.enrollmentFormService.createEnrollmentFormGroup();
 
-  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  compareStudent = (o1: IStudent | null, o2: IStudent | null): boolean => this.studentService.compareStudent(o1, o2);
 
   compareCourseSection = (o1: ICourseSection | null, o2: ICourseSection | null): boolean =>
     this.courseSectionService.compareCourseSection(o1, o2);
@@ -98,7 +98,10 @@ export class EnrollmentUpdateComponent implements OnInit {
     this.enrollment = enrollment;
     this.enrollmentFormService.resetForm(this.editForm, enrollment);
 
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, enrollment.user);
+    this.studentsSharedCollection = this.studentService.addStudentToCollectionIfMissing<IStudent>(
+      this.studentsSharedCollection,
+      enrollment.student,
+    );
     this.courseSectionsSharedCollection = this.courseSectionService.addCourseSectionToCollectionIfMissing<ICourseSection>(
       this.courseSectionsSharedCollection,
       enrollment.courseSection,
@@ -110,11 +113,13 @@ export class EnrollmentUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.userService
+    this.studentService
       .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.enrollment?.user)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+      .pipe(map((res: HttpResponse<IStudent[]>) => res.body ?? []))
+      .pipe(
+        map((students: IStudent[]) => this.studentService.addStudentToCollectionIfMissing<IStudent>(students, this.enrollment?.student)),
+      )
+      .subscribe((students: IStudent[]) => (this.studentsSharedCollection = students));
 
     this.courseSectionService
       .query()

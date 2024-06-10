@@ -25,17 +25,17 @@
           <dd>
             <span>{{ enrollment()!.lastActivityAt | formatMediumDatetime }}</span>
           </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentStartAt">Enrollment Start At</span></dt>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentDate">Enrollment Date</span></dt>
           <dd>
-            <span>{{ enrollment()!.enrollmentStartAt | formatMediumDatetime }}</span>
+            <span>{{ enrollment()!.enrollmentDate | formatMediumDatetime }}</span>
           </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentEndAt">Enrollment End At</span></dt>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.student">Student</span></dt>
           <dd>
-            <span>{{ enrollment()!.enrollmentEndAt | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.user">User</span></dt>
-          <dd>
-            <span>{{ enrollment()!.user?.id }}</span>
+            @if (enrollment()!.student) {
+              <div>
+                <a [routerLink]="['/student', enrollment()!.student?.id, 'view']">{{ enrollment()!.student?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.enrollment.courseSection">Course Section</span></dt>
           <dd>

@@ -11,10 +11,9 @@ import { IEnrollment, NewEnrollment } from '../enrollment.model';
 
 export type PartialUpdateEnrollment = Partial<IEnrollment> & Pick<IEnrollment, 'id'>;
 
-type RestOf<T extends IEnrollment | NewEnrollment> = Omit<T, 'lastActivityAt' | 'enrollmentStartAt' | 'enrollmentEndAt'> & {
+type RestOf<T extends IEnrollment | NewEnrollment> = Omit<T, 'lastActivityAt' | 'enrollmentDate'> & {
   lastActivityAt?: string | null;
-  enrollmentStartAt?: string | null;
-  enrollmentEndAt?: string | null;
+  enrollmentDate?: string | null;
 };
 
 export type RestEnrollment = RestOf<IEnrollment>;
@@ -103,8 +102,7 @@ export class EnrollmentService {
     return {
       ...enrollment,
       lastActivityAt: enrollment.lastActivityAt?.toJSON() ?? null,
-      enrollmentStartAt: enrollment.enrollmentStartAt?.toJSON() ?? null,
-      enrollmentEndAt: enrollment.enrollmentEndAt?.toJSON() ?? null,
+      enrollmentDate: enrollment.enrollmentDate?.toJSON() ?? null,
     };
   }
 
@@ -112,8 +110,7 @@ export class EnrollmentService {
     return {
       ...restEnrollment,
       lastActivityAt: restEnrollment.lastActivityAt ? dayjs(restEnrollment.lastActivityAt) : undefined,
-      enrollmentStartAt: restEnrollment.enrollmentStartAt ? dayjs(restEnrollment.enrollmentStartAt) : undefined,
-      enrollmentEndAt: restEnrollment.enrollmentEndAt ? dayjs(restEnrollment.enrollmentEndAt) : undefined,
+      enrollmentDate: restEnrollment.enrollmentDate ? dayjs(restEnrollment.enrollmentDate) : undefined,
     };
   }
 

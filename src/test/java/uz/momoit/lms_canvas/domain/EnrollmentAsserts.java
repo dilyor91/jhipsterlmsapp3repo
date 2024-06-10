@@ -49,8 +49,7 @@ public class EnrollmentAsserts {
             .as("Verify Enrollment relevant properties")
             .satisfies(e -> assertThat(e.getEnrollmentStatus()).as("check enrollmentStatus").isEqualTo(actual.getEnrollmentStatus()))
             .satisfies(e -> assertThat(e.getLastActivityAt()).as("check lastActivityAt").isEqualTo(actual.getLastActivityAt()))
-            .satisfies(e -> assertThat(e.getEnrollmentStartAt()).as("check enrollmentStartAt").isEqualTo(actual.getEnrollmentStartAt()))
-            .satisfies(e -> assertThat(e.getEnrollmentEndAt()).as("check enrollmentEndAt").isEqualTo(actual.getEnrollmentEndAt()));
+            .satisfies(e -> assertThat(e.getEnrollmentDate()).as("check enrollmentDate").isEqualTo(actual.getEnrollmentDate()));
     }
 
     /**
@@ -62,6 +61,7 @@ public class EnrollmentAsserts {
     public static void assertEnrollmentUpdatableRelationshipsEquals(Enrollment expected, Enrollment actual) {
         assertThat(expected)
             .as("Verify Enrollment relationships")
+            .satisfies(e -> assertThat(e.getStudent()).as("check student").isEqualTo(actual.getStudent()))
             .satisfies(e -> assertThat(e.getCourseSection()).as("check courseSection").isEqualTo(actual.getCourseSection()))
             .satisfies(e -> assertThat(e.getCourse()).as("check course").isEqualTo(actual.getCourse()));
     }

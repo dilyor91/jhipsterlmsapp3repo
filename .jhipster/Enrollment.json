@@ -16,11 +16,7 @@
       "fieldType": "Instant"
     },
     {
-      "fieldName": "enrollmentStartAt",
-      "fieldType": "Instant"
-    },
-    {
-      "fieldName": "enrollmentEndAt",
+      "fieldName": "enrollmentDate",
       "fieldType": "Instant"
     }
   ],
@@ -28,8 +24,8 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "user",
-      "relationshipName": "user",
+      "otherEntityName": "student",
+      "relationshipName": "student",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
