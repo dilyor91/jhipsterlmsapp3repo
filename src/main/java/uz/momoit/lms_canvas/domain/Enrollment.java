@@ -34,14 +34,12 @@ public class Enrollment implements Serializable {
     @Column(name = "last_activity_at")
     private Instant lastActivityAt;
 
-    @Column(name = "enrollment_start_at")
-    private Instant enrollmentStartAt;
-
-    @Column(name = "enrollment_end_at")
-    private Instant enrollmentEndAt;
+    @Column(name = "enrollment_date")
+    private Instant enrollmentDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JsonIgnoreProperties(value = { "studyAcademicYear", "user", "faculty", "speciality", "group" }, allowSetters = true)
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "course", "announcements", "assignments" }, allowSetters = true)
@@ -92,42 +90,29 @@ public class Enrollment implements Serializable {
         this.lastActivityAt = lastActivityAt;
     }
 
-    public Instant getEnrollmentStartAt() {
-        return this.enrollmentStartAt;
+    public Instant getEnrollmentDate() {
+        return this.enrollmentDate;
     }
 
-    public Enrollment enrollmentStartAt(Instant enrollmentStartAt) {
-        this.setEnrollmentStartAt(enrollmentStartAt);
+    public Enrollment enrollmentDate(Instant enrollmentDate) {
+        this.setEnrollmentDate(enrollmentDate);
         return this;
     }
 
-    public void setEnrollmentStartAt(Instant enrollmentStartAt) {
-        this.enrollmentStartAt = enrollmentStartAt;
+    public void setEnrollmentDate(Instant enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
-    public Instant getEnrollmentEndAt() {
-        return this.enrollmentEndAt;
+    public Student getStudent() {
+        return this.student;
     }
 
-    public Enrollment enrollmentEndAt(Instant enrollmentEndAt) {
-        this.setEnrollmentEndAt(enrollmentEndAt);
-        return this;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public void setEnrollmentEndAt(Instant enrollmentEndAt) {
-        this.enrollmentEndAt = enrollmentEndAt;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Enrollment user(User user) {
-        this.setUser(user);
+    public Enrollment student(Student student) {
+        this.setStudent(student);
         return this;
     }
 
@@ -183,8 +168,7 @@ public class Enrollment implements Serializable {
             "id=" + getId() +
             ", enrollmentStatus='" + getEnrollmentStatus() + "'" +
             ", lastActivityAt='" + getLastActivityAt() + "'" +
-            ", enrollmentStartAt='" + getEnrollmentStartAt() + "'" +
-            ", enrollmentEndAt='" + getEnrollmentEndAt() + "'" +
+            ", enrollmentDate='" + getEnrollmentDate() + "'" +
             "}";
     }
 }

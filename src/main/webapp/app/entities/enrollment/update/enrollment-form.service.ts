@@ -19,25 +19,23 @@ type EnrollmentFormGroupInput = IEnrollment | PartialWithRequiredKeyOf<NewEnroll
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends IEnrollment | NewEnrollment> = Omit<T, 'lastActivityAt' | 'enrollmentStartAt' | 'enrollmentEndAt'> & {
+type FormValueOf<T extends IEnrollment | NewEnrollment> = Omit<T, 'lastActivityAt' | 'enrollmentDate'> & {
   lastActivityAt?: string | null;
-  enrollmentStartAt?: string | null;
-  enrollmentEndAt?: string | null;
+  enrollmentDate?: string | null;
 };
 
 type EnrollmentFormRawValue = FormValueOf<IEnrollment>;
 
 type NewEnrollmentFormRawValue = FormValueOf<NewEnrollment>;
 
-type EnrollmentFormDefaults = Pick<NewEnrollment, 'id' | 'lastActivityAt' | 'enrollmentStartAt' | 'enrollmentEndAt'>;
+type EnrollmentFormDefaults = Pick<NewEnrollment, 'id' | 'lastActivityAt' | 'enrollmentDate'>;
 
 type EnrollmentFormGroupContent = {
   id: FormControl<EnrollmentFormRawValue['id'] | NewEnrollment['id']>;
   enrollmentStatus: FormControl<EnrollmentFormRawValue['enrollmentStatus']>;
   lastActivityAt: FormControl<EnrollmentFormRawValue['lastActivityAt']>;
-  enrollmentStartAt: FormControl<EnrollmentFormRawValue['enrollmentStartAt']>;
-  enrollmentEndAt: FormControl<EnrollmentFormRawValue['enrollmentEndAt']>;
-  user: FormControl<EnrollmentFormRawValue['user']>;
+  enrollmentDate: FormControl<EnrollmentFormRawValue['enrollmentDate']>;
+  student: FormControl<EnrollmentFormRawValue['student']>;
   courseSection: FormControl<EnrollmentFormRawValue['courseSection']>;
   course: FormControl<EnrollmentFormRawValue['course']>;
 };
@@ -63,9 +61,8 @@ export class EnrollmentFormService {
         validators: [Validators.required],
       }),
       lastActivityAt: new FormControl(enrollmentRawValue.lastActivityAt),
-      enrollmentStartAt: new FormControl(enrollmentRawValue.enrollmentStartAt),
-      enrollmentEndAt: new FormControl(enrollmentRawValue.enrollmentEndAt),
-      user: new FormControl(enrollmentRawValue.user),
+      enrollmentDate: new FormControl(enrollmentRawValue.enrollmentDate),
+      student: new FormControl(enrollmentRawValue.student),
       courseSection: new FormControl(enrollmentRawValue.courseSection),
       course: new FormControl(enrollmentRawValue.course),
     });
@@ -91,8 +88,7 @@ export class EnrollmentFormService {
     return {
       id: null,
       lastActivityAt: currentTime,
-      enrollmentStartAt: currentTime,
-      enrollmentEndAt: currentTime,
+      enrollmentDate: currentTime,
     };
   }
 
@@ -102,8 +98,7 @@ export class EnrollmentFormService {
     return {
       ...rawEnrollment,
       lastActivityAt: dayjs(rawEnrollment.lastActivityAt, DATE_TIME_FORMAT),
-      enrollmentStartAt: dayjs(rawEnrollment.enrollmentStartAt, DATE_TIME_FORMAT),
-      enrollmentEndAt: dayjs(rawEnrollment.enrollmentEndAt, DATE_TIME_FORMAT),
+      enrollmentDate: dayjs(rawEnrollment.enrollmentDate, DATE_TIME_FORMAT),
     };
   }
 
@@ -113,8 +108,7 @@ export class EnrollmentFormService {
     return {
       ...enrollment,
       lastActivityAt: enrollment.lastActivityAt ? enrollment.lastActivityAt.format(DATE_TIME_FORMAT) : undefined,
-      enrollmentStartAt: enrollment.enrollmentStartAt ? enrollment.enrollmentStartAt.format(DATE_TIME_FORMAT) : undefined,
-      enrollmentEndAt: enrollment.enrollmentEndAt ? enrollment.enrollmentEndAt.format(DATE_TIME_FORMAT) : undefined,
+      enrollmentDate: enrollment.enrollmentDate ? enrollment.enrollmentDate.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }

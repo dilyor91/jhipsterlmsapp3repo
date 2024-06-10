@@ -5,8 +5,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
+import { IStudent } from 'app/entities/student/student.model';
+import { StudentService } from 'app/entities/student/service/student.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
 import { CourseSectionService } from 'app/entities/course-section/service/course-section.service';
 import { ICourse } from 'app/entities/course/course.model';
@@ -23,7 +23,7 @@ describe('Enrollment Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let enrollmentFormService: EnrollmentFormService;
   let enrollmentService: EnrollmentService;
-  let userService: UserService;
+  let studentService: StudentService;
   let courseSectionService: CourseSectionService;
   let courseService: CourseService;
 
@@ -47,7 +47,7 @@ describe('Enrollment Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     enrollmentFormService = TestBed.inject(EnrollmentFormService);
     enrollmentService = TestBed.inject(EnrollmentService);
-    userService = TestBed.inject(UserService);
+    studentService = TestBed.inject(StudentService);
     courseSectionService = TestBed.inject(CourseSectionService);
     courseService = TestBed.inject(CourseService);
 
@@ -55,26 +55,26 @@ describe('Enrollment Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call User query and add missing value', () => {
+    it('Should call Student query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const user: IUser = { id: 12387 };
-      enrollment.user = user;
+      const student: IStudent = { id: 30639 };
+      enrollment.student = student;
 
-      const userCollection: IUser[] = [{ id: 9085 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [user];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const studentCollection: IStudent[] = [{ id: 28844 }];
+      jest.spyOn(studentService, 'query').mockReturnValue(of(new HttpResponse({ body: studentCollection })));
+      const additionalStudents = [student];
+      const expectedCollection: IStudent[] = [...additionalStudents, ...studentCollection];
+      jest.spyOn(studentService, 'addStudentToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ enrollment });
       comp.ngOnInit();
 
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
-        userCollection,
-        ...additionalUsers.map(expect.objectContaining),
+      expect(studentService.query).toHaveBeenCalled();
+      expect(studentService.addStudentToCollectionIfMissing).toHaveBeenCalledWith(
+        studentCollection,
+        ...additionalStudents.map(expect.objectContaining),
       );
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+      expect(comp.studentsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call CourseSection query and add missing value', () => {
@@ -123,8 +123,8 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const user: IUser = { id: 1318 };
-      enrollment.user = user;
+      const student: IStudent = { id: 10105 };
+      enrollment.student = student;
       const courseSection: ICourseSection = { id: 1813 };
       enrollment.courseSection = courseSection;
       const course: ICourse = { id: 22909 };
@@ -133,7 +133,7 @@ describe('Enrollment Management Update Component', () => {
       activatedRoute.data = of({ enrollment });
       comp.ngOnInit();
 
-      expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.studentsSharedCollection).toContain(student);
       expect(comp.courseSectionsSharedCollection).toContain(courseSection);
       expect(comp.coursesSharedCollection).toContain(course);
       expect(comp.enrollment).toEqual(enrollment);
@@ -209,13 +209,13 @@ describe('Enrollment Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareUser', () => {
-      it('Should forward to userService', () => {
+    describe('compareStudent', () => {
+      it('Should forward to studentService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(userService, 'compareUser');
-        comp.compareUser(entity, entity2);
-        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(studentService, 'compareStudent');
+        comp.compareStudent(entity, entity2);
+        expect(studentService.compareStudent).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

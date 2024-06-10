@@ -57,10 +57,10 @@ describe('Teacher Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const teacher: ITeacher = { id: 456 };
-      const user: IUser = { id: 30076 };
+      const user: IUser = { id: 29682 };
       teacher.user = user;
 
-      const userCollection: IUser[] = [{ id: 11976 }];
+      const userCollection: IUser[] = [{ id: 17276 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -123,7 +123,7 @@ describe('Teacher Management Update Component', () => {
 
     it('Should update editForm', () => {
       const teacher: ITeacher = { id: 456 };
-      const user: IUser = { id: 12587 };
+      const user: IUser = { id: 1710 };
       teacher.user = user;
       const faculty: IFaculty = { id: 22707 };
       teacher.faculty = faculty;

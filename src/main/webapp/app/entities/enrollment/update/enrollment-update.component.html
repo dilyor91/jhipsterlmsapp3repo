@@ -67,45 +67,35 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_enrollmentStartAt" jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentStartAt"
-            >Enrollment Start At</label
+          <label class="form-label" for="field_enrollmentDate" jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentDate"
+            >Enrollment Date</label
           >
           <div class="d-flex">
             <input
-              id="field_enrollmentStartAt"
-              data-cy="enrollmentStartAt"
+              id="field_enrollmentDate"
+              data-cy="enrollmentDate"
               type="datetime-local"
               class="form-control"
-              name="enrollmentStartAt"
-              formControlName="enrollmentStartAt"
+              name="enrollmentDate"
+              formControlName="enrollmentDate"
               placeholder="YYYY-MM-DD HH:mm"
             />
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_enrollmentEndAt" jhiTranslate="jhipsterlmsapp3App.enrollment.enrollmentEndAt"
-            >Enrollment End At</label
+          <label class="form-label" for="field_student" jhiTranslate="jhipsterlmsapp3App.enrollment.student">Student</label>
+          <select
+            class="form-control"
+            id="field_student"
+            data-cy="student"
+            name="student"
+            formControlName="student"
+            [compareWith]="compareStudent"
           >
-          <div class="d-flex">
-            <input
-              id="field_enrollmentEndAt"
-              data-cy="enrollmentEndAt"
-              type="datetime-local"
-              class="form-control"
-              name="enrollmentEndAt"
-              formControlName="enrollmentEndAt"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_user" jhiTranslate="jhipsterlmsapp3App.enrollment.user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             <option [ngValue]="null"></option>
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            @for (studentOption of studentsSharedCollection; track $index) {
+              <option [ngValue]="studentOption">{{ studentOption.id }}</option>
             }
           </select>
         </div>

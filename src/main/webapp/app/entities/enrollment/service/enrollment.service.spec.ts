@@ -9,8 +9,7 @@ import { EnrollmentService, RestEnrollment } from './enrollment.service';
 const requireRestSample: RestEnrollment = {
   ...sampleWithRequiredData,
   lastActivityAt: sampleWithRequiredData.lastActivityAt?.toJSON(),
-  enrollmentStartAt: sampleWithRequiredData.enrollmentStartAt?.toJSON(),
-  enrollmentEndAt: sampleWithRequiredData.enrollmentEndAt?.toJSON(),
+  enrollmentDate: sampleWithRequiredData.enrollmentDate?.toJSON(),
 };
 
 describe('Enrollment Service', () => {

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static uz.momoit.lms_canvas.domain.CourseSectionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.CourseTestSamples.*;
 import static uz.momoit.lms_canvas.domain.EnrollmentTestSamples.*;
+import static uz.momoit.lms_canvas.domain.StudentTestSamples.*;
 
 import org.junit.jupiter.api.Test;
 import uz.momoit.lms_canvas.web.rest.TestUtil;
@@ -22,6 +23,18 @@ class EnrollmentTest {
 
         enrollment2 = getEnrollmentSample2();
         assertThat(enrollment1).isNotEqualTo(enrollment2);
+    }
+
+    @Test
+    void studentTest() {
+        Enrollment enrollment = getEnrollmentRandomSampleGenerator();
+        Student studentBack = getStudentRandomSampleGenerator();
+
+        enrollment.setStudent(studentBack);
+        assertThat(enrollment.getStudent()).isEqualTo(studentBack);
+
+        enrollment.student(null);
+        assertThat(enrollment.getStudent()).isNull();
     }
 
     @Test

@@ -19,11 +19,9 @@ public class EnrollmentDTO implements Serializable {
 
     private Instant lastActivityAt;
 
-    private Instant enrollmentStartAt;
+    private Instant enrollmentDate;
 
-    private Instant enrollmentEndAt;
-
-    private UserDTO user;
+    private StudentDTO student;
 
     private CourseSectionDTO courseSection;
 
@@ -53,28 +51,20 @@ public class EnrollmentDTO implements Serializable {
         this.lastActivityAt = lastActivityAt;
     }
 
-    public Instant getEnrollmentStartAt() {
-        return enrollmentStartAt;
+    public Instant getEnrollmentDate() {
+        return enrollmentDate;
     }
 
-    public void setEnrollmentStartAt(Instant enrollmentStartAt) {
-        this.enrollmentStartAt = enrollmentStartAt;
+    public void setEnrollmentDate(Instant enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
-    public Instant getEnrollmentEndAt() {
-        return enrollmentEndAt;
+    public StudentDTO getStudent() {
+        return student;
     }
 
-    public void setEnrollmentEndAt(Instant enrollmentEndAt) {
-        this.enrollmentEndAt = enrollmentEndAt;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setStudent(StudentDTO student) {
+        this.student = student;
     }
 
     public CourseSectionDTO getCourseSection() {
@@ -121,9 +111,8 @@ public class EnrollmentDTO implements Serializable {
             "id=" + getId() +
             ", enrollmentStatus='" + getEnrollmentStatus() + "'" +
             ", lastActivityAt='" + getLastActivityAt() + "'" +
-            ", enrollmentStartAt='" + getEnrollmentStartAt() + "'" +
-            ", enrollmentEndAt='" + getEnrollmentEndAt() + "'" +
-            ", user=" + getUser() +
+            ", enrollmentDate='" + getEnrollmentDate() + "'" +
+            ", student=" + getStudent() +
             ", courseSection=" + getCourseSection() +
             ", course=" + getCourse() +
             "}";

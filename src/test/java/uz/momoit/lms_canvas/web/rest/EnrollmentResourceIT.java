@@ -26,7 +26,6 @@ import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.Enrollment;
 import uz.momoit.lms_canvas.domain.enumeration.EnrollmentStatusEnum;
 import uz.momoit.lms_canvas.repository.EnrollmentRepository;
-import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.EnrollmentDTO;
 import uz.momoit.lms_canvas.service.mapper.EnrollmentMapper;
 
@@ -44,11 +43,8 @@ class EnrollmentResourceIT {
     private static final Instant DEFAULT_LAST_ACTIVITY_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_ACTIVITY_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_ENROLLMENT_START_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_ENROLLMENT_START_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_ENROLLMENT_END_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_ENROLLMENT_END_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_ENROLLMENT_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_ENROLLMENT_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/enrollments";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -61,9 +57,6 @@ class EnrollmentResourceIT {
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private EnrollmentMapper enrollmentMapper;
@@ -88,8 +81,7 @@ class EnrollmentResourceIT {
         Enrollment enrollment = new Enrollment()
             .enrollmentStatus(DEFAULT_ENROLLMENT_STATUS)
             .lastActivityAt(DEFAULT_LAST_ACTIVITY_AT)
-            .enrollmentStartAt(DEFAULT_ENROLLMENT_START_AT)
-            .enrollmentEndAt(DEFAULT_ENROLLMENT_END_AT);
+            .enrollmentDate(DEFAULT_ENROLLMENT_DATE);
         return enrollment;
     }
 
@@ -103,8 +95,7 @@ class EnrollmentResourceIT {
         Enrollment enrollment = new Enrollment()
             .enrollmentStatus(UPDATED_ENROLLMENT_STATUS)
             .lastActivityAt(UPDATED_LAST_ACTIVITY_AT)
-            .enrollmentStartAt(UPDATED_ENROLLMENT_START_AT)
-            .enrollmentEndAt(UPDATED_ENROLLMENT_END_AT);
+            .enrollmentDate(UPDATED_ENROLLMENT_DATE);
         return enrollment;
     }
 
@@ -194,8 +185,7 @@ class EnrollmentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(enrollment.getId().intValue())))
             .andExpect(jsonPath("$.[*].enrollmentStatus").value(hasItem(DEFAULT_ENROLLMENT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].lastActivityAt").value(hasItem(DEFAULT_LAST_ACTIVITY_AT.toString())))
-            .andExpect(jsonPath("$.[*].enrollmentStartAt").value(hasItem(DEFAULT_ENROLLMENT_START_AT.toString())))
-            .andExpect(jsonPath("$.[*].enrollmentEndAt").value(hasItem(DEFAULT_ENROLLMENT_END_AT.toString())));
+            .andExpect(jsonPath("$.[*].enrollmentDate").value(hasItem(DEFAULT_ENROLLMENT_DATE.toString())));
     }
 
     @Test
@@ -212,8 +202,7 @@ class EnrollmentResourceIT {
             .andExpect(jsonPath("$.id").value(enrollment.getId().intValue()))
             .andExpect(jsonPath("$.enrollmentStatus").value(DEFAULT_ENROLLMENT_STATUS.toString()))
             .andExpect(jsonPath("$.lastActivityAt").value(DEFAULT_LAST_ACTIVITY_AT.toString()))
-            .andExpect(jsonPath("$.enrollmentStartAt").value(DEFAULT_ENROLLMENT_START_AT.toString()))
-            .andExpect(jsonPath("$.enrollmentEndAt").value(DEFAULT_ENROLLMENT_END_AT.toString()));
+            .andExpect(jsonPath("$.enrollmentDate").value(DEFAULT_ENROLLMENT_DATE.toString()));
     }
 
     @Test
@@ -238,8 +227,7 @@ class EnrollmentResourceIT {
         updatedEnrollment
             .enrollmentStatus(UPDATED_ENROLLMENT_STATUS)
             .lastActivityAt(UPDATED_LAST_ACTIVITY_AT)
-            .enrollmentStartAt(UPDATED_ENROLLMENT_START_AT)
-            .enrollmentEndAt(UPDATED_ENROLLMENT_END_AT);
+            .enrollmentDate(UPDATED_ENROLLMENT_DATE);
         EnrollmentDTO enrollmentDTO = enrollmentMapper.toDto(updatedEnrollment);
 
         restEnrollmentMockMvc
@@ -363,8 +351,7 @@ class EnrollmentResourceIT {
         partialUpdatedEnrollment
             .enrollmentStatus(UPDATED_ENROLLMENT_STATUS)
             .lastActivityAt(UPDATED_LAST_ACTIVITY_AT)
-            .enrollmentStartAt(UPDATED_ENROLLMENT_START_AT)
-            .enrollmentEndAt(UPDATED_ENROLLMENT_END_AT);
+            .enrollmentDate(UPDATED_ENROLLMENT_DATE);
 
         restEnrollmentMockMvc
             .perform(
