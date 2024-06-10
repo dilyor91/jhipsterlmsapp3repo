@@ -31,8 +31,7 @@ entity Accounts {
 entity Enrollment {
    enrollmentStatus EnrollmentStatusEnum required
    lastActivityAt Instant
-   enrollmentStartAt Instant
-   enrollmentEndAt Instant
+   enrollmentDate Instant
 }
 
 entity User{
@@ -232,7 +231,7 @@ entity Department {
 }
 
 relationship ManyToOne {
-    Enrollment{user} to User
+    Enrollment{student} to Student
     CourseSection{course} to Course
     Enrollment{courseSection} to CourseSection
     Enrollment{course} to Course
