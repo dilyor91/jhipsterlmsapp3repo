@@ -1,48 +1,50 @@
 import { IAccounts, NewAccounts } from './accounts.model';
 
 export const sampleWithRequiredData: IAccounts = {
-  id: 15803,
-  username: 'lest',
-  fullName: 'queasily voluntarily granola',
-  sortableName: 'declassify',
-  phone: '1-679-301-0876',
-  gender: 'supervisor playwright',
+  id: 24653,
+  username: 'watery',
+  fullName: 'forenenst',
+  sortableName: 'since',
+  phone: '857.945.9430',
+  gender: 'throughout shy',
+  userType: 'STUDENT',
+  userStatus: 'BLOCKED',
+};
+
+export const sampleWithPartialData: IAccounts = {
+  id: 9652,
+  username: 'gosh salute oil',
+  fullName: 'inasmuch abaft along',
+  sortableName: 'whether',
+  avatarImageUrl: 'sans closely',
+  phone: '983-632-9079 x6019',
+  locale: 'early',
+  gender: 'soot',
   userType: 'STUDENT',
   userStatus: 'ACTIVE',
 };
 
-export const sampleWithPartialData: IAccounts = {
-  id: 8213,
-  username: 'protection',
-  fullName: 'warlike heavenly',
-  sortableName: 'gloss',
-  phone: '(945) 697-8839 x965',
-  gender: 'than why',
+export const sampleWithFullData: IAccounts = {
+  id: 2314,
+  username: 'beside',
+  fullName: 'joshingly minus',
+  sortableName: 'advertising',
+  avatarImageUrl: 'cultivated honoree beneath',
+  phone: '372.875.4309 x102',
+  locale: 'variable angrily atop',
+  gender: 'even shiny hm',
   userType: 'TEACHER',
   userStatus: 'PENDING',
 };
 
-export const sampleWithFullData: IAccounts = {
-  id: 15178,
-  username: 'demonise any',
-  fullName: 'gosling',
-  sortableName: 'useful',
-  avatarImageUrl: 'assist ruddy',
-  phone: '(661) 266-6292',
-  locale: 'immediately wrong unlike',
-  gender: 'lined',
-  userType: 'STUDENT',
-  userStatus: 'BLOCKED',
-};
-
 export const sampleWithNewData: NewAccounts = {
-  username: 'consolidate',
-  fullName: 'abnormally',
-  sortableName: 'detest required even',
-  phone: '297.387.6237 x597',
-  gender: 'beside unfortunately',
+  username: 'minus vainly',
+  fullName: 'once all involvement',
+  sortableName: 'aha',
+  phone: '(830) 269-7014',
+  gender: 'product quicker hmph',
   userType: 'TEACHER',
-  userStatus: 'BLOCKED',
+  userStatus: 'ACTIVE',
   id: null,
 };
 

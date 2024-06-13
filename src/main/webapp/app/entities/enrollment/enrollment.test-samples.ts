@@ -3,24 +3,25 @@ import dayjs from 'dayjs/esm';
 import { IEnrollment, NewEnrollment } from './enrollment.model';
 
 export const sampleWithRequiredData: IEnrollment = {
-  id: 18175,
-  enrollmentStatus: 'PENDING',
+  id: 12541,
+  enrollmentStatus: 'ACTIVE',
 };
 
 export const sampleWithPartialData: IEnrollment = {
-  id: 11634,
+  id: 2,
   enrollmentStatus: 'REJECTED',
+  lastActivityAt: dayjs('2024-05-19T14:05'),
 };
 
 export const sampleWithFullData: IEnrollment = {
-  id: 19893,
-  enrollmentStatus: 'PENDING',
-  lastActivityAt: dayjs('2024-05-19T22:10'),
-  enrollmentDate: dayjs('2024-05-19T20:27'),
+  id: 14638,
+  enrollmentStatus: 'REJECTED',
+  lastActivityAt: dayjs('2024-05-19T19:29'),
+  enrollmentDate: dayjs('2024-05-19T15:14'),
 };
 
 export const sampleWithNewData: NewEnrollment = {
-  enrollmentStatus: 'ACTIVE',
+  enrollmentStatus: 'REJECTED',
   id: null,
 };
 

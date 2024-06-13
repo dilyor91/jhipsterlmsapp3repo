@@ -1,17 +1,17 @@
 import { IAttendanceDetail, NewAttendanceDetail } from './attendance-detail.model';
 
 export const sampleWithRequiredData: IAttendanceDetail = {
-  id: 2565,
+  id: 18254,
 };
 
 export const sampleWithPartialData: IAttendanceDetail = {
-  id: 12200,
-  attendanceEnum: 'ABSENT',
+  id: 18375,
+  attendanceEnum: 'LATE',
 };
 
 export const sampleWithFullData: IAttendanceDetail = {
-  id: 17148,
-  attendanceEnum: 'PRESENT',
+  id: 16032,
+  attendanceEnum: 'UNMARKED',
 };
 
 export const sampleWithNewData: NewAttendanceDetail = {
