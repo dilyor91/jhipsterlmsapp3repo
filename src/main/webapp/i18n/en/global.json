@@ -24,7 +24,10 @@
         "group": "Group",
         "studyAcademicYear": "Study Academic Year",
         "teacher": "Teacher",
-        "department": "Department"
+        "department": "Department",
+        "questionGroup": "Question Group",
+        "question": "Question",
+        "option": "Option"
       },
       "account": {
         "main": "Account",

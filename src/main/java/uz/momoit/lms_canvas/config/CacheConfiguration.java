@@ -71,6 +71,9 @@ public class CacheConfiguration {
             createCache(cm, uz.momoit.lms_canvas.domain.StudyAcademicYear.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.Teacher.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.Department.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.QuestionGroup.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Question.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.Option.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

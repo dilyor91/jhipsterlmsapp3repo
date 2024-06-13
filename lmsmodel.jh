@@ -230,6 +230,26 @@ entity Department {
    name String
 }
 
+entity QuestionGroup {
+   name String required
+}
+
+entity Question {
+   questionText String required
+   point Integer 
+}
+
+entity Option {
+   optionText String required
+   isCorrect Boolean required
+}
+
+relationship ManyToOne {
+   QuestionGroup{course} to Course
+   Question{questtionGroup} to QuestionGroup
+   Option{question} to Question
+}
+
 relationship ManyToOne {
     Enrollment{student} to Student
     CourseSection{course} to Course
@@ -264,7 +284,8 @@ paginate  Course, CourseSection, Enrollment, Accounts,
 Assignment, Announcement, CalendarEvent, WikiPage,
 Attendance, AttendanceDetail, Student,
 Faculty, Speciality, Group, StudyAcademicYear,
-Teacher, Department with pagination
+Teacher, Department,
+QuestionGroup, Question, Option with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

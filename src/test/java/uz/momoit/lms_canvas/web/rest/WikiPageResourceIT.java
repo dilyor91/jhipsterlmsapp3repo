@@ -342,7 +342,10 @@ class WikiPageResourceIT {
 
         partialUpdatedWikiPage
             .content(UPDATED_CONTENT)
+            .whoAllowed(UPDATED_WHO_ALLOWED)
+            .addToStudents(UPDATED_ADD_TO_STUDENTS)
             .addToStudentsDate(UPDATED_ADD_TO_STUDENTS_DATE)
+            .publishedAt(UPDATED_PUBLISHED_AT)
             .published(UPDATED_PUBLISHED)
             .notifyUsersChanges(UPDATED_NOTIFY_USERS_CHANGES);
 

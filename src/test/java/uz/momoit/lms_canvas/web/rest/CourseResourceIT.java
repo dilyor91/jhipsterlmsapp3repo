@@ -501,10 +501,10 @@ class CourseResourceIT {
 
         partialUpdatedCourse
             .courseName(UPDATED_COURSE_NAME)
-            .courseCode(UPDATED_COURSE_CODE)
             .courseImagePath(UPDATED_COURSE_IMAGE_PATH)
             .courseStartDate(UPDATED_COURSE_START_DATE)
-            .storageQuota(UPDATED_STORAGE_QUOTA);
+            .storageQuota(UPDATED_STORAGE_QUOTA)
+            .status(UPDATED_STATUS);
 
         restCourseMockMvc
             .perform(
