@@ -11,7 +11,7 @@ import uz.momoit.lms_canvas.service.dto.QuestionGroupDTO;
  */
 @Mapper(componentModel = "spring")
 public interface QuestionMapper extends EntityMapper<QuestionDTO, Question> {
-    @Mapping(target = "questtionGroup", source = "questtionGroup", qualifiedByName = "questionGroupId")
+    @Mapping(target = "questionGroup", source = "questionGroup", qualifiedByName = "questionGroupId")
     QuestionDTO toDto(Question s);
 
     @Named("questionGroupId")

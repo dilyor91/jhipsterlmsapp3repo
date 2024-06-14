@@ -49,12 +49,12 @@ describe('Question Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call QuestionGroup query and add missing value', () => {
       const question: IQuestion = { id: 456 };
-      const questtionGroup: IQuestionGroup = { id: 10403 };
-      question.questtionGroup = questtionGroup;
+      const questionGroup: IQuestionGroup = { id: 11455 };
+      question.questionGroup = questionGroup;
 
-      const questionGroupCollection: IQuestionGroup[] = [{ id: 2517 }];
+      const questionGroupCollection: IQuestionGroup[] = [{ id: 15845 }];
       jest.spyOn(questionGroupService, 'query').mockReturnValue(of(new HttpResponse({ body: questionGroupCollection })));
-      const additionalQuestionGroups = [questtionGroup];
+      const additionalQuestionGroups = [questionGroup];
       const expectedCollection: IQuestionGroup[] = [...additionalQuestionGroups, ...questionGroupCollection];
       jest.spyOn(questionGroupService, 'addQuestionGroupToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -71,13 +71,13 @@ describe('Question Management Update Component', () => {
 
     it('Should update editForm', () => {
       const question: IQuestion = { id: 456 };
-      const questtionGroup: IQuestionGroup = { id: 22074 };
-      question.questtionGroup = questtionGroup;
+      const questionGroup: IQuestionGroup = { id: 1745 };
+      question.questionGroup = questionGroup;
 
       activatedRoute.data = of({ question });
       comp.ngOnInit();
 
-      expect(comp.questionGroupsSharedCollection).toContain(questtionGroup);
+      expect(comp.questionGroupsSharedCollection).toContain(questionGroup);
       expect(comp.question).toEqual(question);
     });
   });

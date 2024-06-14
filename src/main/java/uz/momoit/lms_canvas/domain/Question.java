@@ -33,7 +33,7 @@ public class Question implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "course" }, allowSetters = true)
-    private QuestionGroup questtionGroup;
+    private QuestionGroup questionGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -76,16 +76,16 @@ public class Question implements Serializable {
         this.point = point;
     }
 
-    public QuestionGroup getQuesttionGroup() {
-        return this.questtionGroup;
+    public QuestionGroup getQuestionGroup() {
+        return this.questionGroup;
     }
 
-    public void setQuesttionGroup(QuestionGroup questionGroup) {
-        this.questtionGroup = questionGroup;
+    public void setQuestionGroup(QuestionGroup questionGroup) {
+        this.questionGroup = questionGroup;
     }
 
-    public Question questtionGroup(QuestionGroup questionGroup) {
-        this.setQuesttionGroup(questionGroup);
+    public Question questionGroup(QuestionGroup questionGroup) {
+        this.setQuestionGroup(questionGroup);
         return this;
     }
 

@@ -86,7 +86,7 @@ export class QuestionUpdateComponent implements OnInit {
 
     this.questionGroupsSharedCollection = this.questionGroupService.addQuestionGroupToCollectionIfMissing<IQuestionGroup>(
       this.questionGroupsSharedCollection,
-      question.questtionGroup,
+      question.questionGroup,
     );
   }
 
@@ -96,7 +96,7 @@ export class QuestionUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IQuestionGroup[]>) => res.body ?? []))
       .pipe(
         map((questionGroups: IQuestionGroup[]) =>
-          this.questionGroupService.addQuestionGroupToCollectionIfMissing<IQuestionGroup>(questionGroups, this.question?.questtionGroup),
+          this.questionGroupService.addQuestionGroupToCollectionIfMissing<IQuestionGroup>(questionGroups, this.question?.questionGroup),
         ),
       )
       .subscribe((questionGroups: IQuestionGroup[]) => (this.questionGroupsSharedCollection = questionGroups));

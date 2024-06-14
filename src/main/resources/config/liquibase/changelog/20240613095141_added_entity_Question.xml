@@ -20,7 +20,7 @@
             <column name="point" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="questtion_group_id" type="bigint">
+            <column name="question_group_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

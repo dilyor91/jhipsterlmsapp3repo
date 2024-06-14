@@ -33,7 +33,7 @@ public class Option implements Serializable {
     private Boolean isCorrect;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "questtionGroup" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questionGroup" }, allowSetters = true)
     private Question question;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

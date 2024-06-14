@@ -23,11 +23,11 @@
           <dd>
             <span>{{ question()!.point }}</span>
           </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.question.questtionGroup">Questtion Group</span></dt>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.question.questionGroup">Question Group</span></dt>
           <dd>
-            @if (question()!.questtionGroup) {
+            @if (question()!.questionGroup) {
               <div>
-                <a [routerLink]="['/question-group', question()!.questtionGroup?.id, 'view']">{{ question()!.questtionGroup?.id }}</a>
+                <a [routerLink]="['/question-group', question()!.questionGroup?.id, 'view']">{{ question()!.questionGroup?.id }}</a>
               </div>
             }
           </dd>

@@ -17,7 +17,7 @@ public class QuestionDTO implements Serializable {
 
     private Integer point;
 
-    private QuestionGroupDTO questtionGroup;
+    private QuestionGroupDTO questionGroup;
 
     public Long getId() {
         return id;
@@ -43,12 +43,12 @@ public class QuestionDTO implements Serializable {
         this.point = point;
     }
 
-    public QuestionGroupDTO getQuesttionGroup() {
-        return questtionGroup;
+    public QuestionGroupDTO getQuestionGroup() {
+        return questionGroup;
     }
 
-    public void setQuesttionGroup(QuestionGroupDTO questtionGroup) {
-        this.questtionGroup = questtionGroup;
+    public void setQuestionGroup(QuestionGroupDTO questionGroup) {
+        this.questionGroup = questionGroup;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class QuestionDTO implements Serializable {
             "id=" + getId() +
             ", questionText='" + getQuestionText() + "'" +
             ", point=" + getPoint() +
-            ", questtionGroup=" + getQuesttionGroup() +
+            ", questionGroup=" + getQuestionGroup() +
             "}";
     }
 }

@@ -22,7 +22,7 @@ describe('Question Form Service', () => {
             id: expect.any(Object),
             questionText: expect.any(Object),
             point: expect.any(Object),
-            questtionGroup: expect.any(Object),
+            questionGroup: expect.any(Object),
           }),
         );
       });
@@ -35,7 +35,7 @@ describe('Question Form Service', () => {
             id: expect.any(Object),
             questionText: expect.any(Object),
             point: expect.any(Object),
-            questtionGroup: expect.any(Object),
+            questionGroup: expect.any(Object),
           }),
         );
       });

@@ -4,7 +4,7 @@ export interface IQuestion {
   id: number;
   questionText?: string | null;
   point?: number | null;
-  questtionGroup?: Pick<IQuestionGroup, 'id'> | null;
+  questionGroup?: Pick<IQuestionGroup, 'id'> | null;
 }
 
 export type NewQuestion = Omit<IQuestion, 'id'> & { id: null };
