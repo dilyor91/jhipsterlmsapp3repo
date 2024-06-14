@@ -23,5 +23,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="course_section"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="quiz_id"
+                                 baseTableName="quiz_course_section"
+                                 constraintName="fk_quiz_course_section__quiz_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quiz"
+                                 />
     </changeSet>
 </databaseChangeLog>

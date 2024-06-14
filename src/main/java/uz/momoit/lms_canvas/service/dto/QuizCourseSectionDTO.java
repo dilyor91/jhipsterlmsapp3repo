@@ -23,6 +23,8 @@ public class QuizCourseSectionDTO implements Serializable {
 
     private CourseSectionDTO courseSection;
 
+    private QuizDTO quiz;
+
     public Long getId() {
         return id;
     }
@@ -63,6 +65,14 @@ public class QuizCourseSectionDTO implements Serializable {
         this.courseSection = courseSection;
     }
 
+    public QuizDTO getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(QuizDTO quiz) {
+        this.quiz = quiz;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,6 +103,7 @@ public class QuizCourseSectionDTO implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             ", course=" + getCourse() +
             ", courseSection=" + getCourseSection() +
+            ", quiz=" + getQuiz() +
             "}";
     }
 }

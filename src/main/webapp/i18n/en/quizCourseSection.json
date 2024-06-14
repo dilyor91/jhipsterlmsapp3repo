@@ -21,7 +21,8 @@
       "startDate": "Start Date",
       "endDate": "End Date",
       "course": "Course",
-      "courseSection": "Course Section"
+      "courseSection": "Course Section",
+      "quiz": "Quiz"
     }
   }
 }

@@ -36,6 +36,7 @@ type QuizCourseSectionFormGroupContent = {
   endDate: FormControl<QuizCourseSectionFormRawValue['endDate']>;
   course: FormControl<QuizCourseSectionFormRawValue['course']>;
   courseSection: FormControl<QuizCourseSectionFormRawValue['courseSection']>;
+  quiz: FormControl<QuizCourseSectionFormRawValue['quiz']>;
 };
 
 export type QuizCourseSectionFormGroup = FormGroup<QuizCourseSectionFormGroupContent>;
@@ -63,6 +64,7 @@ export class QuizCourseSectionFormService {
       }),
       course: new FormControl(quizCourseSectionRawValue.course),
       courseSection: new FormControl(quizCourseSectionRawValue.courseSection),
+      quiz: new FormControl(quizCourseSectionRawValue.quiz),
     });
   }
 

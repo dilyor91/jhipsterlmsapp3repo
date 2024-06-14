@@ -41,6 +41,10 @@ public class QuizCourseSection implements Serializable {
     @JsonIgnoreProperties(value = { "course", "announcements", "assignments" }, allowSetters = true)
     private CourseSection courseSection;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "course" }, allowSetters = true)
+    private Quiz quiz;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -105,6 +109,19 @@ public class QuizCourseSection implements Serializable {
 
     public QuizCourseSection courseSection(CourseSection courseSection) {
         this.setCourseSection(courseSection);
+        return this;
+    }
+
+    public Quiz getQuiz() {
+        return this.quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public QuizCourseSection quiz(Quiz quiz) {
+        this.setQuiz(quiz);
         return this;
     }
 

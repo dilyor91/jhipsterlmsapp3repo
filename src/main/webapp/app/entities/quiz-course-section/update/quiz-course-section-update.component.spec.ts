@@ -9,6 +9,8 @@ import { ICourse } from 'app/entities/course/course.model';
 import { CourseService } from 'app/entities/course/service/course.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
 import { CourseSectionService } from 'app/entities/course-section/service/course-section.service';
+import { IQuiz } from 'app/entities/quiz/quiz.model';
+import { QuizService } from 'app/entities/quiz/service/quiz.service';
 import { IQuizCourseSection } from '../quiz-course-section.model';
 import { QuizCourseSectionService } from '../service/quiz-course-section.service';
 import { QuizCourseSectionFormService } from './quiz-course-section-form.service';
@@ -23,6 +25,7 @@ describe('QuizCourseSection Management Update Component', () => {
   let quizCourseSectionService: QuizCourseSectionService;
   let courseService: CourseService;
   let courseSectionService: CourseSectionService;
+  let quizService: QuizService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,6 +49,7 @@ describe('QuizCourseSection Management Update Component', () => {
     quizCourseSectionService = TestBed.inject(QuizCourseSectionService);
     courseService = TestBed.inject(CourseService);
     courseSectionService = TestBed.inject(CourseSectionService);
+    quizService = TestBed.inject(QuizService);
 
     comp = fixture.componentInstance;
   });
@@ -95,18 +99,43 @@ describe('QuizCourseSection Management Update Component', () => {
       expect(comp.courseSectionsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Quiz query and add missing value', () => {
+      const quizCourseSection: IQuizCourseSection = { id: 456 };
+      const quiz: IQuiz = { id: 20031 };
+      quizCourseSection.quiz = quiz;
+
+      const quizCollection: IQuiz[] = [{ id: 14727 }];
+      jest.spyOn(quizService, 'query').mockReturnValue(of(new HttpResponse({ body: quizCollection })));
+      const additionalQuizzes = [quiz];
+      const expectedCollection: IQuiz[] = [...additionalQuizzes, ...quizCollection];
+      jest.spyOn(quizService, 'addQuizToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ quizCourseSection });
+      comp.ngOnInit();
+
+      expect(quizService.query).toHaveBeenCalled();
+      expect(quizService.addQuizToCollectionIfMissing).toHaveBeenCalledWith(
+        quizCollection,
+        ...additionalQuizzes.map(expect.objectContaining),
+      );
+      expect(comp.quizzesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const quizCourseSection: IQuizCourseSection = { id: 456 };
       const course: ICourse = { id: 29454 };
       quizCourseSection.course = course;
       const courseSection: ICourseSection = { id: 28440 };
       quizCourseSection.courseSection = courseSection;
+      const quiz: IQuiz = { id: 2519 };
+      quizCourseSection.quiz = quiz;
 
       activatedRoute.data = of({ quizCourseSection });
       comp.ngOnInit();
 
       expect(comp.coursesSharedCollection).toContain(course);
       expect(comp.courseSectionsSharedCollection).toContain(courseSection);
+      expect(comp.quizzesSharedCollection).toContain(quiz);
       expect(comp.quizCourseSection).toEqual(quizCourseSection);
     });
   });
@@ -197,6 +226,16 @@ describe('QuizCourseSection Management Update Component', () => {
         jest.spyOn(courseSectionService, 'compareCourseSection');
         comp.compareCourseSection(entity, entity2);
         expect(courseSectionService.compareCourseSection).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareQuiz', () => {
+      it('Should forward to quizService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(quizService, 'compareQuiz');
+        comp.compareQuiz(entity, entity2);
+        expect(quizService.compareQuiz).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

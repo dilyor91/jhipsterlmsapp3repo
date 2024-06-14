@@ -61,6 +61,7 @@ public class QuizCourseSectionAsserts {
         assertThat(expected)
             .as("Verify QuizCourseSection relationships")
             .satisfies(e -> assertThat(e.getCourse()).as("check course").isEqualTo(actual.getCourse()))
-            .satisfies(e -> assertThat(e.getCourseSection()).as("check courseSection").isEqualTo(actual.getCourseSection()));
+            .satisfies(e -> assertThat(e.getCourseSection()).as("check courseSection").isEqualTo(actual.getCourseSection()))
+            .satisfies(e -> assertThat(e.getQuiz()).as("check quiz").isEqualTo(actual.getQuiz()));
     }
 }

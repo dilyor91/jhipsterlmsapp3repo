@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static uz.momoit.lms_canvas.domain.CourseSectionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.CourseTestSamples.*;
 import static uz.momoit.lms_canvas.domain.QuizCourseSectionTestSamples.*;
+import static uz.momoit.lms_canvas.domain.QuizTestSamples.*;
 
 import org.junit.jupiter.api.Test;
 import uz.momoit.lms_canvas.web.rest.TestUtil;
@@ -46,5 +47,17 @@ class QuizCourseSectionTest {
 
         quizCourseSection.courseSection(null);
         assertThat(quizCourseSection.getCourseSection()).isNull();
+    }
+
+    @Test
+    void quizTest() {
+        QuizCourseSection quizCourseSection = getQuizCourseSectionRandomSampleGenerator();
+        Quiz quizBack = getQuizRandomSampleGenerator();
+
+        quizCourseSection.setQuiz(quizBack);
+        assertThat(quizCourseSection.getQuiz()).isEqualTo(quizBack);
+
+        quizCourseSection.quiz(null);
+        assertThat(quizCourseSection.getQuiz()).isNull();
     }
 }

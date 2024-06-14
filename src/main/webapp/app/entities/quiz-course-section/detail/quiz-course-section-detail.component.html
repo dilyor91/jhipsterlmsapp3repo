@@ -43,6 +43,14 @@
               </div>
             }
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.quizCourseSection.quiz">Quiz</span></dt>
+          <dd>
+            @if (quizCourseSection()!.quiz) {
+              <div>
+                <a [routerLink]="['/quiz', quizCourseSection()!.quiz?.id, 'view']">{{ quizCourseSection()!.quiz?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -11,6 +11,8 @@ import { ICourse } from 'app/entities/course/course.model';
 import { CourseService } from 'app/entities/course/service/course.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
 import { CourseSectionService } from 'app/entities/course-section/service/course-section.service';
+import { IQuiz } from 'app/entities/quiz/quiz.model';
+import { QuizService } from 'app/entities/quiz/service/quiz.service';
 import { QuizCourseSectionService } from '../service/quiz-course-section.service';
 import { IQuizCourseSection } from '../quiz-course-section.model';
 import { QuizCourseSectionFormService, QuizCourseSectionFormGroup } from './quiz-course-section-form.service';
@@ -27,11 +29,13 @@ export class QuizCourseSectionUpdateComponent implements OnInit {
 
   coursesSharedCollection: ICourse[] = [];
   courseSectionsSharedCollection: ICourseSection[] = [];
+  quizzesSharedCollection: IQuiz[] = [];
 
   protected quizCourseSectionService = inject(QuizCourseSectionService);
   protected quizCourseSectionFormService = inject(QuizCourseSectionFormService);
   protected courseService = inject(CourseService);
   protected courseSectionService = inject(CourseSectionService);
+  protected quizService = inject(QuizService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -41,6 +45,8 @@ export class QuizCourseSectionUpdateComponent implements OnInit {
 
   compareCourseSection = (o1: ICourseSection | null, o2: ICourseSection | null): boolean =>
     this.courseSectionService.compareCourseSection(o1, o2);
+
+  compareQuiz = (o1: IQuiz | null, o2: IQuiz | null): boolean => this.quizService.compareQuiz(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ quizCourseSection }) => {
@@ -98,6 +104,10 @@ export class QuizCourseSectionUpdateComponent implements OnInit {
       this.courseSectionsSharedCollection,
       quizCourseSection.courseSection,
     );
+    this.quizzesSharedCollection = this.quizService.addQuizToCollectionIfMissing<IQuiz>(
+      this.quizzesSharedCollection,
+      quizCourseSection.quiz,
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -121,5 +131,11 @@ export class QuizCourseSectionUpdateComponent implements OnInit {
         ),
       )
       .subscribe((courseSections: ICourseSection[]) => (this.courseSectionsSharedCollection = courseSections));
+
+    this.quizService
+      .query()
+      .pipe(map((res: HttpResponse<IQuiz[]>) => res.body ?? []))
+      .pipe(map((quizzes: IQuiz[]) => this.quizService.addQuizToCollectionIfMissing<IQuiz>(quizzes, this.quizCourseSection?.quiz)))
+      .subscribe((quizzes: IQuiz[]) => (this.quizzesSharedCollection = quizzes));
   }
 }

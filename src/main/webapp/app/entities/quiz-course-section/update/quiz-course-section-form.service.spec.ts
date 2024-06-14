@@ -24,6 +24,7 @@ describe('QuizCourseSection Form Service', () => {
             endDate: expect.any(Object),
             course: expect.any(Object),
             courseSection: expect.any(Object),
+            quiz: expect.any(Object),
           }),
         );
       });
@@ -38,6 +39,7 @@ describe('QuizCourseSection Form Service', () => {
             endDate: expect.any(Object),
             course: expect.any(Object),
             courseSection: expect.any(Object),
+            quiz: expect.any(Object),
           }),
         );
       });
