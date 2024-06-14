@@ -68,6 +68,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="quiz.id">
+              <div class="d-flex">
+                <span jhiTranslate="jhipsterlmsapp3App.quizCourseSection.quiz">Quiz</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -92,6 +98,13 @@
                     <a [routerLink]="['/course-section', quizCourseSection.courseSection.id, 'view']">{{
                       quizCourseSection.courseSection.id
                     }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quizCourseSection.quiz) {
+                  <div>
+                    <a [routerLink]="['/quiz', quizCourseSection.quiz.id, 'view']">{{ quizCourseSection.quiz.id }}</a>
                   </div>
                 }
               </td>

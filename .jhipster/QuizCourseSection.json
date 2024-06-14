@@ -30,6 +30,12 @@
       "relationshipName": "courseSection",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "quiz",
+      "relationshipName": "quiz",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

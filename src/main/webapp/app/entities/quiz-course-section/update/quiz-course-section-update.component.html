@@ -110,6 +110,16 @@
             }
           </select>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quiz" jhiTranslate="jhipsterlmsapp3App.quizCourseSection.quiz">Quiz</label>
+          <select class="form-control" id="field_quiz" data-cy="quiz" name="quiz" formControlName="quiz" [compareWith]="compareQuiz">
+            <option [ngValue]="null"></option>
+            @for (quizOption of quizzesSharedCollection; track $index) {
+              <option [ngValue]="quizOption">{{ quizOption.id }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <div>
