@@ -27,7 +27,10 @@
         "department": "Department",
         "questionGroup": "Question Group",
         "question": "Question",
-        "option": "Option"
+        "option": "Option",
+        "quiz": "Quiz",
+        "quizQuestionGroup": "Quiz Question Group",
+        "quizCourseSection": "Quiz Course Section"
       },
       "account": {
         "main": "Account",

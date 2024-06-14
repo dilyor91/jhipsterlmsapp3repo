@@ -56,9 +56,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="questtionGroup.id">
+            <th scope="col" jhiSortBy="questionGroup.id">
               <div class="d-flex">
-                <span jhiTranslate="jhipsterlmsapp3App.question.questtionGroup">Questtion Group</span>
+                <span jhiTranslate="jhipsterlmsapp3App.question.questionGroup">Question Group</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -74,9 +74,9 @@
               <td>{{ question.questionText }}</td>
               <td>{{ question.point }}</td>
               <td>
-                @if (question.questtionGroup) {
+                @if (question.questionGroup) {
                   <div>
-                    <a [routerLink]="['/question-group', question.questtionGroup.id, 'view']">{{ question.questtionGroup.id }}</a>
+                    <a [routerLink]="['/question-group', question.questionGroup.id, 'view']">{{ question.questionGroup.id }}</a>
                   </div>
                 }
               </td>

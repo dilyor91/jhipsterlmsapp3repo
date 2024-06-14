@@ -24,14 +24,14 @@ class QuestionTest {
     }
 
     @Test
-    void questtionGroupTest() {
+    void questionGroupTest() {
         Question question = getQuestionRandomSampleGenerator();
         QuestionGroup questionGroupBack = getQuestionGroupRandomSampleGenerator();
 
-        question.setQuesttionGroup(questionGroupBack);
-        assertThat(question.getQuesttionGroup()).isEqualTo(questionGroupBack);
+        question.setQuestionGroup(questionGroupBack);
+        assertThat(question.getQuestionGroup()).isEqualTo(questionGroupBack);
 
-        question.questtionGroup(null);
-        assertThat(question.getQuesttionGroup()).isNull();
+        question.questionGroup(null);
+        assertThat(question.getQuestionGroup()).isNull();
     }
 }

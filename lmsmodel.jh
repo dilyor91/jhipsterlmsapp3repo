@@ -244,10 +244,30 @@ entity Option {
    isCorrect Boolean required
 }
 
+entity Quiz {
+   quizName String required
+   timeInMinute Integer required
+   published Boolean
+}
+
+entity QuizQuestionGroup {
+   questionCount Integer
+}
+
+entity QuizCourseSection {
+   startDate Instant required
+   endDate Instant required
+}
+
 relationship ManyToOne {
    QuestionGroup{course} to Course
-   Question{questtionGroup} to QuestionGroup
+   Question{questionGroup} to QuestionGroup
    Option{question} to Question
+   Quiz{course} to Course
+   QuizQuestionGroup{quiz} to Quiz
+   QuizQuestionGroup{questionGroup} to QuestionGroup
+   QuizCourseSection{course} to Course
+   QuizCourseSection{courseSection} to CourseSection
 }
 
 relationship ManyToOne {
@@ -285,7 +305,8 @@ Assignment, Announcement, CalendarEvent, WikiPage,
 Attendance, AttendanceDetail, Student,
 Faculty, Speciality, Group, StudyAcademicYear,
 Teacher, Department,
-QuestionGroup, Question, Option with pagination
+QuestionGroup, Question, Option,
+Quiz, QuizQuestionGroup, QuizCourseSection with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

@@ -60,6 +60,6 @@ public class QuestionAsserts {
     public static void assertQuestionUpdatableRelationshipsEquals(Question expected, Question actual) {
         assertThat(expected)
             .as("Verify Question relationships")
-            .satisfies(e -> assertThat(e.getQuesttionGroup()).as("check questtionGroup").isEqualTo(actual.getQuesttionGroup()));
+            .satisfies(e -> assertThat(e.getQuestionGroup()).as("check questionGroup").isEqualTo(actual.getQuestionGroup()));
     }
 }

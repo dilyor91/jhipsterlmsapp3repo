@@ -20,7 +20,7 @@
   "relationships": [
     {
       "otherEntityName": "questionGroup",
-      "relationshipName": "questtionGroup",
+      "relationshipName": "questionGroup",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

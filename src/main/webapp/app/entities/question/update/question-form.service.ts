@@ -20,7 +20,7 @@ type QuestionFormGroupContent = {
   id: FormControl<IQuestion['id'] | NewQuestion['id']>;
   questionText: FormControl<IQuestion['questionText']>;
   point: FormControl<IQuestion['point']>;
-  questtionGroup: FormControl<IQuestion['questtionGroup']>;
+  questionGroup: FormControl<IQuestion['questionGroup']>;
 };
 
 export type QuestionFormGroup = FormGroup<QuestionFormGroupContent>;
@@ -44,7 +44,7 @@ export class QuestionFormService {
         validators: [Validators.required],
       }),
       point: new FormControl(questionRawValue.point),
-      questtionGroup: new FormControl(questionRawValue.questtionGroup),
+      questionGroup: new FormControl(questionRawValue.questionGroup),
     });
   }
 
