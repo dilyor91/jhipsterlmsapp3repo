@@ -3,27 +3,29 @@ import dayjs from 'dayjs/esm';
 import { ICalendarEvent, NewCalendarEvent } from './calendar-event.model';
 
 export const sampleWithRequiredData: ICalendarEvent = {
-  id: 6431,
+  id: 4689,
 };
 
 export const sampleWithPartialData: ICalendarEvent = {
-  id: 3195,
-  content: 'tingle parch which',
-  date: dayjs('2024-05-22T09:29'),
-  location: 'amid blah afore',
-  address: 'ideal',
+  id: 31320,
+  title: 'across who consul',
+  content: 'innocently so',
+  endTime: 20666,
+  location: 'for freeload',
+  address: 'peel webpage',
+  eventFrequency: 'WEEKLY',
 };
 
 export const sampleWithFullData: ICalendarEvent = {
-  id: 25179,
-  title: 'famously and',
-  content: 'greedily',
-  date: dayjs('2024-05-21T17:58'),
-  startTime: 31899,
-  endTime: 23366,
-  location: 'around likewise knowingly',
-  address: 'following um keenly',
-  eventFrequency: 'DAILY',
+  id: 7462,
+  title: 'puzzled eek harmonise',
+  content: 'ukulele wicked anti',
+  date: dayjs('2024-05-21T13:35'),
+  startTime: 23809,
+  endTime: 6043,
+  location: 'mundane',
+  address: 'decisive sedately',
+  eventFrequency: 'NOREPEAT',
 };
 
 export const sampleWithNewData: NewCalendarEvent = {

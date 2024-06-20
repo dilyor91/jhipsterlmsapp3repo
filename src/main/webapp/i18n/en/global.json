@@ -30,7 +30,12 @@
         "option": "Option",
         "quiz": "Quiz",
         "quizQuestionGroup": "Quiz Question Group",
-        "quizCourseSection": "Quiz Course Section"
+        "quizCourseSection": "Quiz Course Section",
+        "quizSession": "Quiz Session",
+        "studentOption": "Student Option",
+        "studentQuestion": "Student Question",
+        "studentAnswerQuestion": "Student Answer Question",
+        "quizResult": "Quiz Result"
       },
       "account": {
         "main": "Account",

@@ -503,7 +503,11 @@ class CourseResourceIT {
             .courseName(UPDATED_COURSE_NAME)
             .courseImagePath(UPDATED_COURSE_IMAGE_PATH)
             .courseStartDate(UPDATED_COURSE_START_DATE)
-            .published(UPDATED_PUBLISHED);
+            .courseEndDate(UPDATED_COURSE_END_DATE)
+            .selfEnrollment(UPDATED_SELF_ENROLLMENT)
+            .selfEnrollmentCode(UPDATED_SELF_ENROLLMENT_CODE)
+            .storageQuota(UPDATED_STORAGE_QUOTA)
+            .status(UPDATED_STATUS);
 
         restCourseMockMvc
             .perform(

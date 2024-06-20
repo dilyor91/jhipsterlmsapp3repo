@@ -398,8 +398,9 @@ class AssignmentResourceIT {
         partialUpdatedAssignment.setId(assignment.getId());
 
         partialUpdatedAssignment
-            .points(UPDATED_POINTS)
-            .startDate(UPDATED_START_DATE)
+            .name(UPDATED_NAME)
+            .submissionType(UPDATED_SUBMISSION_TYPE)
+            .allowedAttempts(UPDATED_ALLOWED_ATTEMPTS)
             .endDate(UPDATED_END_DATE)
             .dueDate(UPDATED_DUE_DATE)
             .published(UPDATED_PUBLISHED);

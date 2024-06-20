@@ -3,32 +3,33 @@ import dayjs from 'dayjs/esm';
 import { IAnnouncement, NewAnnouncement } from './announcement.model';
 
 export const sampleWithRequiredData: IAnnouncement = {
-  id: 15365,
-  title: 'er thankfully provided',
-  content: 'actualise ouch',
+  id: 25356,
+  title: 'ack',
+  content: 'yahoo',
 };
 
 export const sampleWithPartialData: IAnnouncement = {
-  id: 17247,
-  title: 'impressive',
-  content: 'yuck',
-  attachmentId: 13575,
-  postAt: dayjs('2024-05-20T10:55'),
+  id: 23609,
+  title: 'hit',
+  content: 'valance lest',
+  attachmentId: 2580,
+  delayPost: false,
+  postAt: dayjs('2024-05-20T03:45'),
 };
 
 export const sampleWithFullData: IAnnouncement = {
-  id: 21181,
-  title: 'brr circa how',
-  content: 'agree',
-  attachmentId: 13732,
+  id: 30701,
+  title: 'incidentally within',
+  content: 'what',
+  attachmentId: 12834,
   delayPost: false,
-  postAt: dayjs('2024-05-19T20:31'),
-  published: false,
+  postAt: dayjs('2024-05-20T07:51'),
+  published: true,
 };
 
 export const sampleWithNewData: NewAnnouncement = {
-  title: 'constrict alarmed',
-  content: 'cautiously who',
+  title: 'ferry limping vase',
+  content: 'fooey',
   id: null,
 };
 
