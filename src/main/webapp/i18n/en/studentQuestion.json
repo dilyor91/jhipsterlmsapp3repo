@@ -19,7 +19,8 @@
       },
       "id": "ID",
       "ordNum": "Ord Num",
-      "quizSession": "Quiz Session"
+      "quizSession": "Quiz Session",
+      "question": "Question"
     }
   }
 }

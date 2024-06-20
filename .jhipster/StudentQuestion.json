@@ -18,6 +18,12 @@
       "relationshipName": "quizSession",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "question",
+      "relationshipName": "question",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

@@ -15,6 +15,8 @@ public class StudentQuestionDTO implements Serializable {
 
     private QuizSessionDTO quizSession;
 
+    private QuestionDTO question;
+
     public Long getId() {
         return id;
     }
@@ -37,6 +39,14 @@ public class StudentQuestionDTO implements Serializable {
 
     public void setQuizSession(QuizSessionDTO quizSession) {
         this.quizSession = quizSession;
+    }
+
+    public QuestionDTO getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionDTO question) {
+        this.question = question;
     }
 
     @Override
@@ -67,6 +77,7 @@ public class StudentQuestionDTO implements Serializable {
             "id=" + getId() +
             ", ordNum=" + getOrdNum() +
             ", quizSession=" + getQuizSession() +
+            ", question=" + getQuestion() +
             "}";
     }
 }

@@ -121,6 +121,31 @@ const routes: Routes = [
     data: { pageTitle: 'jhipsterlmsapp3App.quizCourseSection.home.title' },
     loadChildren: () => import('./quiz-course-section/quiz-course-section.routes'),
   },
+  {
+    path: 'quiz-session',
+    data: { pageTitle: 'jhipsterlmsapp3App.quizSession.home.title' },
+    loadChildren: () => import('./quiz-session/quiz-session.routes'),
+  },
+  {
+    path: 'student-option',
+    data: { pageTitle: 'jhipsterlmsapp3App.studentOption.home.title' },
+    loadChildren: () => import('./student-option/student-option.routes'),
+  },
+  {
+    path: 'student-question',
+    data: { pageTitle: 'jhipsterlmsapp3App.studentQuestion.home.title' },
+    loadChildren: () => import('./student-question/student-question.routes'),
+  },
+  {
+    path: 'student-answer-question',
+    data: { pageTitle: 'jhipsterlmsapp3App.studentAnswerQuestion.home.title' },
+    loadChildren: () => import('./student-answer-question/student-answer-question.routes'),
+  },
+  {
+    path: 'quiz-result',
+    data: { pageTitle: 'jhipsterlmsapp3App.quizResult.home.title' },
+    loadChildren: () => import('./quiz-result/quiz-result.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

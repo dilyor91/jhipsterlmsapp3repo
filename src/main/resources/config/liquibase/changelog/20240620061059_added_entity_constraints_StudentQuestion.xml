@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="quiz_session"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="question_id"
+                                 baseTableName="student_question"
+                                 constraintName="fk_student_question__question_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="question"
+                                 />
     </changeSet>
 </databaseChangeLog>
