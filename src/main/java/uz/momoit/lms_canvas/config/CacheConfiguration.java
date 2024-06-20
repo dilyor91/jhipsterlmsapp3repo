@@ -77,6 +77,11 @@ public class CacheConfiguration {
             createCache(cm, uz.momoit.lms_canvas.domain.Quiz.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.QuizQuestionGroup.class.getName());
             createCache(cm, uz.momoit.lms_canvas.domain.QuizCourseSection.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.QuizSession.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.StudentOption.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.StudentQuestion.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.StudentAnswerQuestion.class.getName());
+            createCache(cm, uz.momoit.lms_canvas.domain.QuizResult.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

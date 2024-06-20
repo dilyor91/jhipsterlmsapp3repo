@@ -342,9 +342,9 @@ class WikiPageResourceIT {
 
         partialUpdatedWikiPage
             .content(UPDATED_CONTENT)
-            .whoAllowed(UPDATED_WHO_ALLOWED)
             .addToStudents(UPDATED_ADD_TO_STUDENTS)
-            .addToStudentsDate(UPDATED_ADD_TO_STUDENTS_DATE);
+            .addToStudentsDate(UPDATED_ADD_TO_STUDENTS_DATE)
+            .notifyUsersChanges(UPDATED_NOTIFY_USERS_CHANGES);
 
         restWikiPageMockMvc
             .perform(

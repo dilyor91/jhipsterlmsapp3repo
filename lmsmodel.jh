@@ -259,6 +259,49 @@ entity QuizCourseSection {
    endDate Instant required
 }
 
+enum QuizSessionEnum {
+   IN_PROGRESS, FINISHED
+}
+
+entity QuizSession {
+   startTime Instant 
+   endTime Instant
+   quizSessionEnum QuizSessionEnum 
+}
+
+entity StudentOption {
+    ordNum Integer
+}
+
+entity StudentQuestion {
+    ordNum Integer 
+}
+
+entity StudentAnswerQuestion {
+    isCorrect Boolean
+}
+
+entity QuizResult {
+    point Integer
+    totalQuestionCnt Integer 
+    correctAnswerCnt Integer 
+    wrongAnswerCnt Integer 
+}
+
+relationship ManyToOne {
+   QuizSession{student} to Student
+   QuizSession{quiz} to Quiz
+   StudentQuestion{quizSession} to QuizSession
+   StudentOption{studentQuestion} to StudentQuestion
+   StudentAnswerQuestion{question} to Question
+   StudentAnswerQuestion{option} to Option
+   StudentAnswerQuestion{quizSession} to QuizSession
+   QuizResult{quiz} to Quiz
+   QuizResult{student} to Student
+   QuizResult{quizSession} to QuizSession
+}
+
+
 relationship ManyToOne {
    QuestionGroup{course} to Course
    Question{questionGroup} to QuestionGroup
@@ -307,7 +350,10 @@ Attendance, AttendanceDetail, Student,
 Faculty, Speciality, Group, StudyAcademicYear,
 Teacher, Department,
 QuestionGroup, Question, Option,
-Quiz, QuizQuestionGroup, QuizCourseSection with pagination
+Quiz, QuizQuestionGroup, QuizCourseSection,
+QuizSession, StudentOption, StudentQuestion,
+StudentAnswerQuestion, QuizResult
+with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

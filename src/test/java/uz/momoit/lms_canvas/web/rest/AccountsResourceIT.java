@@ -467,8 +467,9 @@ class AccountsResourceIT {
         partialUpdatedAccounts.setId(accounts.getId());
 
         partialUpdatedAccounts
+            .username(UPDATED_USERNAME)
             .fullName(UPDATED_FULL_NAME)
-            .sortableName(UPDATED_SORTABLE_NAME)
+            .avatarImageUrl(UPDATED_AVATAR_IMAGE_URL)
             .locale(UPDATED_LOCALE)
             .gender(UPDATED_GENDER)
             .userStatus(UPDATED_USER_STATUS);

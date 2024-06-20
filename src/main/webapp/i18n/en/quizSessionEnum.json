@@ -1,0 +1,9 @@
+{
+  "jhipsterlmsapp3App": {
+    "QuizSessionEnum": {
+      "null": "",
+      "IN_PROGRESS": "IN_PROGRESS",
+      "FINISHED": "FINISHED"
+    }
+  }
+}
