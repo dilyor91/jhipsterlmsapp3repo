@@ -29,6 +29,14 @@
               </div>
             }
           </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.studentQuestion.question">Question</span></dt>
+          <dd>
+            @if (studentQuestion()!.question) {
+              <div>
+                <a [routerLink]="['/question', studentQuestion()!.question?.id, 'view']">{{ studentQuestion()!.question?.id }}</a>
+              </div>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

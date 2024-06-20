@@ -292,6 +292,7 @@ relationship ManyToOne {
    QuizSession{student} to Student
    QuizSession{quiz} to Quiz
    StudentQuestion{quizSession} to QuizSession
+   StudentQuestion{question} to Question
    StudentOption{studentQuestion} to StudentQuestion
    StudentAnswerQuestion{question} to Question
    StudentAnswerQuestion{option} to Option

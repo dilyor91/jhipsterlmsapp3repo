@@ -1,6 +1,7 @@
 package uz.momoit.lms_canvas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uz.momoit.lms_canvas.domain.QuestionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.QuizSessionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.StudentQuestionTestSamples.*;
 
@@ -33,5 +34,17 @@ class StudentQuestionTest {
 
         studentQuestion.quizSession(null);
         assertThat(studentQuestion.getQuizSession()).isNull();
+    }
+
+    @Test
+    void questionTest() {
+        StudentQuestion studentQuestion = getStudentQuestionRandomSampleGenerator();
+        Question questionBack = getQuestionRandomSampleGenerator();
+
+        studentQuestion.setQuestion(questionBack);
+        assertThat(studentQuestion.getQuestion()).isEqualTo(questionBack);
+
+        studentQuestion.question(null);
+        assertThat(studentQuestion.getQuestion()).isNull();
     }
 }

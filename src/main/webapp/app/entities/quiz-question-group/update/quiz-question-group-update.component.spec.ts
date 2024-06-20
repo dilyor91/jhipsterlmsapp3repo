@@ -53,10 +53,10 @@ describe('QuizQuestionGroup Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Quiz query and add missing value', () => {
       const quizQuestionGroup: IQuizQuestionGroup = { id: 456 };
-      const quiz: IQuiz = { id: 387 };
+      const quiz: IQuiz = { id: 31811 };
       quizQuestionGroup.quiz = quiz;
 
-      const quizCollection: IQuiz[] = [{ id: 400 }];
+      const quizCollection: IQuiz[] = [{ id: 4841 }];
       jest.spyOn(quizService, 'query').mockReturnValue(of(new HttpResponse({ body: quizCollection })));
       const additionalQuizzes = [quiz];
       const expectedCollection: IQuiz[] = [...additionalQuizzes, ...quizCollection];
@@ -75,10 +75,10 @@ describe('QuizQuestionGroup Management Update Component', () => {
 
     it('Should call QuestionGroup query and add missing value', () => {
       const quizQuestionGroup: IQuizQuestionGroup = { id: 456 };
-      const questionGroup: IQuestionGroup = { id: 265 };
+      const questionGroup: IQuestionGroup = { id: 15083 };
       quizQuestionGroup.questionGroup = questionGroup;
 
-      const questionGroupCollection: IQuestionGroup[] = [{ id: 29752 }];
+      const questionGroupCollection: IQuestionGroup[] = [{ id: 19744 }];
       jest.spyOn(questionGroupService, 'query').mockReturnValue(of(new HttpResponse({ body: questionGroupCollection })));
       const additionalQuestionGroups = [questionGroup];
       const expectedCollection: IQuestionGroup[] = [...additionalQuestionGroups, ...questionGroupCollection];
@@ -97,9 +97,9 @@ describe('QuizQuestionGroup Management Update Component', () => {
 
     it('Should update editForm', () => {
       const quizQuestionGroup: IQuizQuestionGroup = { id: 456 };
-      const quiz: IQuiz = { id: 9900 };
+      const quiz: IQuiz = { id: 20091 };
       quizQuestionGroup.quiz = quiz;
-      const questionGroup: IQuestionGroup = { id: 27550 };
+      const questionGroup: IQuestionGroup = { id: 22061 };
       quizQuestionGroup.questionGroup = questionGroup;
 
       activatedRoute.data = of({ quizQuestionGroup });
