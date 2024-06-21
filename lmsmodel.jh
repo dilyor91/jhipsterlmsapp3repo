@@ -294,6 +294,7 @@ relationship ManyToOne {
    StudentQuestion{quizSession} to QuizSession
    StudentQuestion{question} to Question
    StudentOption{studentQuestion} to StudentQuestion
+   StudentOption{option} to Option
    StudentAnswerQuestion{question} to Question
    StudentAnswerQuestion{option} to Option
    StudentAnswerQuestion{quizSession} to QuizSession
