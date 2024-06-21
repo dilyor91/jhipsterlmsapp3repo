@@ -7,8 +7,10 @@ import { of, Subject, from } from 'rxjs';
 
 import { IStudentQuestion } from 'app/entities/student-question/student-question.model';
 import { StudentQuestionService } from 'app/entities/student-question/service/student-question.service';
-import { StudentOptionService } from '../service/student-option.service';
+import { IOption } from 'app/entities/option/option.model';
+import { OptionService } from 'app/entities/option/service/option.service';
 import { IStudentOption } from '../student-option.model';
+import { StudentOptionService } from '../service/student-option.service';
 import { StudentOptionFormService } from './student-option-form.service';
 
 import { StudentOptionUpdateComponent } from './student-option-update.component';
@@ -20,6 +22,7 @@ describe('StudentOption Management Update Component', () => {
   let studentOptionFormService: StudentOptionFormService;
   let studentOptionService: StudentOptionService;
   let studentQuestionService: StudentQuestionService;
+  let optionService: OptionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('StudentOption Management Update Component', () => {
     studentOptionFormService = TestBed.inject(StudentOptionFormService);
     studentOptionService = TestBed.inject(StudentOptionService);
     studentQuestionService = TestBed.inject(StudentQuestionService);
+    optionService = TestBed.inject(OptionService);
 
     comp = fixture.componentInstance;
   });
@@ -69,15 +73,40 @@ describe('StudentOption Management Update Component', () => {
       expect(comp.studentQuestionsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Option query and add missing value', () => {
+      const studentOption: IStudentOption = { id: 456 };
+      const option: IOption = { id: 27915 };
+      studentOption.option = option;
+
+      const optionCollection: IOption[] = [{ id: 13357 }];
+      jest.spyOn(optionService, 'query').mockReturnValue(of(new HttpResponse({ body: optionCollection })));
+      const additionalOptions = [option];
+      const expectedCollection: IOption[] = [...additionalOptions, ...optionCollection];
+      jest.spyOn(optionService, 'addOptionToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ studentOption });
+      comp.ngOnInit();
+
+      expect(optionService.query).toHaveBeenCalled();
+      expect(optionService.addOptionToCollectionIfMissing).toHaveBeenCalledWith(
+        optionCollection,
+        ...additionalOptions.map(expect.objectContaining),
+      );
+      expect(comp.optionsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const studentOption: IStudentOption = { id: 456 };
       const studentQuestion: IStudentQuestion = { id: 17455 };
       studentOption.studentQuestion = studentQuestion;
+      const option: IOption = { id: 13625 };
+      studentOption.option = option;
 
       activatedRoute.data = of({ studentOption });
       comp.ngOnInit();
 
       expect(comp.studentQuestionsSharedCollection).toContain(studentQuestion);
+      expect(comp.optionsSharedCollection).toContain(option);
       expect(comp.studentOption).toEqual(studentOption);
     });
   });
@@ -158,6 +187,16 @@ describe('StudentOption Management Update Component', () => {
         jest.spyOn(studentQuestionService, 'compareStudentQuestion');
         comp.compareStudentQuestion(entity, entity2);
         expect(studentQuestionService.compareStudentQuestion).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareOption', () => {
+      it('Should forward to optionService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(optionService, 'compareOption');
+        comp.compareOption(entity, entity2);
+        expect(optionService.compareOption).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

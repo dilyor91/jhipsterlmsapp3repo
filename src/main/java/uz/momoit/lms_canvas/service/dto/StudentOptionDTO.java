@@ -15,6 +15,8 @@ public class StudentOptionDTO implements Serializable {
 
     private StudentQuestionDTO studentQuestion;
 
+    private OptionDTO option;
+
     public Long getId() {
         return id;
     }
@@ -37,6 +39,14 @@ public class StudentOptionDTO implements Serializable {
 
     public void setStudentQuestion(StudentQuestionDTO studentQuestion) {
         this.studentQuestion = studentQuestion;
+    }
+
+    public OptionDTO getOption() {
+        return option;
+    }
+
+    public void setOption(OptionDTO option) {
+        this.option = option;
     }
 
     @Override
@@ -67,6 +77,7 @@ public class StudentOptionDTO implements Serializable {
             "id=" + getId() +
             ", ordNum=" + getOrdNum() +
             ", studentQuestion=" + getStudentQuestion() +
+            ", option=" + getOption() +
             "}";
     }
 }

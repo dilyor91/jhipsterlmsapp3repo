@@ -30,6 +30,10 @@ public class StudentOption implements Serializable {
     @JsonIgnoreProperties(value = { "quizSession", "question" }, allowSetters = true)
     private StudentQuestion studentQuestion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "question" }, allowSetters = true)
+    private Option option;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -68,6 +72,19 @@ public class StudentOption implements Serializable {
 
     public StudentOption studentQuestion(StudentQuestion studentQuestion) {
         this.setStudentQuestion(studentQuestion);
+        return this;
+    }
+
+    public Option getOption() {
+        return this.option;
+    }
+
+    public void setOption(Option option) {
+        this.option = option;
+    }
+
+    public StudentOption option(Option option) {
+        this.setOption(option);
         return this;
     }
 

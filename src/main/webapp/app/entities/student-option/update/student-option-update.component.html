@@ -42,6 +42,23 @@
             }
           </select>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_option" jhiTranslate="jhipsterlmsapp3App.studentOption.option">Option</label>
+          <select
+            class="form-control"
+            id="field_option"
+            data-cy="option"
+            name="option"
+            formControlName="option"
+            [compareWith]="compareOption"
+          >
+            <option [ngValue]="null"></option>
+            @for (optionOption of optionsSharedCollection; track $index) {
+              <option [ngValue]="optionOption">{{ optionOption.id }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <div>

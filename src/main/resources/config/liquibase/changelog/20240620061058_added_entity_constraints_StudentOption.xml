@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="student_question"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="option_id"
+                                 baseTableName="student_option"
+                                 constraintName="fk_student_option__option_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="option"
+                                 />
     </changeSet>
 </databaseChangeLog>

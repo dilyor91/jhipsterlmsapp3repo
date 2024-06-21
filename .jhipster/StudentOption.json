@@ -18,6 +18,12 @@
       "relationshipName": "studentQuestion",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "option",
+      "relationshipName": "option",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",
