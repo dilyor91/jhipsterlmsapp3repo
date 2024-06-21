@@ -1,6 +1,7 @@
 package uz.momoit.lms_canvas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uz.momoit.lms_canvas.domain.OptionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.StudentOptionTestSamples.*;
 import static uz.momoit.lms_canvas.domain.StudentQuestionTestSamples.*;
 
@@ -33,5 +34,17 @@ class StudentOptionTest {
 
         studentOption.studentQuestion(null);
         assertThat(studentOption.getStudentQuestion()).isNull();
+    }
+
+    @Test
+    void optionTest() {
+        StudentOption studentOption = getStudentOptionRandomSampleGenerator();
+        Option optionBack = getOptionRandomSampleGenerator();
+
+        studentOption.setOption(optionBack);
+        assertThat(studentOption.getOption()).isEqualTo(optionBack);
+
+        studentOption.option(null);
+        assertThat(studentOption.getOption()).isNull();
     }
 }

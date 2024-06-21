@@ -79,10 +79,10 @@ describe('StudentAnswerQuestion Management Update Component', () => {
 
     it('Should call Option query and add missing value', () => {
       const studentAnswerQuestion: IStudentAnswerQuestion = { id: 456 };
-      const option: IOption = { id: 27915 };
+      const option: IOption = { id: 30257 };
       studentAnswerQuestion.option = option;
 
-      const optionCollection: IOption[] = [{ id: 13357 }];
+      const optionCollection: IOption[] = [{ id: 18727 }];
       jest.spyOn(optionService, 'query').mockReturnValue(of(new HttpResponse({ body: optionCollection })));
       const additionalOptions = [option];
       const expectedCollection: IOption[] = [...additionalOptions, ...optionCollection];
@@ -125,7 +125,7 @@ describe('StudentAnswerQuestion Management Update Component', () => {
       const studentAnswerQuestion: IStudentAnswerQuestion = { id: 456 };
       const question: IQuestion = { id: 24058 };
       studentAnswerQuestion.question = question;
-      const option: IOption = { id: 13625 };
+      const option: IOption = { id: 16441 };
       studentAnswerQuestion.option = option;
       const quizSession: IQuizSession = { id: 17651 };
       studentAnswerQuestion.quizSession = quizSession;

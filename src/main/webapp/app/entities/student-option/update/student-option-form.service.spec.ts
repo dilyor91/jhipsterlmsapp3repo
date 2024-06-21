@@ -22,6 +22,7 @@ describe('StudentOption Form Service', () => {
             id: expect.any(Object),
             ordNum: expect.any(Object),
             studentQuestion: expect.any(Object),
+            option: expect.any(Object),
           }),
         );
       });
@@ -34,6 +35,7 @@ describe('StudentOption Form Service', () => {
             id: expect.any(Object),
             ordNum: expect.any(Object),
             studentQuestion: expect.any(Object),
+            option: expect.any(Object),
           }),
         );
       });

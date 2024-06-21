@@ -20,6 +20,9 @@
             <column name="student_question_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="option_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

@@ -9,8 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IStudentQuestion } from 'app/entities/student-question/student-question.model';
 import { StudentQuestionService } from 'app/entities/student-question/service/student-question.service';
-import { IStudentOption } from '../student-option.model';
+import { IOption } from 'app/entities/option/option.model';
+import { OptionService } from 'app/entities/option/service/option.service';
 import { StudentOptionService } from '../service/student-option.service';
+import { IStudentOption } from '../student-option.model';
 import { StudentOptionFormService, StudentOptionFormGroup } from './student-option-form.service';
 
 @Component({
@@ -24,10 +26,12 @@ export class StudentOptionUpdateComponent implements OnInit {
   studentOption: IStudentOption | null = null;
 
   studentQuestionsSharedCollection: IStudentQuestion[] = [];
+  optionsSharedCollection: IOption[] = [];
 
   protected studentOptionService = inject(StudentOptionService);
   protected studentOptionFormService = inject(StudentOptionFormService);
   protected studentQuestionService = inject(StudentQuestionService);
+  protected optionService = inject(OptionService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -35,6 +39,8 @@ export class StudentOptionUpdateComponent implements OnInit {
 
   compareStudentQuestion = (o1: IStudentQuestion | null, o2: IStudentQuestion | null): boolean =>
     this.studentQuestionService.compareStudentQuestion(o1, o2);
+
+  compareOption = (o1: IOption | null, o2: IOption | null): boolean => this.optionService.compareOption(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ studentOption }) => {
@@ -88,6 +94,10 @@ export class StudentOptionUpdateComponent implements OnInit {
       this.studentQuestionsSharedCollection,
       studentOption.studentQuestion,
     );
+    this.optionsSharedCollection = this.optionService.addOptionToCollectionIfMissing<IOption>(
+      this.optionsSharedCollection,
+      studentOption.option,
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -103,5 +113,11 @@ export class StudentOptionUpdateComponent implements OnInit {
         ),
       )
       .subscribe((studentQuestions: IStudentQuestion[]) => (this.studentQuestionsSharedCollection = studentQuestions));
+
+    this.optionService
+      .query()
+      .pipe(map((res: HttpResponse<IOption[]>) => res.body ?? []))
+      .pipe(map((options: IOption[]) => this.optionService.addOptionToCollectionIfMissing<IOption>(options, this.studentOption?.option)))
+      .subscribe((options: IOption[]) => (this.optionsSharedCollection = options));
   }
 }

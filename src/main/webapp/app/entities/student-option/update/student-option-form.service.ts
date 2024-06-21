@@ -20,6 +20,7 @@ type StudentOptionFormGroupContent = {
   id: FormControl<IStudentOption['id'] | NewStudentOption['id']>;
   ordNum: FormControl<IStudentOption['ordNum']>;
   studentQuestion: FormControl<IStudentOption['studentQuestion']>;
+  option: FormControl<IStudentOption['option']>;
 };
 
 export type StudentOptionFormGroup = FormGroup<StudentOptionFormGroupContent>;
@@ -41,6 +42,7 @@ export class StudentOptionFormService {
       ),
       ordNum: new FormControl(studentOptionRawValue.ordNum),
       studentQuestion: new FormControl(studentOptionRawValue.studentQuestion),
+      option: new FormControl(studentOptionRawValue.option),
     });
   }
 
