@@ -288,6 +288,22 @@ entity QuizResult {
     wrongAnswerCnt Integer 
 }
 
+enum LessonTypeEnum {
+    Lecture, Practice, Seminar, Lab
+}
+
+entity Lesson {
+  lessonTitle String required
+  startPlanDate Instant required
+  actualLessonDate Instant
+  lessonType LessonTypeEnum required
+  videoUrl String
+}
+
+relationship ManyToOne {
+   Lesson{course} to Course
+}
+
 relationship ManyToOne {
    QuizSession{student} to Student
    QuizSession{quiz} to Quiz
@@ -354,7 +370,7 @@ Teacher, Department,
 QuestionGroup, Question, Option,
 Quiz, QuizQuestionGroup, QuizCourseSection,
 QuizSession, StudentOption, StudentQuestion,
-StudentAnswerQuestion, QuizResult
+StudentAnswerQuestion, QuizResult, Lesson
 with pagination
 
 // Use Data Transfer Objects (DTO)
