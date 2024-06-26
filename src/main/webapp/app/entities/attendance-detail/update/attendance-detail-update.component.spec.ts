@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -26,8 +25,9 @@ describe('AttendanceDetail Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, AttendanceDetailUpdateComponent],
+      imports: [AttendanceDetailUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -53,10 +53,10 @@ describe('AttendanceDetail Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Attendance query and add missing value', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const attendance: IAttendance = { id: 3402 };
+      const attendance: IAttendance = { id: 21873 };
       attendanceDetail.attendance = attendance;
 
-      const attendanceCollection: IAttendance[] = [{ id: 31365 }];
+      const attendanceCollection: IAttendance[] = [{ id: 1621 }];
       jest.spyOn(attendanceService, 'query').mockReturnValue(of(new HttpResponse({ body: attendanceCollection })));
       const additionalAttendances = [attendance];
       const expectedCollection: IAttendance[] = [...additionalAttendances, ...attendanceCollection];
@@ -75,10 +75,10 @@ describe('AttendanceDetail Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const student: IUser = { id: 6881 };
+      const student: IUser = { id: 1979 };
       attendanceDetail.student = student;
 
-      const userCollection: IUser[] = [{ id: 5484 }];
+      const userCollection: IUser[] = [{ id: 5837 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [student];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -97,9 +97,9 @@ describe('AttendanceDetail Management Update Component', () => {
 
     it('Should update editForm', () => {
       const attendanceDetail: IAttendanceDetail = { id: 456 };
-      const attendance: IAttendance = { id: 2449 };
+      const attendance: IAttendance = { id: 15596 };
       attendanceDetail.attendance = attendance;
-      const student: IUser = { id: 1287 };
+      const student: IUser = { id: 9311 };
       attendanceDetail.student = student;
 
       activatedRoute.data = of({ attendanceDetail });

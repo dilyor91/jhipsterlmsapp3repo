@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.AttendanceDetailMapper;
 @Transactional
 public class AttendanceDetailServiceImpl implements AttendanceDetailService {
 
-    private final Logger log = LoggerFactory.getLogger(AttendanceDetailServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(AttendanceDetailServiceImpl.class);
 
     private final AttendanceDetailRepository attendanceDetailRepository;
 

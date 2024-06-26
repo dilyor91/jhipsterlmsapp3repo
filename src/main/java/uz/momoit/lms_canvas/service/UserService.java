@@ -31,7 +31,7 @@ import uz.momoit.lms_canvas.service.dto.UserDTO;
 @Transactional
 public class UserService {
 
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 

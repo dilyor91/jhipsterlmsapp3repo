@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.QuizResultMapper;
 @Transactional
 public class QuizResultServiceImpl implements QuizResultService {
 
-    private final Logger log = LoggerFactory.getLogger(QuizResultServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(QuizResultServiceImpl.class);
 
     private final QuizResultRepository quizResultRepository;
 

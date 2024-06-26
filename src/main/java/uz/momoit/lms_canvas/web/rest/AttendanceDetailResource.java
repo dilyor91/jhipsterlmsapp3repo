@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/attendance-details")
 public class AttendanceDetailResource {
 
-    private final Logger log = LoggerFactory.getLogger(AttendanceDetailResource.class);
+    private static final Logger log = LoggerFactory.getLogger(AttendanceDetailResource.class);
 
     private static final String ENTITY_NAME = "attendanceDetail";
 

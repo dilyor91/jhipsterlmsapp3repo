@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/wiki-pages")
 public class WikiPageResource {
 
-    private final Logger log = LoggerFactory.getLogger(WikiPageResource.class);
+    private static final Logger log = LoggerFactory.getLogger(WikiPageResource.class);
 
     private static final String ENTITY_NAME = "wikiPage";
 

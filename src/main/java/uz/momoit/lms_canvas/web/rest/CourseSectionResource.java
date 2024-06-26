@@ -31,7 +31,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/course-sections")
 public class CourseSectionResource {
 
-    private final Logger log = LoggerFactory.getLogger(CourseSectionResource.class);
+    private static final Logger log = LoggerFactory.getLogger(CourseSectionResource.class);
 
     private static final String ENTITY_NAME = "courseSection";
 

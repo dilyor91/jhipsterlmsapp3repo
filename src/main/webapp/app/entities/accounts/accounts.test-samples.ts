@@ -1,47 +1,47 @@
 import { IAccounts, NewAccounts } from './accounts.model';
 
 export const sampleWithRequiredData: IAccounts = {
-  id: 32,
-  username: 'pish rarely slap',
-  fullName: 'tax',
-  sortableName: 'likable',
-  phone: '(599) 411-6927',
-  gender: 'esteemed intentional',
-  userType: 'TEACHER',
-  userStatus: 'PENDING',
-};
-
-export const sampleWithPartialData: IAccounts = {
-  id: 27823,
-  username: 'cooperative dearly',
-  fullName: 'whether piercing',
-  sortableName: 'warmly',
-  avatarImageUrl: 'whereas',
-  phone: '(664) 863-3065 x8194',
-  gender: 'apud ha',
-  userType: 'TEACHER',
-  userStatus: 'ACTIVE',
-};
-
-export const sampleWithFullData: IAccounts = {
-  id: 12859,
-  username: 'dream',
-  fullName: 'whose oblong',
-  sortableName: 'border before in',
-  avatarImageUrl: 'and and bah',
-  phone: '1-367-445-2790 x82633',
-  locale: 'decontrol while barrier',
-  gender: 'powder tugboat',
+  id: 11765,
+  username: 'among',
+  fullName: 'grocery',
+  sortableName: 'villainous cue',
+  phone: '1-267-903-4459 x96826',
+  gender: 'delicious',
   userType: 'STUDENT',
   userStatus: 'BLOCKED',
 };
 
+export const sampleWithPartialData: IAccounts = {
+  id: 27131,
+  username: 'as near er',
+  fullName: 'noted',
+  sortableName: 'once beside even',
+  avatarImageUrl: 'heartache fooey',
+  phone: '1-507-338-2788 x29537',
+  gender: 'cultivar tenderly',
+  userType: 'STUDENT',
+  userStatus: 'ACTIVE',
+};
+
+export const sampleWithFullData: IAccounts = {
+  id: 8136,
+  username: 'nifty',
+  fullName: 'upon wealthy',
+  sortableName: 'scan finally belittle',
+  avatarImageUrl: 'deliberately',
+  phone: '1-451-791-1474 x22878',
+  locale: 'retrospective wetly barring',
+  gender: 'platinum deadly',
+  userType: 'STUDENT',
+  userStatus: 'ACTIVE',
+};
+
 export const sampleWithNewData: NewAccounts = {
-  username: 'grouchy aw outgrow',
-  fullName: 'pulse unto ecclesia',
-  sortableName: 'oh brow',
-  phone: '477-423-7330 x64423',
-  gender: 'gadzooks',
+  username: 'fooey',
+  fullName: 'healthily',
+  sortableName: 'hightail inasmuch',
+  phone: '1-200-256-8034 x0212',
+  gender: 'before miserably',
   userType: 'STUDENT',
   userStatus: 'ACTIVE',
   id: null,

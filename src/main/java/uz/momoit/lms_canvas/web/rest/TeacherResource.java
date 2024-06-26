@@ -31,7 +31,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/teachers")
 public class TeacherResource {
 
-    private final Logger log = LoggerFactory.getLogger(TeacherResource.class);
+    private static final Logger log = LoggerFactory.getLogger(TeacherResource.class);
 
     private static final String ENTITY_NAME = "teacher";
 

@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.SpecialityMapper;
 @Transactional
 public class SpecialityServiceImpl implements SpecialityService {
 
-    private final Logger log = LoggerFactory.getLogger(SpecialityServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(SpecialityServiceImpl.class);
 
     private final SpecialityRepository specialityRepository;
 

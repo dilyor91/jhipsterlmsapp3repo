@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.AnnouncementMapper;
 @Transactional
 public class AnnouncementServiceImpl implements AnnouncementService {
 
-    private final Logger log = LoggerFactory.getLogger(AnnouncementServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(AnnouncementServiceImpl.class);
 
     private final AnnouncementRepository announcementRepository;
 

@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.DepartmentMapper;
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final Logger log = LoggerFactory.getLogger(DepartmentServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DepartmentServiceImpl.class);
 
     private final DepartmentRepository departmentRepository;
 

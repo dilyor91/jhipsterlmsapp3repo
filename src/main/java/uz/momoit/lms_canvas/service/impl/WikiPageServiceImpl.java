@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.WikiPageMapper;
 @Transactional
 public class WikiPageServiceImpl implements WikiPageService {
 
-    private final Logger log = LoggerFactory.getLogger(WikiPageServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(WikiPageServiceImpl.class);
 
     private final WikiPageRepository wikiPageRepository;
 

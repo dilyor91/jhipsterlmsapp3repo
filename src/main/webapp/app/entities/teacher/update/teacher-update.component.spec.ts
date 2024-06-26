@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -29,8 +28,9 @@ describe('Teacher Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TeacherUpdateComponent],
+      imports: [TeacherUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -57,10 +57,10 @@ describe('Teacher Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const teacher: ITeacher = { id: 456 };
-      const user: IUser = { id: 14974 };
+      const user: IUser = { id: 26575 };
       teacher.user = user;
 
-      const userCollection: IUser[] = [{ id: 28638 }];
+      const userCollection: IUser[] = [{ id: 24644 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -79,10 +79,10 @@ describe('Teacher Management Update Component', () => {
 
     it('Should call Faculty query and add missing value', () => {
       const teacher: ITeacher = { id: 456 };
-      const faculty: IFaculty = { id: 22633 };
+      const faculty: IFaculty = { id: 7514 };
       teacher.faculty = faculty;
 
-      const facultyCollection: IFaculty[] = [{ id: 3504 }];
+      const facultyCollection: IFaculty[] = [{ id: 18767 }];
       jest.spyOn(facultyService, 'query').mockReturnValue(of(new HttpResponse({ body: facultyCollection })));
       const additionalFaculties = [faculty];
       const expectedCollection: IFaculty[] = [...additionalFaculties, ...facultyCollection];
@@ -101,10 +101,10 @@ describe('Teacher Management Update Component', () => {
 
     it('Should call Department query and add missing value', () => {
       const teacher: ITeacher = { id: 456 };
-      const department: IDepartment = { id: 6961 };
+      const department: IDepartment = { id: 32451 };
       teacher.department = department;
 
-      const departmentCollection: IDepartment[] = [{ id: 11434 }];
+      const departmentCollection: IDepartment[] = [{ id: 9119 }];
       jest.spyOn(departmentService, 'query').mockReturnValue(of(new HttpResponse({ body: departmentCollection })));
       const additionalDepartments = [department];
       const expectedCollection: IDepartment[] = [...additionalDepartments, ...departmentCollection];
@@ -123,11 +123,11 @@ describe('Teacher Management Update Component', () => {
 
     it('Should update editForm', () => {
       const teacher: ITeacher = { id: 456 };
-      const user: IUser = { id: 6964 };
+      const user: IUser = { id: 26266 };
       teacher.user = user;
-      const faculty: IFaculty = { id: 17770 };
+      const faculty: IFaculty = { id: 23889 };
       teacher.faculty = faculty;
-      const department: IDepartment = { id: 13120 };
+      const department: IDepartment = { id: 1279 };
       teacher.department = department;
 
       activatedRoute.data = of({ teacher });

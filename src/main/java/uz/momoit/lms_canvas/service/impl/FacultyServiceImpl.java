@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.FacultyMapper;
 @Transactional
 public class FacultyServiceImpl implements FacultyService {
 
-    private final Logger log = LoggerFactory.getLogger(FacultyServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(FacultyServiceImpl.class);
 
     private final FacultyRepository facultyRepository;
 

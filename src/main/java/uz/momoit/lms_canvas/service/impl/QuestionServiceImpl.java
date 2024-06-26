@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.QuestionMapper;
 @Transactional
 public class QuestionServiceImpl implements QuestionService {
 
-    private final Logger log = LoggerFactory.getLogger(QuestionServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(QuestionServiceImpl.class);
 
     private final QuestionRepository questionRepository;
 

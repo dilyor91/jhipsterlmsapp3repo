@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.GroupMapper;
 @Transactional
 public class GroupServiceImpl implements GroupService {
 
-    private final Logger log = LoggerFactory.getLogger(GroupServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(GroupServiceImpl.class);
 
     private final GroupRepository groupRepository;
 

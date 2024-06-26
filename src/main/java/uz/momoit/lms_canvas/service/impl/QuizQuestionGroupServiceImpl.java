@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.QuizQuestionGroupMapper;
 @Transactional
 public class QuizQuestionGroupServiceImpl implements QuizQuestionGroupService {
 
-    private final Logger log = LoggerFactory.getLogger(QuizQuestionGroupServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(QuizQuestionGroupServiceImpl.class);
 
     private final QuizQuestionGroupRepository quizQuestionGroupRepository;
 

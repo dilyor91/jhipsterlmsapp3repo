@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -23,8 +22,9 @@ describe('WikiPage Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, WikiPageUpdateComponent],
+      imports: [WikiPageUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -49,10 +49,10 @@ describe('WikiPage Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Course query and add missing value', () => {
       const wikiPage: IWikiPage = { id: 456 };
-      const course: ICourse = { id: 20299 };
+      const course: ICourse = { id: 31504 };
       wikiPage.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 4654 }];
+      const courseCollection: ICourse[] = [{ id: 23401 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -71,7 +71,7 @@ describe('WikiPage Management Update Component', () => {
 
     it('Should update editForm', () => {
       const wikiPage: IWikiPage = { id: 456 };
-      const course: ICourse = { id: 254 };
+      const course: ICourse = { id: 25984 };
       wikiPage.course = course;
 
       activatedRoute.data = of({ wikiPage });

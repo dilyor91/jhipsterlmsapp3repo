@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.StudentOptionMapper;
 @Transactional
 public class StudentOptionServiceImpl implements StudentOptionService {
 
-    private final Logger log = LoggerFactory.getLogger(StudentOptionServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(StudentOptionServiceImpl.class);
 
     private final StudentOptionRepository studentOptionRepository;
 

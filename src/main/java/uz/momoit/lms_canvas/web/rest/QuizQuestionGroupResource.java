@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/quiz-question-groups")
 public class QuizQuestionGroupResource {
 
-    private final Logger log = LoggerFactory.getLogger(QuizQuestionGroupResource.class);
+    private static final Logger log = LoggerFactory.getLogger(QuizQuestionGroupResource.class);
 
     private static final String ENTITY_NAME = "quizQuestionGroup";
 

@@ -40,6 +40,7 @@
     <include file="config/liquibase/changelog/20240620061059_added_entity_StudentQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240620061100_added_entity_StudentAnswerQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240620061101_added_entity_QuizResult.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240626094444_added_entity_Lesson.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20240520125712_added_entity_constraints_Course.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240520125713_added_entity_constraints_CourseSection.xml" relativeToChangelogFile="false"/>
@@ -65,6 +66,7 @@
     <include file="config/liquibase/changelog/20240620061059_added_entity_constraints_StudentQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240620061100_added_entity_constraints_StudentAnswerQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240620061101_added_entity_constraints_QuizResult.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240626094444_added_entity_constraints_Lesson.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

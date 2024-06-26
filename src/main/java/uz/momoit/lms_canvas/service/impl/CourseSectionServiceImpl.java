@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.CourseSectionMapper;
 @Transactional
 public class CourseSectionServiceImpl implements CourseSectionService {
 
-    private final Logger log = LoggerFactory.getLogger(CourseSectionServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(CourseSectionServiceImpl.class);
 
     private final CourseSectionRepository courseSectionRepository;
 

@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.QuestionGroupMapper;
 @Transactional
 public class QuestionGroupServiceImpl implements QuestionGroupService {
 
-    private final Logger log = LoggerFactory.getLogger(QuestionGroupServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(QuestionGroupServiceImpl.class);
 
     private final QuestionGroupRepository questionGroupRepository;
 

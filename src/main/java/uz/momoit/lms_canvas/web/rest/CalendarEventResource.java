@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/calendar-events")
 public class CalendarEventResource {
 
-    private final Logger log = LoggerFactory.getLogger(CalendarEventResource.class);
+    private static final Logger log = LoggerFactory.getLogger(CalendarEventResource.class);
 
     private static final String ENTITY_NAME = "calendarEvent";
 
