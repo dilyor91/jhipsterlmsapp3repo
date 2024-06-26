@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -23,8 +22,9 @@ describe('Question Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, QuestionUpdateComponent],
+      imports: [QuestionUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -49,10 +49,10 @@ describe('Question Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call QuestionGroup query and add missing value', () => {
       const question: IQuestion = { id: 456 };
-      const questionGroup: IQuestionGroup = { id: 25898 };
+      const questionGroup: IQuestionGroup = { id: 32174 };
       question.questionGroup = questionGroup;
 
-      const questionGroupCollection: IQuestionGroup[] = [{ id: 19199 }];
+      const questionGroupCollection: IQuestionGroup[] = [{ id: 30735 }];
       jest.spyOn(questionGroupService, 'query').mockReturnValue(of(new HttpResponse({ body: questionGroupCollection })));
       const additionalQuestionGroups = [questionGroup];
       const expectedCollection: IQuestionGroup[] = [...additionalQuestionGroups, ...questionGroupCollection];
@@ -71,7 +71,7 @@ describe('Question Management Update Component', () => {
 
     it('Should update editForm', () => {
       const question: IQuestion = { id: 456 };
-      const questionGroup: IQuestionGroup = { id: 5605 };
+      const questionGroup: IQuestionGroup = { id: 22683 };
       question.questionGroup = questionGroup;
 
       activatedRoute.data = of({ question });

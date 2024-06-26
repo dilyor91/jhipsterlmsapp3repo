@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -23,8 +22,9 @@ describe('Course Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, CourseUpdateComponent],
+      imports: [CourseUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -49,10 +49,10 @@ describe('Course Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const course: ICourse = { id: 456 };
-      const user: IUser = { id: 16772 };
+      const user: IUser = { id: 28121 };
       course.user = user;
 
-      const userCollection: IUser[] = [{ id: 2488 }];
+      const userCollection: IUser[] = [{ id: 13625 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -71,7 +71,7 @@ describe('Course Management Update Component', () => {
 
     it('Should update editForm', () => {
       const course: ICourse = { id: 456 };
-      const user: IUser = { id: 6535 };
+      const user: IUser = { id: 20464 };
       course.user = user;
 
       activatedRoute.data = of({ course });

@@ -1,0 +1,11 @@
+{
+  "jhipsterlmsapp3App": {
+    "LessonTypeEnum": {
+      "null": "",
+      "Lecture": "Lecture",
+      "Practice": "Practice",
+      "Seminar": "Seminar",
+      "Lab": "Lab"
+    }
+  }
+}

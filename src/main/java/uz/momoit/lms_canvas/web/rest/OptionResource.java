@@ -31,7 +31,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/options")
 public class OptionResource {
 
-    private final Logger log = LoggerFactory.getLogger(OptionResource.class);
+    private static final Logger log = LoggerFactory.getLogger(OptionResource.class);
 
     private static final String ENTITY_NAME = "option";
 

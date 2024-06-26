@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -23,8 +22,9 @@ describe('CalendarEvent Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, CalendarEventUpdateComponent],
+      imports: [CalendarEventUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -49,10 +49,10 @@ describe('CalendarEvent Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const calendarEvent: ICalendarEvent = { id: 456 };
-      const user: IUser = { id: 29345 };
+      const user: IUser = { id: 23141 };
       calendarEvent.user = user;
 
-      const userCollection: IUser[] = [{ id: 19801 }];
+      const userCollection: IUser[] = [{ id: 14191 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -71,7 +71,7 @@ describe('CalendarEvent Management Update Component', () => {
 
     it('Should update editForm', () => {
       const calendarEvent: ICalendarEvent = { id: 456 };
-      const user: IUser = { id: 29767 };
+      const user: IUser = { id: 13011 };
       calendarEvent.user = user;
 
       activatedRoute.data = of({ calendarEvent });

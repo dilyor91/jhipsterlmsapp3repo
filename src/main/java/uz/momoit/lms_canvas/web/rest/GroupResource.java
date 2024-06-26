@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/groups")
 public class GroupResource {
 
-    private final Logger log = LoggerFactory.getLogger(GroupResource.class);
+    private static final Logger log = LoggerFactory.getLogger(GroupResource.class);
 
     private static final String ENTITY_NAME = "group";
 

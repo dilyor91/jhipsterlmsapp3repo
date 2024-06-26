@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.AssignmentMapper;
 @Transactional
 public class AssignmentServiceImpl implements AssignmentService {
 
-    private final Logger log = LoggerFactory.getLogger(AssignmentServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(AssignmentServiceImpl.class);
 
     private final AssignmentRepository assignmentRepository;
 

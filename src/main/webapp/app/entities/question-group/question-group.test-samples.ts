@@ -1,22 +1,22 @@
 import { IQuestionGroup, NewQuestionGroup } from './question-group.model';
 
 export const sampleWithRequiredData: IQuestionGroup = {
-  id: 21692,
-  name: 'aside',
+  id: 12988,
+  name: 'even',
 };
 
 export const sampleWithPartialData: IQuestionGroup = {
-  id: 9825,
-  name: 'without',
+  id: 21655,
+  name: 'sheepishly',
 };
 
 export const sampleWithFullData: IQuestionGroup = {
-  id: 10940,
-  name: 'attenuation essence uneven',
+  id: 30023,
+  name: 'except',
 };
 
 export const sampleWithNewData: NewQuestionGroup = {
-  name: 'harden throbbing',
+  name: 'slather eligibility',
   id: null,
 };
 

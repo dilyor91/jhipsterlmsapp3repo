@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.CalendarEventMapper;
 @Transactional
 public class CalendarEventServiceImpl implements CalendarEventService {
 
-    private final Logger log = LoggerFactory.getLogger(CalendarEventServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(CalendarEventServiceImpl.class);
 
     private final CalendarEventRepository calendarEventRepository;
 

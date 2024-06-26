@@ -24,7 +24,7 @@ import uz.momoit.lms_canvas.service.mapper.StudyAcademicYearMapper;
 @Transactional
 public class StudyAcademicYearServiceImpl implements StudyAcademicYearService {
 
-    private final Logger log = LoggerFactory.getLogger(StudyAcademicYearServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(StudyAcademicYearServiceImpl.class);
 
     private final StudyAcademicYearRepository studyAcademicYearRepository;
 

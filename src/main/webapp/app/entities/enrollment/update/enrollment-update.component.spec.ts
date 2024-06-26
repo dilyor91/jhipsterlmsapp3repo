@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -29,8 +28,9 @@ describe('Enrollment Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, EnrollmentUpdateComponent],
+      imports: [EnrollmentUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -57,10 +57,10 @@ describe('Enrollment Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Student query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const student: IStudent = { id: 19386 };
+      const student: IStudent = { id: 25373 };
       enrollment.student = student;
 
-      const studentCollection: IStudent[] = [{ id: 3411 }];
+      const studentCollection: IStudent[] = [{ id: 26343 }];
       jest.spyOn(studentService, 'query').mockReturnValue(of(new HttpResponse({ body: studentCollection })));
       const additionalStudents = [student];
       const expectedCollection: IStudent[] = [...additionalStudents, ...studentCollection];
@@ -79,10 +79,10 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should call CourseSection query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const courseSection: ICourseSection = { id: 1472 };
+      const courseSection: ICourseSection = { id: 14893 };
       enrollment.courseSection = courseSection;
 
-      const courseSectionCollection: ICourseSection[] = [{ id: 18551 }];
+      const courseSectionCollection: ICourseSection[] = [{ id: 12145 }];
       jest.spyOn(courseSectionService, 'query').mockReturnValue(of(new HttpResponse({ body: courseSectionCollection })));
       const additionalCourseSections = [courseSection];
       const expectedCollection: ICourseSection[] = [...additionalCourseSections, ...courseSectionCollection];
@@ -101,10 +101,10 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should call Course query and add missing value', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const course: ICourse = { id: 2137 };
+      const course: ICourse = { id: 1153 };
       enrollment.course = course;
 
-      const courseCollection: ICourse[] = [{ id: 5386 }];
+      const courseCollection: ICourse[] = [{ id: 24720 }];
       jest.spyOn(courseService, 'query').mockReturnValue(of(new HttpResponse({ body: courseCollection })));
       const additionalCourses = [course];
       const expectedCollection: ICourse[] = [...additionalCourses, ...courseCollection];
@@ -123,11 +123,11 @@ describe('Enrollment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const enrollment: IEnrollment = { id: 456 };
-      const student: IStudent = { id: 29951 };
+      const student: IStudent = { id: 5736 };
       enrollment.student = student;
-      const courseSection: ICourseSection = { id: 32392 };
+      const courseSection: ICourseSection = { id: 13116 };
       enrollment.courseSection = courseSection;
-      const course: ICourse = { id: 18878 };
+      const course: ICourse = { id: 11359 };
       enrollment.course = course;
 
       activatedRoute.data = of({ enrollment });

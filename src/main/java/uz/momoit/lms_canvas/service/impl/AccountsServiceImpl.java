@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.AccountsMapper;
 @Transactional
 public class AccountsServiceImpl implements AccountsService {
 
-    private final Logger log = LoggerFactory.getLogger(AccountsServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(AccountsServiceImpl.class);
 
     private final AccountsRepository accountsRepository;
 

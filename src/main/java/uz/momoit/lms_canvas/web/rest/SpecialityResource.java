@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/specialities")
 public class SpecialityResource {
 
-    private final Logger log = LoggerFactory.getLogger(SpecialityResource.class);
+    private static final Logger log = LoggerFactory.getLogger(SpecialityResource.class);
 
     private static final String ENTITY_NAME = "speciality";
 

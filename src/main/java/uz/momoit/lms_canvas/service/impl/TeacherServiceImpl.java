@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.TeacherMapper;
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
 
-    private final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
     private final TeacherRepository teacherRepository;
 

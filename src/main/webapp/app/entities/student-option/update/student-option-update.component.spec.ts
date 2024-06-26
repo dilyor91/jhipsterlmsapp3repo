@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
@@ -26,8 +25,9 @@ describe('StudentOption Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, StudentOptionUpdateComponent],
+      imports: [StudentOptionUpdateComponent],
       providers: [
+        provideHttpClient(),
         FormBuilder,
         {
           provide: ActivatedRoute,
@@ -53,10 +53,10 @@ describe('StudentOption Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call StudentQuestion query and add missing value', () => {
       const studentOption: IStudentOption = { id: 456 };
-      const studentQuestion: IStudentQuestion = { id: 32364 };
+      const studentQuestion: IStudentQuestion = { id: 3862 };
       studentOption.studentQuestion = studentQuestion;
 
-      const studentQuestionCollection: IStudentQuestion[] = [{ id: 16276 }];
+      const studentQuestionCollection: IStudentQuestion[] = [{ id: 5648 }];
       jest.spyOn(studentQuestionService, 'query').mockReturnValue(of(new HttpResponse({ body: studentQuestionCollection })));
       const additionalStudentQuestions = [studentQuestion];
       const expectedCollection: IStudentQuestion[] = [...additionalStudentQuestions, ...studentQuestionCollection];
@@ -75,10 +75,10 @@ describe('StudentOption Management Update Component', () => {
 
     it('Should call Option query and add missing value', () => {
       const studentOption: IStudentOption = { id: 456 };
-      const option: IOption = { id: 27915 };
+      const option: IOption = { id: 16612 };
       studentOption.option = option;
 
-      const optionCollection: IOption[] = [{ id: 13357 }];
+      const optionCollection: IOption[] = [{ id: 23582 }];
       jest.spyOn(optionService, 'query').mockReturnValue(of(new HttpResponse({ body: optionCollection })));
       const additionalOptions = [option];
       const expectedCollection: IOption[] = [...additionalOptions, ...optionCollection];
@@ -97,9 +97,9 @@ describe('StudentOption Management Update Component', () => {
 
     it('Should update editForm', () => {
       const studentOption: IStudentOption = { id: 456 };
-      const studentQuestion: IStudentQuestion = { id: 17455 };
+      const studentQuestion: IStudentQuestion = { id: 31370 };
       studentOption.studentQuestion = studentQuestion;
-      const option: IOption = { id: 13625 };
+      const option: IOption = { id: 4234 };
       studentOption.option = option;
 
       activatedRoute.data = of({ studentOption });

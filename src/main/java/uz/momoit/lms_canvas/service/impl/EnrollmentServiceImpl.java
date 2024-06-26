@@ -20,7 +20,7 @@ import uz.momoit.lms_canvas.service.mapper.EnrollmentMapper;
 @Transactional
 public class EnrollmentServiceImpl implements EnrollmentService {
 
-    private final Logger log = LoggerFactory.getLogger(EnrollmentServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EnrollmentServiceImpl.class);
 
     private final EnrollmentRepository enrollmentRepository;
 

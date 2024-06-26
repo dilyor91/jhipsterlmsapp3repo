@@ -29,7 +29,7 @@ import uz.momoit.lms_canvas.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api/student-answer-questions")
 public class StudentAnswerQuestionResource {
 
-    private final Logger log = LoggerFactory.getLogger(StudentAnswerQuestionResource.class);
+    private static final Logger log = LoggerFactory.getLogger(StudentAnswerQuestionResource.class);
 
     private static final String ENTITY_NAME = "studentAnswerQuestion";
 
