@@ -1,8 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
-
-import dayjs from 'dayjs/esm';
+import { Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -10,16 +8,6 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { IAttendance, NewAttendance } from '../attendance.model';
 
 export type PartialUpdateAttendance = Partial<IAttendance> & Pick<IAttendance, 'id'>;
-
-type RestOf<T extends IAttendance | NewAttendance> = Omit<T, 'attendanceDate'> & {
-  attendanceDate?: string | null;
-};
-
-export type RestAttendance = RestOf<IAttendance>;
-
-export type NewRestAttendance = RestOf<NewAttendance>;
-
-export type PartialUpdateRestAttendance = RestOf<PartialUpdateAttendance>;
 
 export type EntityResponseType = HttpResponse<IAttendance>;
 export type EntityArrayResponseType = HttpResponse<IAttendance[]>;
@@ -32,37 +20,28 @@ export class AttendanceService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/attendances');
 
   create(attendance: NewAttendance): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(attendance);
-    return this.http
-      .post<RestAttendance>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.post<IAttendance>(this.resourceUrl, attendance, { observe: 'response' });
   }
 
   update(attendance: IAttendance): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(attendance);
-    return this.http
-      .put<RestAttendance>(`${this.resourceUrl}/${this.getAttendanceIdentifier(attendance)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.put<IAttendance>(`${this.resourceUrl}/${this.getAttendanceIdentifier(attendance)}`, attendance, {
+      observe: 'response',
+    });
   }
 
   partialUpdate(attendance: PartialUpdateAttendance): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(attendance);
-    return this.http
-      .patch<RestAttendance>(`${this.resourceUrl}/${this.getAttendanceIdentifier(attendance)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.patch<IAttendance>(`${this.resourceUrl}/${this.getAttendanceIdentifier(attendance)}`, attendance, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<RestAttendance>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.get<IAttendance>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http
-      .get<RestAttendance[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map(res => this.convertResponseArrayFromServer(res)));
+    return this.http.get<IAttendance[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -95,31 +74,5 @@ export class AttendanceService {
       return [...attendancesToAdd, ...attendanceCollection];
     }
     return attendanceCollection;
-  }
-
-  protected convertDateFromClient<T extends IAttendance | NewAttendance | PartialUpdateAttendance>(attendance: T): RestOf<T> {
-    return {
-      ...attendance,
-      attendanceDate: attendance.attendanceDate?.toJSON() ?? null,
-    };
-  }
-
-  protected convertDateFromServer(restAttendance: RestAttendance): IAttendance {
-    return {
-      ...restAttendance,
-      attendanceDate: restAttendance.attendanceDate ? dayjs(restAttendance.attendanceDate) : undefined,
-    };
-  }
-
-  protected convertResponseFromServer(res: HttpResponse<RestAttendance>): HttpResponse<IAttendance> {
-    return res.clone({
-      body: res.body ? this.convertDateFromServer(res.body) : null,
-    });
-  }
-
-  protected convertResponseArrayFromServer(res: HttpResponse<RestAttendance[]>): HttpResponse<IAttendance[]> {
-    return res.clone({
-      body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
-    });
   }
 }

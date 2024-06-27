@@ -18,7 +18,9 @@
         "title": "Attendance"
       },
       "id": "ID",
-      "attendanceDate": "Attendance Date",
+      "attendanceEnum": "Attendance Enum",
+      "student": "Student",
+      "lesson": "Lesson",
       "course": "Course",
       "courseSection": "Course Section",
       "teacher": "Teacher"

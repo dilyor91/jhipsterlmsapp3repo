@@ -10,7 +10,7 @@ export const sampleWithPartialData: IAttendanceDetail = {
 
 export const sampleWithFullData: IAttendanceDetail = {
   id: 5511,
-  attendanceEnum: 'ABSENT',
+  attendanceEnum: 'PRESENT',
 };
 
 export const sampleWithNewData: NewAttendanceDetail = {

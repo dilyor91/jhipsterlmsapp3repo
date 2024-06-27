@@ -79,10 +79,10 @@ describe('QuizResult Management Update Component', () => {
 
     it('Should call Student query and add missing value', () => {
       const quizResult: IQuizResult = { id: 456 };
-      const student: IStudent = { id: 15154 };
+      const student: IStudent = { id: 4760 };
       quizResult.student = student;
 
-      const studentCollection: IStudent[] = [{ id: 14293 }];
+      const studentCollection: IStudent[] = [{ id: 3806 }];
       jest.spyOn(studentService, 'query').mockReturnValue(of(new HttpResponse({ body: studentCollection })));
       const additionalStudents = [student];
       const expectedCollection: IStudent[] = [...additionalStudents, ...studentCollection];
@@ -125,7 +125,7 @@ describe('QuizResult Management Update Component', () => {
       const quizResult: IQuizResult = { id: 456 };
       const quiz: IQuiz = { id: 20027 };
       quizResult.quiz = quiz;
-      const student: IStudent = { id: 2083 };
+      const student: IStudent = { id: 12302 };
       quizResult.student = student;
       const quizSession: IQuizSession = { id: 23964 };
       quizResult.quizSession = quizSession;

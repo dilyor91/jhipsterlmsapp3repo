@@ -1,5 +1,3 @@
-import dayjs from 'dayjs/esm';
-
 import { IAttendance, NewAttendance } from './attendance.model';
 
 export const sampleWithRequiredData: IAttendance = {
@@ -8,12 +6,12 @@ export const sampleWithRequiredData: IAttendance = {
 
 export const sampleWithPartialData: IAttendance = {
   id: 17722,
-  attendanceDate: dayjs('2024-05-26T23:10'),
+  attendanceEnum: 'LATE',
 };
 
 export const sampleWithFullData: IAttendance = {
   id: 18243,
-  attendanceDate: dayjs('2024-05-26T11:27'),
+  attendanceEnum: 'ABSENT',
 };
 
 export const sampleWithNewData: NewAttendance = {

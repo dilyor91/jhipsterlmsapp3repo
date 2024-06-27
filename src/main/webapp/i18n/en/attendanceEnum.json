@@ -3,9 +3,8 @@
     "AttendanceEnum": {
       "null": "",
       "PRESENT": "PRESENT",
-      "ABSENT": "ABSENT",
       "LATE": "LATE",
-      "UNMARKED": "UNMARKED"
+      "ABSENT": "ABSENT"
     }
   }
 }
