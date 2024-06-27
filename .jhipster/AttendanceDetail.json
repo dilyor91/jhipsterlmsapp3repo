@@ -8,7 +8,7 @@
     {
       "fieldName": "attendanceEnum",
       "fieldType": "AttendanceEnum",
-      "fieldValues": "PRESENT,ABSENT,LATE,UNMARKED"
+      "fieldValues": "PRESENT,LATE,ABSENT"
     }
   ],
   "name": "AttendanceDetail",

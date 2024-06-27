@@ -3,9 +3,9 @@ package uz.momoit.lms_canvas.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uz.momoit.lms_canvas.domain.enumeration.AttendanceEnum;
 
 /**
  * A Attendance.
@@ -24,8 +24,17 @@ public class Attendance implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "attendance_date")
-    private Instant attendanceDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "attendance_enum")
+    private AttendanceEnum attendanceEnum;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "studyAcademicYear", "user", "faculty", "speciality", "group" }, allowSetters = true)
+    private Student student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "course" }, allowSetters = true)
+    private Lesson lesson;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
@@ -53,17 +62,43 @@ public class Attendance implements Serializable {
         this.id = id;
     }
 
-    public Instant getAttendanceDate() {
-        return this.attendanceDate;
+    public AttendanceEnum getAttendanceEnum() {
+        return this.attendanceEnum;
     }
 
-    public Attendance attendanceDate(Instant attendanceDate) {
-        this.setAttendanceDate(attendanceDate);
+    public Attendance attendanceEnum(AttendanceEnum attendanceEnum) {
+        this.setAttendanceEnum(attendanceEnum);
         return this;
     }
 
-    public void setAttendanceDate(Instant attendanceDate) {
-        this.attendanceDate = attendanceDate;
+    public void setAttendanceEnum(AttendanceEnum attendanceEnum) {
+        this.attendanceEnum = attendanceEnum;
+    }
+
+    public Student getStudent() {
+        return this.student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Attendance student(Student student) {
+        this.setStudent(student);
+        return this;
+    }
+
+    public Lesson getLesson() {
+        return this.lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public Attendance lesson(Lesson lesson) {
+        this.setLesson(lesson);
+        return this;
     }
 
     public Course getCourse() {
@@ -129,7 +164,7 @@ public class Attendance implements Serializable {
     public String toString() {
         return "Attendance{" +
             "id=" + getId() +
-            ", attendanceDate='" + getAttendanceDate() + "'" +
+            ", attendanceEnum='" + getAttendanceEnum() + "'" +
             "}";
     }
 }

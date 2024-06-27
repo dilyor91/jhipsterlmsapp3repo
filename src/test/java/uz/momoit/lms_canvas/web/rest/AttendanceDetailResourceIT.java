@@ -37,7 +37,7 @@ import uz.momoit.lms_canvas.service.mapper.AttendanceDetailMapper;
 class AttendanceDetailResourceIT {
 
     private static final AttendanceEnum DEFAULT_ATTENDANCE_ENUM = AttendanceEnum.PRESENT;
-    private static final AttendanceEnum UPDATED_ATTENDANCE_ENUM = AttendanceEnum.ABSENT;
+    private static final AttendanceEnum UPDATED_ATTENDANCE_ENUM = AttendanceEnum.LATE;
 
     private static final String ENTITY_API_URL = "/api/attendance-details";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

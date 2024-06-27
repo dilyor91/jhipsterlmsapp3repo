@@ -20,7 +20,9 @@ describe('Attendance Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            attendanceDate: expect.any(Object),
+            attendanceEnum: expect.any(Object),
+            student: expect.any(Object),
+            lesson: expect.any(Object),
             course: expect.any(Object),
             courseSection: expect.any(Object),
             teacher: expect.any(Object),
@@ -34,7 +36,9 @@ describe('Attendance Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            attendanceDate: expect.any(Object),
+            attendanceEnum: expect.any(Object),
+            student: expect.any(Object),
+            lesson: expect.any(Object),
             course: expect.any(Object),
             courseSection: expect.any(Object),
             teacher: expect.any(Object),
