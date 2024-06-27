@@ -20,7 +20,9 @@
           <dt><span jhiTranslate="jhipsterlmsapp3App.attendanceDetail.attendanceEnum">Attendance Enum</span></dt>
           <dd>
             <span [jhiTranslate]="'jhipsterlmsapp3App.AttendanceEnum.' + (attendanceDetail()!.attendanceEnum ?? 'null')">{{
-              { null: '', PRESENT: 'PRESENT', LATE: 'LATE', ABSENT: 'ABSENT' }[attendanceDetail()!.attendanceEnum ?? 'null']
+              { null: '', PRESENT: 'PRESENT', ABSENT: 'ABSENT', LATE: 'LATE', UNMARKED: 'UNMARKED' }[
+                attendanceDetail()!.attendanceEnum ?? 'null'
+              ]
             }}</span>
           </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.attendanceDetail.attendance">Attendance</span></dt>

@@ -4,10 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { IStudent } from 'app/entities/student/student.model';
-import { StudentService } from 'app/entities/student/service/student.service';
-import { ILesson } from 'app/entities/lesson/lesson.model';
-import { LessonService } from 'app/entities/lesson/service/lesson.service';
 import { ICourse } from 'app/entities/course/course.model';
 import { CourseService } from 'app/entities/course/service/course.service';
 import { ICourseSection } from 'app/entities/course-section/course-section.model';
@@ -26,8 +22,6 @@ describe('Attendance Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let attendanceFormService: AttendanceFormService;
   let attendanceService: AttendanceService;
-  let studentService: StudentService;
-  let lessonService: LessonService;
   let courseService: CourseService;
   let courseSectionService: CourseSectionService;
   let userService: UserService;
@@ -53,8 +47,6 @@ describe('Attendance Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     attendanceFormService = TestBed.inject(AttendanceFormService);
     attendanceService = TestBed.inject(AttendanceService);
-    studentService = TestBed.inject(StudentService);
-    lessonService = TestBed.inject(LessonService);
     courseService = TestBed.inject(CourseService);
     courseSectionService = TestBed.inject(CourseSectionService);
     userService = TestBed.inject(UserService);
@@ -63,50 +55,6 @@ describe('Attendance Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call Student query and add missing value', () => {
-      const attendance: IAttendance = { id: 456 };
-      const student: IStudent = { id: 30649 };
-      attendance.student = student;
-
-      const studentCollection: IStudent[] = [{ id: 29240 }];
-      jest.spyOn(studentService, 'query').mockReturnValue(of(new HttpResponse({ body: studentCollection })));
-      const additionalStudents = [student];
-      const expectedCollection: IStudent[] = [...additionalStudents, ...studentCollection];
-      jest.spyOn(studentService, 'addStudentToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ attendance });
-      comp.ngOnInit();
-
-      expect(studentService.query).toHaveBeenCalled();
-      expect(studentService.addStudentToCollectionIfMissing).toHaveBeenCalledWith(
-        studentCollection,
-        ...additionalStudents.map(expect.objectContaining),
-      );
-      expect(comp.studentsSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call Lesson query and add missing value', () => {
-      const attendance: IAttendance = { id: 456 };
-      const lesson: ILesson = { id: 9349 };
-      attendance.lesson = lesson;
-
-      const lessonCollection: ILesson[] = [{ id: 30786 }];
-      jest.spyOn(lessonService, 'query').mockReturnValue(of(new HttpResponse({ body: lessonCollection })));
-      const additionalLessons = [lesson];
-      const expectedCollection: ILesson[] = [...additionalLessons, ...lessonCollection];
-      jest.spyOn(lessonService, 'addLessonToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ attendance });
-      comp.ngOnInit();
-
-      expect(lessonService.query).toHaveBeenCalled();
-      expect(lessonService.addLessonToCollectionIfMissing).toHaveBeenCalledWith(
-        lessonCollection,
-        ...additionalLessons.map(expect.objectContaining),
-      );
-      expect(comp.lessonsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Course query and add missing value', () => {
       const attendance: IAttendance = { id: 456 };
       const course: ICourse = { id: 4401 };
@@ -175,10 +123,6 @@ describe('Attendance Management Update Component', () => {
 
     it('Should update editForm', () => {
       const attendance: IAttendance = { id: 456 };
-      const student: IStudent = { id: 2810 };
-      attendance.student = student;
-      const lesson: ILesson = { id: 16860 };
-      attendance.lesson = lesson;
       const course: ICourse = { id: 3524 };
       attendance.course = course;
       const courseSection: ICourseSection = { id: 7170 };
@@ -189,8 +133,6 @@ describe('Attendance Management Update Component', () => {
       activatedRoute.data = of({ attendance });
       comp.ngOnInit();
 
-      expect(comp.studentsSharedCollection).toContain(student);
-      expect(comp.lessonsSharedCollection).toContain(lesson);
       expect(comp.coursesSharedCollection).toContain(course);
       expect(comp.courseSectionsSharedCollection).toContain(courseSection);
       expect(comp.usersSharedCollection).toContain(teacher);
@@ -267,26 +209,6 @@ describe('Attendance Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareStudent', () => {
-      it('Should forward to studentService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(studentService, 'compareStudent');
-        comp.compareStudent(entity, entity2);
-        expect(studentService.compareStudent).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareLesson', () => {
-      it('Should forward to lessonService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(lessonService, 'compareLesson');
-        comp.compareLesson(entity, entity2);
-        expect(lessonService.compareLesson).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareCourse', () => {
       it('Should forward to courseService', () => {
         const entity = { id: 123 };

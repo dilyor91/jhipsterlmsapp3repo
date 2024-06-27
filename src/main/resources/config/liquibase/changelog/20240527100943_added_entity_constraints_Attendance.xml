@@ -10,20 +10,6 @@
     -->
     <changeSet id="20240527100943-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="student_id"
-                                 baseTableName="attendance"
-                                 constraintName="fk_attendance__student_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="student"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="lesson_id"
-                                 baseTableName="attendance"
-                                 constraintName="fk_attendance__lesson_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="lesson"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="course_id"
                                  baseTableName="attendance"
                                  constraintName="fk_attendance__course_id"

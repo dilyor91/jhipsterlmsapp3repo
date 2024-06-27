@@ -1,7 +1,9 @@
 export enum AttendanceEnum {
   PRESENT = 'PRESENT',
 
+  ABSENT = 'ABSENT',
+
   LATE = 'LATE',
 
-  ABSENT = 'ABSENT',
+  UNMARKED = 'UNMARKED',
 }

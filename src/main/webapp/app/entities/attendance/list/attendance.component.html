@@ -42,22 +42,10 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="attendanceEnum">
+            <th scope="col" jhiSortBy="attendanceDate">
               <div class="d-flex">
-                <span jhiTranslate="jhipsterlmsapp3App.attendance.attendanceEnum">Attendance Enum</span>
+                <span jhiTranslate="jhipsterlmsapp3App.attendance.attendanceDate">Attendance Date</span>
 
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="student.id">
-              <div class="d-flex">
-                <span jhiTranslate="jhipsterlmsapp3App.attendance.student">Student</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="lesson.id">
-              <div class="d-flex">
-                <span jhiTranslate="jhipsterlmsapp3App.attendance.lesson">Lesson</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -88,23 +76,7 @@
               <td>
                 <a [routerLink]="['/attendance', attendance.id, 'view']">{{ attendance.id }}</a>
               </td>
-              <td [jhiTranslate]="'jhipsterlmsapp3App.AttendanceEnum.' + (attendance.attendanceEnum ?? 'null')">
-                {{ { null: '', PRESENT: 'PRESENT', LATE: 'LATE', ABSENT: 'ABSENT' }[attendance.attendanceEnum ?? 'null'] }}
-              </td>
-              <td>
-                @if (attendance.student) {
-                  <div>
-                    <a [routerLink]="['/student', attendance.student.id, 'view']">{{ attendance.student.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (attendance.lesson) {
-                  <div>
-                    <a [routerLink]="['/lesson', attendance.lesson.id, 'view']">{{ attendance.lesson.id }}</a>
-                  </div>
-                }
-              </td>
+              <td>{{ attendance.attendanceDate | formatMediumDatetime }}</td>
               <td>
                 @if (attendance.course) {
                   <div>

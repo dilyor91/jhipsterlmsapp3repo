@@ -20,55 +20,20 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" for="field_attendanceEnum" jhiTranslate="jhipsterlmsapp3App.attendance.attendanceEnum"
-            >Attendance Enum</label
+          <label class="form-label" for="field_attendanceDate" jhiTranslate="jhipsterlmsapp3App.attendance.attendanceDate"
+            >Attendance Date</label
           >
-          <select
-            class="form-control"
-            name="attendanceEnum"
-            formControlName="attendanceEnum"
-            id="field_attendanceEnum"
-            data-cy="attendanceEnum"
-          >
-            <option [ngValue]="null">{{ 'jhipsterlmsapp3App.AttendanceEnum.null' | translate }}</option>
-            @for (attendanceEnum of attendanceEnumValues; track $index) {
-              <option [value]="attendanceEnum">{{ 'jhipsterlmsapp3App.AttendanceEnum.' + attendanceEnum | translate }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_student" jhiTranslate="jhipsterlmsapp3App.attendance.student">Student</label>
-          <select
-            class="form-control"
-            id="field_student"
-            data-cy="student"
-            name="student"
-            formControlName="student"
-            [compareWith]="compareStudent"
-          >
-            <option [ngValue]="null"></option>
-            @for (studentOption of studentsSharedCollection; track $index) {
-              <option [ngValue]="studentOption">{{ studentOption.id }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_lesson" jhiTranslate="jhipsterlmsapp3App.attendance.lesson">Lesson</label>
-          <select
-            class="form-control"
-            id="field_lesson"
-            data-cy="lesson"
-            name="lesson"
-            formControlName="lesson"
-            [compareWith]="compareLesson"
-          >
-            <option [ngValue]="null"></option>
-            @for (lessonOption of lessonsSharedCollection; track $index) {
-              <option [ngValue]="lessonOption">{{ lessonOption.id }}</option>
-            }
-          </select>
+          <div class="d-flex">
+            <input
+              id="field_attendanceDate"
+              data-cy="attendanceDate"
+              type="datetime-local"
+              class="form-control"
+              name="attendanceDate"
+              formControlName="attendanceDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
         </div>
 
         <div class="mb-3">

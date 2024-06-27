@@ -71,7 +71,11 @@
                 <a [routerLink]="['/attendance-detail', attendanceDetail.id, 'view']">{{ attendanceDetail.id }}</a>
               </td>
               <td [jhiTranslate]="'jhipsterlmsapp3App.AttendanceEnum.' + (attendanceDetail.attendanceEnum ?? 'null')">
-                {{ { null: '', PRESENT: 'PRESENT', LATE: 'LATE', ABSENT: 'ABSENT' }[attendanceDetail.attendanceEnum ?? 'null'] }}
+                {{
+                  { null: '', PRESENT: 'PRESENT', ABSENT: 'ABSENT', LATE: 'LATE', UNMARKED: 'UNMARKED' }[
+                    attendanceDetail.attendanceEnum ?? 'null'
+                  ]
+                }}
               </td>
               <td>
                 @if (attendanceDetail.attendance) {

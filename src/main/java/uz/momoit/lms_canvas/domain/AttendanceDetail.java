@@ -29,7 +29,7 @@ public class AttendanceDetail implements Serializable {
     private AttendanceEnum attendanceEnum;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "student", "lesson", "course", "courseSection", "teacher" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "course", "courseSection", "teacher" }, allowSetters = true)
     private Attendance attendance;
 
     @ManyToOne(fetch = FetchType.LAZY)
