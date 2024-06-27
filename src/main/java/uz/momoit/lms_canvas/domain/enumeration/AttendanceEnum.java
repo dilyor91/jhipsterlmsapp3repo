@@ -5,6 +5,7 @@ package uz.momoit.lms_canvas.domain.enumeration;
  */
 public enum AttendanceEnum {
     PRESENT,
-    LATE,
     ABSENT,
+    LATE,
+    UNMARKED,
 }

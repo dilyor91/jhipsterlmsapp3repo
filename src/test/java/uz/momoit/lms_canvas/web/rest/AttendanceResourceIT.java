@@ -9,6 +9,8 @@ import static uz.momoit.lms_canvas.web.rest.TestUtil.createUpdateProxyForBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import uz.momoit.lms_canvas.IntegrationTest;
 import uz.momoit.lms_canvas.domain.Attendance;
-import uz.momoit.lms_canvas.domain.enumeration.AttendanceEnum;
 import uz.momoit.lms_canvas.repository.AttendanceRepository;
 import uz.momoit.lms_canvas.repository.UserRepository;
 import uz.momoit.lms_canvas.service.dto.AttendanceDTO;
@@ -36,8 +37,8 @@ import uz.momoit.lms_canvas.service.mapper.AttendanceMapper;
 @WithMockUser
 class AttendanceResourceIT {
 
-    private static final AttendanceEnum DEFAULT_ATTENDANCE_ENUM = AttendanceEnum.PRESENT;
-    private static final AttendanceEnum UPDATED_ATTENDANCE_ENUM = AttendanceEnum.LATE;
+    private static final Instant DEFAULT_ATTENDANCE_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_ATTENDANCE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/attendances";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -74,7 +75,7 @@ class AttendanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Attendance createEntity(EntityManager em) {
-        Attendance attendance = new Attendance().attendanceEnum(DEFAULT_ATTENDANCE_ENUM);
+        Attendance attendance = new Attendance().attendanceDate(DEFAULT_ATTENDANCE_DATE);
         return attendance;
     }
 
@@ -85,7 +86,7 @@ class AttendanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Attendance createUpdatedEntity(EntityManager em) {
-        Attendance attendance = new Attendance().attendanceEnum(UPDATED_ATTENDANCE_ENUM);
+        Attendance attendance = new Attendance().attendanceDate(UPDATED_ATTENDANCE_DATE);
         return attendance;
     }
 
@@ -156,7 +157,7 @@ class AttendanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].attendanceEnum").value(hasItem(DEFAULT_ATTENDANCE_ENUM.toString())));
+            .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())));
     }
 
     @Test
@@ -171,7 +172,7 @@ class AttendanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(attendance.getId().intValue()))
-            .andExpect(jsonPath("$.attendanceEnum").value(DEFAULT_ATTENDANCE_ENUM.toString()));
+            .andExpect(jsonPath("$.attendanceDate").value(DEFAULT_ATTENDANCE_DATE.toString()));
     }
 
     @Test
@@ -193,7 +194,7 @@ class AttendanceResourceIT {
         Attendance updatedAttendance = attendanceRepository.findById(attendance.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAttendance are not directly saved in db
         em.detach(updatedAttendance);
-        updatedAttendance.attendanceEnum(UPDATED_ATTENDANCE_ENUM);
+        updatedAttendance.attendanceDate(UPDATED_ATTENDANCE_DATE);
         AttendanceDTO attendanceDTO = attendanceMapper.toDto(updatedAttendance);
 
         restAttendanceMockMvc
@@ -283,7 +284,7 @@ class AttendanceResourceIT {
         Attendance partialUpdatedAttendance = new Attendance();
         partialUpdatedAttendance.setId(attendance.getId());
 
-        partialUpdatedAttendance.attendanceEnum(UPDATED_ATTENDANCE_ENUM);
+        partialUpdatedAttendance.attendanceDate(UPDATED_ATTENDANCE_DATE);
 
         restAttendanceMockMvc
             .perform(
@@ -314,7 +315,7 @@ class AttendanceResourceIT {
         Attendance partialUpdatedAttendance = new Attendance();
         partialUpdatedAttendance.setId(attendance.getId());
 
-        partialUpdatedAttendance.attendanceEnum(UPDATED_ATTENDANCE_ENUM);
+        partialUpdatedAttendance.attendanceDate(UPDATED_ATTENDANCE_DATE);
 
         restAttendanceMockMvc
             .perform(

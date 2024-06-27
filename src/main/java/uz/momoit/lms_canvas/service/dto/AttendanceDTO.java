@@ -1,8 +1,8 @@
 package uz.momoit.lms_canvas.service.dto;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
-import uz.momoit.lms_canvas.domain.enumeration.AttendanceEnum;
 
 /**
  * A DTO for the {@link uz.momoit.lms_canvas.domain.Attendance} entity.
@@ -12,11 +12,7 @@ public class AttendanceDTO implements Serializable {
 
     private Long id;
 
-    private AttendanceEnum attendanceEnum;
-
-    private StudentDTO student;
-
-    private LessonDTO lesson;
+    private Instant attendanceDate;
 
     private CourseDTO course;
 
@@ -32,28 +28,12 @@ public class AttendanceDTO implements Serializable {
         this.id = id;
     }
 
-    public AttendanceEnum getAttendanceEnum() {
-        return attendanceEnum;
+    public Instant getAttendanceDate() {
+        return attendanceDate;
     }
 
-    public void setAttendanceEnum(AttendanceEnum attendanceEnum) {
-        this.attendanceEnum = attendanceEnum;
-    }
-
-    public StudentDTO getStudent() {
-        return student;
-    }
-
-    public void setStudent(StudentDTO student) {
-        this.student = student;
-    }
-
-    public LessonDTO getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(LessonDTO lesson) {
-        this.lesson = lesson;
+    public void setAttendanceDate(Instant attendanceDate) {
+        this.attendanceDate = attendanceDate;
     }
 
     public CourseDTO getCourse() {
@@ -106,9 +86,7 @@ public class AttendanceDTO implements Serializable {
     public String toString() {
         return "AttendanceDTO{" +
             "id=" + getId() +
-            ", attendanceEnum='" + getAttendanceEnum() + "'" +
-            ", student=" + getStudent() +
-            ", lesson=" + getLesson() +
+            ", attendanceDate='" + getAttendanceDate() + "'" +
             ", course=" + getCourse() +
             ", courseSection=" + getCourseSection() +
             ", teacher=" + getTeacher() +

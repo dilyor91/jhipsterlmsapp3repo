@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import dayjs from 'dayjs/esm';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IAttendance, NewAttendance } from '../attendance.model';
 
 /**
@@ -14,16 +16,25 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type AttendanceFormGroupInput = IAttendance | PartialWithRequiredKeyOf<NewAttendance>;
 
-type AttendanceFormDefaults = Pick<NewAttendance, 'id'>;
+/**
+ * Type that converts some properties for forms.
+ */
+type FormValueOf<T extends IAttendance | NewAttendance> = Omit<T, 'attendanceDate'> & {
+  attendanceDate?: string | null;
+};
+
+type AttendanceFormRawValue = FormValueOf<IAttendance>;
+
+type NewAttendanceFormRawValue = FormValueOf<NewAttendance>;
+
+type AttendanceFormDefaults = Pick<NewAttendance, 'id' | 'attendanceDate'>;
 
 type AttendanceFormGroupContent = {
-  id: FormControl<IAttendance['id'] | NewAttendance['id']>;
-  attendanceEnum: FormControl<IAttendance['attendanceEnum']>;
-  student: FormControl<IAttendance['student']>;
-  lesson: FormControl<IAttendance['lesson']>;
-  course: FormControl<IAttendance['course']>;
-  courseSection: FormControl<IAttendance['courseSection']>;
-  teacher: FormControl<IAttendance['teacher']>;
+  id: FormControl<AttendanceFormRawValue['id'] | NewAttendance['id']>;
+  attendanceDate: FormControl<AttendanceFormRawValue['attendanceDate']>;
+  course: FormControl<AttendanceFormRawValue['course']>;
+  courseSection: FormControl<AttendanceFormRawValue['courseSection']>;
+  teacher: FormControl<AttendanceFormRawValue['teacher']>;
 };
 
 export type AttendanceFormGroup = FormGroup<AttendanceFormGroupContent>;
@@ -31,10 +42,10 @@ export type AttendanceFormGroup = FormGroup<AttendanceFormGroupContent>;
 @Injectable({ providedIn: 'root' })
 export class AttendanceFormService {
   createAttendanceFormGroup(attendance: AttendanceFormGroupInput = { id: null }): AttendanceFormGroup {
-    const attendanceRawValue = {
+    const attendanceRawValue = this.convertAttendanceToAttendanceRawValue({
       ...this.getFormDefaults(),
       ...attendance,
-    };
+    });
     return new FormGroup<AttendanceFormGroupContent>({
       id: new FormControl(
         { value: attendanceRawValue.id, disabled: true },
@@ -43,9 +54,7 @@ export class AttendanceFormService {
           validators: [Validators.required],
         },
       ),
-      attendanceEnum: new FormControl(attendanceRawValue.attendanceEnum),
-      student: new FormControl(attendanceRawValue.student),
-      lesson: new FormControl(attendanceRawValue.lesson),
+      attendanceDate: new FormControl(attendanceRawValue.attendanceDate),
       course: new FormControl(attendanceRawValue.course),
       courseSection: new FormControl(attendanceRawValue.courseSection),
       teacher: new FormControl(attendanceRawValue.teacher),
@@ -53,11 +62,11 @@ export class AttendanceFormService {
   }
 
   getAttendance(form: AttendanceFormGroup): IAttendance | NewAttendance {
-    return form.getRawValue() as IAttendance | NewAttendance;
+    return this.convertAttendanceRawValueToAttendance(form.getRawValue() as AttendanceFormRawValue | NewAttendanceFormRawValue);
   }
 
   resetForm(form: AttendanceFormGroup, attendance: AttendanceFormGroupInput): void {
-    const attendanceRawValue = { ...this.getFormDefaults(), ...attendance };
+    const attendanceRawValue = this.convertAttendanceToAttendanceRawValue({ ...this.getFormDefaults(), ...attendance });
     form.reset(
       {
         ...attendanceRawValue,
@@ -67,8 +76,29 @@ export class AttendanceFormService {
   }
 
   private getFormDefaults(): AttendanceFormDefaults {
+    const currentTime = dayjs();
+
     return {
       id: null,
+      attendanceDate: currentTime,
+    };
+  }
+
+  private convertAttendanceRawValueToAttendance(
+    rawAttendance: AttendanceFormRawValue | NewAttendanceFormRawValue,
+  ): IAttendance | NewAttendance {
+    return {
+      ...rawAttendance,
+      attendanceDate: dayjs(rawAttendance.attendanceDate, DATE_TIME_FORMAT),
+    };
+  }
+
+  private convertAttendanceToAttendanceRawValue(
+    attendance: IAttendance | (Partial<NewAttendance> & AttendanceFormDefaults),
+  ): AttendanceFormRawValue | PartialWithRequiredKeyOf<NewAttendanceFormRawValue> {
+    return {
+      ...attendance,
+      attendanceDate: attendance.attendanceDate ? attendance.attendanceDate.format(DATE_TIME_FORMAT) : undefined,
     };
   }
 }
