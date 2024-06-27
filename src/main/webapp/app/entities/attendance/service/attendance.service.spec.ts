@@ -5,11 +5,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { IAttendance } from '../attendance.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../attendance.test-samples';
 
-import { AttendanceService, RestAttendance } from './attendance.service';
+import { AttendanceService } from './attendance.service';
 
-const requireRestSample: RestAttendance = {
+const requireRestSample: IAttendance = {
   ...sampleWithRequiredData,
-  attendanceDate: sampleWithRequiredData.attendanceDate?.toJSON(),
 };
 
 describe('Attendance Service', () => {

@@ -15,9 +15,27 @@
           <dd>
             <span>{{ attendance()!.id }}</span>
           </dd>
-          <dt><span jhiTranslate="jhipsterlmsapp3App.attendance.attendanceDate">Attendance Date</span></dt>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.attendance.attendanceEnum">Attendance Enum</span></dt>
           <dd>
-            <span>{{ attendance()!.attendanceDate | formatMediumDatetime }}</span>
+            <span [jhiTranslate]="'jhipsterlmsapp3App.AttendanceEnum.' + (attendance()!.attendanceEnum ?? 'null')">{{
+              { null: '', PRESENT: 'PRESENT', LATE: 'LATE', ABSENT: 'ABSENT' }[attendance()!.attendanceEnum ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.attendance.student">Student</span></dt>
+          <dd>
+            @if (attendance()!.student) {
+              <div>
+                <a [routerLink]="['/student', attendance()!.student?.id, 'view']">{{ attendance()!.student?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="jhipsterlmsapp3App.attendance.lesson">Lesson</span></dt>
+          <dd>
+            @if (attendance()!.lesson) {
+              <div>
+                <a [routerLink]="['/lesson', attendance()!.lesson?.id, 'view']">{{ attendance()!.lesson?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="jhipsterlmsapp3App.attendance.course">Course</span></dt>
           <dd>

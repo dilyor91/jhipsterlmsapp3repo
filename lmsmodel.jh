@@ -300,7 +300,17 @@ entity Lesson {
   videoUrl String
 }
 
+enum AttendanceEnum {
+   PRESENT, LATE, ABSENT
+}
+
+entity Attendance {
+   attendanceEnum AttendanceEnum
+}
+
 relationship ManyToOne {
+   Attendance{student} to Student
+   Attendance{lesson} to Lesson
    Lesson{course} to Course
 }
 
@@ -370,7 +380,7 @@ Teacher, Department,
 QuestionGroup, Question, Option,
 Quiz, QuizQuestionGroup, QuizCourseSection,
 QuizSession, StudentOption, StudentQuestion,
-StudentAnswerQuestion, QuizResult, Lesson
+StudentAnswerQuestion, QuizResult, Lesson, Attendance
 with pagination
 
 // Use Data Transfer Objects (DTO)
